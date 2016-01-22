@@ -19,10 +19,10 @@
 #import <Cocoa/Cocoa.h>
 
 //! Project version number for ConvertKit.
-FOUNDATION_EXPORT double ConvertKitVersionNumber;
+FOUNDATION_EXPORT double RealmConvertKitVersionNumber;
 
 //! Project version string for ConvertKit.
-FOUNDATION_EXPORT const unsigned char ConvertKitVersionString[];
+FOUNDATION_EXPORT const unsigned char RealmConvertKitVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <ConvertKit/PublicHeader.h>
 

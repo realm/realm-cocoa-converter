@@ -20,34 +20,34 @@ import Foundation
 import XCTest
 import Realm
 import RealmSwift
+import RealmConvertKit
 import PathKit
 
 @testable import ConvertKit
 
 class ConvertKitTests: XCTestCase {
+    let testOutputPath = "io.realm.test-output"
     let testRealmFileName = "io.realm.test.realm"
     
     var testRealmFilePath:String {
         let path = Path(NSTemporaryDictory())
+        path += Path(testOutputPath)
         path += Path(self.testRealmFileName)
         return path.path
     }
     
     override func setUp() {
         super.setUp()
-        
-        
     }
     
     override func tearDown() {
         //Delete any outstanding realm files from previous tests
         NSFileManager.defaultFileManager().removeItemAtPath(self.testRealmFilePath, error: nil)
-        
         super.tearDown()
     }
     
     func testCSVImport() {
-        let businessesCSVFilePath = NSBundle.mainBundle().pathForResource("businesses", ofType: "csv")
+        let businessesCSVFilePath = NSBundle(forClass: self.dynamicType).pathForResource("businesses", ofType: "csv")
         XCTAssetNotNil(businessesCSVFilePath)
         
         let generator = JSONTableSchemaGenerator(file: businessesCSVFilePath)

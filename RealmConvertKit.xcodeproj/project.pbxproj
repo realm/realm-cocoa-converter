@@ -8,19 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		2213C7011C50BE1000902618 /* RealmConvertKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2213C6F61C50BE1000902618 /* RealmConvertKit.framework */; };
-		2213C71A1C50CA3D00902618 /* ConvertKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2213C7111C50CA3D00902618 /* ConvertKit.h */; };
 		2213C71B1C50CA3D00902618 /* Exporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7131C50CA3D00902618 /* Exporter.swift */; };
 		2213C71C1C50CA3D00902618 /* Importer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7151C50CA3D00902618 /* Importer.swift */; };
 		2213C7211C50CF3800902618 /* JSONSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7201C50CF3800902618 /* JSONSchema.swift */; };
 		2213C7231C50CF9700902618 /* JSONObjectSchama.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7221C50CF9700902618 /* JSONObjectSchama.swift */; };
 		2213C7251C50D04000902618 /* PropertyType+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7241C50D04000902618 /* PropertyType+Description.swift */; };
 		2213C7271C50D20400902618 /* JSONTableSchemaGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7261C50D20400902618 /* JSONTableSchemaGenerator.swift */; };
-		2213C72F1C50F7A700902618 /* businesses.csv in Resources */ = {isa = PBXBuildFile; fileRef = 2213C7291C50F7A700902618 /* businesses.csv */; };
-		2213C7301C50F7A700902618 /* dogs.csv in Resources */ = {isa = PBXBuildFile; fileRef = 2213C72A1C50F7A700902618 /* dogs.csv */; };
-		2213C7311C50F7A700902618 /* inspections.csv in Resources */ = {isa = PBXBuildFile; fileRef = 2213C72B1C50F7A700902618 /* inspections.csv */; };
-		2213C7321C50F7A700902618 /* people.csv in Resources */ = {isa = PBXBuildFile; fileRef = 2213C72C1C50F7A700902618 /* people.csv */; };
-		2213C7331C50F7A700902618 /* restaurant.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 2213C72D1C50F7A700902618 /* restaurant.xlsx */; };
-		2213C7341C50F7A700902618 /* violations.csv in Resources */ = {isa = PBXBuildFile; fileRef = 2213C72E1C50F7A700902618 /* violations.csv */; };
+		2213C7361C52058C00902618 /* ConvertKitObjCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7351C52058C00902618 /* ConvertKitObjCTests.m */; };
+		2213C7391C52109300902618 /* RealmConvertKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2213C7111C50CA3D00902618 /* RealmConvertKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2213C73A1C52196100902618 /* dogs.realm in Resources */ = {isa = PBXBuildFile; fileRef = 2213C7371C520DC900902618 /* dogs.realm */; };
+		2213C73B1C52196100902618 /* businesses.csv in Resources */ = {isa = PBXBuildFile; fileRef = 2213C7291C50F7A700902618 /* businesses.csv */; };
+		2213C73C1C52196100902618 /* dogs.csv in Resources */ = {isa = PBXBuildFile; fileRef = 2213C72A1C50F7A700902618 /* dogs.csv */; };
+		2213C73D1C52196100902618 /* inspections.csv in Resources */ = {isa = PBXBuildFile; fileRef = 2213C72B1C50F7A700902618 /* inspections.csv */; };
+		2213C73E1C52196100902618 /* people.csv in Resources */ = {isa = PBXBuildFile; fileRef = 2213C72C1C50F7A700902618 /* people.csv */; };
+		2213C73F1C52196100902618 /* restaurant.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 2213C72D1C50F7A700902618 /* restaurant.xlsx */; };
+		2213C7401C52196100902618 /* violations.csv in Resources */ = {isa = PBXBuildFile; fileRef = 2213C72E1C50F7A700902618 /* violations.csv */; };
 		A1834E4CE986834B9232D349 /* Pods_RealmConvertKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7D09F9198E260F3F21AA406 /* Pods_RealmConvertKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,7 +39,7 @@
 /* Begin PBXFileReference section */
 		2213C6F61C50BE1000902618 /* RealmConvertKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RealmConvertKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2213C7001C50BE1000902618 /* RealmConvertKit.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealmConvertKit.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2213C7111C50CA3D00902618 /* ConvertKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertKit.h; sourceTree = "<group>"; };
+		2213C7111C50CA3D00902618 /* RealmConvertKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RealmConvertKit.h; sourceTree = "<group>"; };
 		2213C7131C50CA3D00902618 /* Exporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exporter.swift; sourceTree = "<group>"; };
 		2213C7151C50CA3D00902618 /* Importer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Importer.swift; sourceTree = "<group>"; };
 		2213C7161C50CA3D00902618 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -53,6 +55,8 @@
 		2213C72C1C50F7A700902618 /* people.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = people.csv; sourceTree = "<group>"; };
 		2213C72D1C50F7A700902618 /* restaurant.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = restaurant.xlsx; sourceTree = "<group>"; };
 		2213C72E1C50F7A700902618 /* violations.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = violations.csv; sourceTree = "<group>"; };
+		2213C7351C52058C00902618 /* ConvertKitObjCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConvertKitObjCTests.m; sourceTree = "<group>"; };
+		2213C7371C520DC900902618 /* dogs.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = dogs.realm; sourceTree = "<group>"; };
 		34882D99EEC35EF5EC0AD1F9 /* Pods-RealmConvertKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConvertKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConvertKit/Pods-RealmConvertKit.debug.xcconfig"; sourceTree = "<group>"; };
 		C7D09F9198E260F3F21AA406 /* Pods_RealmConvertKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmConvertKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDF00B04C816D49C128378E5 /* Pods-RealmConvertKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConvertKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConvertKit/Pods-RealmConvertKit.release.xcconfig"; sourceTree = "<group>"; };
@@ -118,7 +122,7 @@
 		2213C7101C50CA3D00902618 /* RealmConvertKit */ = {
 			isa = PBXGroup;
 			children = (
-				2213C7111C50CA3D00902618 /* ConvertKit.h */,
+				2213C7111C50CA3D00902618 /* RealmConvertKit.h */,
 				2213C7121C50CA3D00902618 /* Exporter */,
 				2213C7141C50CA3D00902618 /* Importer */,
 				2213C7161C50CA3D00902618 /* Info.plist */,
@@ -151,6 +155,7 @@
 			children = (
 				2213C7281C50F7A700902618 /* TestAssets */,
 				2213C7181C50CA3D00902618 /* ConvertKitTests.swift */,
+				2213C7351C52058C00902618 /* ConvertKitObjCTests.m */,
 				2213C7191C50CA3D00902618 /* Info.plist */,
 			);
 			path = RealmConvertKitTests;
@@ -159,6 +164,7 @@
 		2213C7281C50F7A700902618 /* TestAssets */ = {
 			isa = PBXGroup;
 			children = (
+				2213C7371C520DC900902618 /* dogs.realm */,
 				2213C7291C50F7A700902618 /* businesses.csv */,
 				2213C72A1C50F7A700902618 /* dogs.csv */,
 				2213C72B1C50F7A700902618 /* inspections.csv */,
@@ -176,7 +182,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2213C71A1C50CA3D00902618 /* ConvertKit.h in Headers */,
+				2213C7391C52109300902618 /* RealmConvertKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,12 +275,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2213C7311C50F7A700902618 /* inspections.csv in Resources */,
-				2213C7321C50F7A700902618 /* people.csv in Resources */,
-				2213C7341C50F7A700902618 /* violations.csv in Resources */,
-				2213C72F1C50F7A700902618 /* businesses.csv in Resources */,
-				2213C7301C50F7A700902618 /* dogs.csv in Resources */,
-				2213C7331C50F7A700902618 /* restaurant.xlsx in Resources */,
+				2213C73A1C52196100902618 /* dogs.realm in Resources */,
+				2213C73B1C52196100902618 /* businesses.csv in Resources */,
+				2213C73C1C52196100902618 /* dogs.csv in Resources */,
+				2213C73D1C52196100902618 /* inspections.csv in Resources */,
+				2213C73E1C52196100902618 /* people.csv in Resources */,
+				2213C73F1C52196100902618 /* restaurant.xlsx in Resources */,
+				2213C7401C52196100902618 /* violations.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +338,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2213C7361C52058C00902618 /* ConvertKitObjCTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +443,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 34882D99EEC35EF5EC0AD1F9 /* Pods-RealmConvertKit.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -454,6 +463,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FDF00B04C816D49C128378E5 /* Pods-RealmConvertKit.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -472,10 +482,12 @@
 		2213C70E1C50BE1000902618 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = RealmConvertKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.realm.ConvertKitTests;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)Tests";
 				PRODUCT_NAME = RealmConvertKit;
 			};
 			name = Debug;
@@ -483,10 +495,12 @@
 		2213C70F1C50BE1000902618 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = RealmConvertKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = io.realm.ConvertKitTests;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)Tests";
 				PRODUCT_NAME = RealmConvertKit;
 			};
 			name = Release;
