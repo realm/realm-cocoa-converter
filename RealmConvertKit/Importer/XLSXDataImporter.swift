@@ -23,7 +23,7 @@ import RealmSwift
 import SpreadsheetWriter
 
 @objc(RLMXLSXDataImporter)
-public class XLSXDataImporter : DataImporter {
+public class XLSXDataImporter: DataImporter {
 
     public override func `import`(schema: JSONSchema) throws -> RLMRealm {
         let realm = try! self.createNewRealmFile(schema)

@@ -14,6 +14,7 @@
 		2212D2D11C55FD2D00455162 /* String+CamelCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2212D2D01C55FD2D00455162 /* String+CamelCase.swift */; };
 		2212D2D31C55FD6900455162 /* DataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2212D2D21C55FD6900455162 /* DataImporter.swift */; };
 		2212D2D51C5609B200455162 /* XLSXDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2212D2D41C5609B200455162 /* XLSXDataImporter.swift */; };
+		2212D2D71C560E4F00455162 /* DataExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2212D2D61C560E4F00455162 /* DataExporter.swift */; };
 		2213C7011C50BE1000902618 /* RealmConvertKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2213C6F61C50BE1000902618 /* RealmConvertKit.framework */; };
 		2213C71B1C50CA3D00902618 /* CSVDataExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7131C50CA3D00902618 /* CSVDataExporter.swift */; };
 		2213C71C1C50CA3D00902618 /* CSVDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7151C50CA3D00902618 /* CSVDataImporter.swift */; };
@@ -48,6 +49,7 @@
 		2212D2D01C55FD2D00455162 /* String+CamelCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+CamelCase.swift"; sourceTree = "<group>"; };
 		2212D2D21C55FD6900455162 /* DataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataImporter.swift; sourceTree = "<group>"; };
 		2212D2D41C5609B200455162 /* XLSXDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLSXDataImporter.swift; sourceTree = "<group>"; };
+		2212D2D61C560E4F00455162 /* DataExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExporter.swift; sourceTree = "<group>"; };
 		2213C6F61C50BE1000902618 /* RealmConvertKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RealmConvertKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2213C7001C50BE1000902618 /* RealmConvertKit.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealmConvertKit.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2213C7111C50CA3D00902618 /* RealmConvertKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RealmConvertKit.h; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 		2213C7121C50CA3D00902618 /* Exporter */ = {
 			isa = PBXGroup;
 			children = (
+				2212D2D61C560E4F00455162 /* DataExporter.swift */,
 				2213C7131C50CA3D00902618 /* CSVDataExporter.swift */,
 			);
 			path = Exporter;
@@ -368,6 +371,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2212D2D71C560E4F00455162 /* DataExporter.swift in Sources */,
 				2212D2D11C55FD2D00455162 /* String+CamelCase.swift in Sources */,
 				2212D2D51C5609B200455162 /* XLSXDataImporter.swift in Sources */,
 				2212D2D31C55FD6900455162 /* DataImporter.swift in Sources */,

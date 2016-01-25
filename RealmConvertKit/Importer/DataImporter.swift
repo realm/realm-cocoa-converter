@@ -11,7 +11,7 @@ import Realm
 import RealmSwift
 
 @objc (RLMDataImporter)
-public class DataImporter : NSObject {
+public class DataImporter: NSObject {
     public let files: [String]
     public let output: String
     public let encoding: Encoding

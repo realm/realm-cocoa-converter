@@ -23,7 +23,7 @@ import Realm
 import RealmSwift
 
 @objc(RLMCSVDataImporter)
-public class CSVDataImporter : DataImporter {
+public class CSVDataImporter: DataImporter {
 
     public override func `import`(schema: JSONSchema) throws -> RLMRealm {
         let realm = try! self.createNewRealmFile(schema)

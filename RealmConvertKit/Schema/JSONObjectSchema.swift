@@ -21,7 +21,7 @@ import Realm
 import RealmSwift
 
 @objc(RLMJSONObjectSchema)
-public class JSONObjectSchema : NSObject {
+public class JSONObjectSchema: NSObject {
     public var objectClassName: String
     var properties: [JSONObjectSchema.Property] = []
     

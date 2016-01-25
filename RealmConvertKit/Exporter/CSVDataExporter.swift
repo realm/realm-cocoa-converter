@@ -35,31 +35,25 @@ import PathKit
  not captured in the CSV files.
 */
 @objc(RLMCSVDataExporter)
-public class CSVDataExporter : NSObject {
+public class CSVDataExporter: DataExporter {
     
-    public var outputFolderPath = ""
-    public var realmFilePath    = ""
+    /**
+     The delimiter symbol used to separate each property on each row.
+     Defaults to the CSV standard ',' comma.
+     */
     public var delimiter        = ","
+    
+    /**
+     When it's necessary to escape a Realm property on a CSV row, this is the escape symbol
+     Defaults to the CSV standard '"' double-quotes.
+     */
     public var escapeQuotes     = "\""
     
     /**
-     Create a new instance of the exporter object
-     
-     - parameter realmFilePath: An absolute path to the Realm file to be exported
-     - parameter outputFolderpath: An absolute path to a folder where the CSV files will be created
+     Takes the provided Realm file and exports each table to a CSV file in the provided
+     output folder.
      */
-    @objc(initWithRealmFileAtPath:outputToFolderAtPath:)
-    public init (realmFilePath: String, outputFolderPath: String) {
-        self.outputFolderPath = outputFolderPath
-        self.realmFilePath = realmFilePath
-    }
-    
-    /**
-     Exports all of the contents of the provided Realm file to 
-     the designated output folder, in CSV
-     */
-    @objc(exportWithError:)
-    public func export() throws {
+    public override func export() throws {
         
         let realmConfiguration = RLMRealmConfiguration.defaultConfiguration()
         realmConfiguration.path = self.realmFilePath
