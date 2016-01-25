@@ -21,20 +21,6 @@ import CSwiftV
 import PathKit
 import SpreadsheetWriter
 
-
-extension String {
-    
-    var camelcaseString: String {
-        guard !isEmpty else {
-            return ""
-        }
-        let delimiters = NSCharacterSet(charactersInString: "_-")
-        let pascalcaseString = capitalizedString.componentsSeparatedByCharactersInSet(delimiters).joinWithSeparator("")
-        return "\(pascalcaseString.substringToIndex(startIndex.advancedBy(1)).lowercaseString)\(pascalcaseString.substringFromIndex(startIndex.advancedBy(1)))"
-    }
-    
-}
-
 public struct JSONTableSchemaGenerator {
     let files: [String]
     let type: String

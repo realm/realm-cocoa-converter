@@ -86,7 +86,7 @@ class RealmConvertKit_Importer: XCTestCase {
         let schema = try! generator.generate("csv")
         
         let destinationRealmPath = Path(self.outputTestFolderPath)
-        let dataImporter = DataImporter(files: filePaths, output: String(destinationRealmPath))
+        let dataImporter = CSVDataImporter(files: filePaths, output: String(destinationRealmPath))
         try! dataImporter.`import`(schema)
         
         XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath(String(destinationRealmPath)))

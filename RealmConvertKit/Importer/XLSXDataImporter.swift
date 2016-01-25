@@ -18,57 +18,49 @@
 
 import Foundation
 import PathKit
-import CSwiftV
 import Realm
 import RealmSwift
+import SpreadsheetWriter
 
-@objc(RLMCSVDataImporter)
-public class CSVDataImporter : DataImporter {
+@objc(RLMXLSXDataImporter)
+public class XLSXDataImporter : DataImporter {
 
     public override func `import`(schema: JSONSchema) throws -> RLMRealm {
         let realm = try! self.createNewRealmFile(schema)
-        
-        for (index, file) in files.enumerate() {
+        let workbook = SpreadsheetWriter.ReadWorkbook(NSURL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
+        for (index, key) in workbook.keys.enumerate() {
             let schema = schema.schemas[index]
-
-            let inputString = try! NSString(contentsOfFile: file, encoding: encoding.rawValue) as String
-            let csv = CSwiftV(String: inputString)
-
-            var generator = csv.rows.generate()
-            transactionLoop: while true {
-                realm.beginWriteTransaction()
-                for _ in 0..<10000 {
+            
+            if let sheet = workbook[key] {
+                let rows = sheet.dropFirst()
+                for row in rows {
                     let cls = NSClassFromString(schema.objectClassName) as! RLMObject.Type
                     let object = cls.init()
-
-                    guard let row = generator.next() else {
-                        break transactionLoop
-                    }
+                    
                     row.enumerate().forEach { (index, field) -> () in
                         let property = schema.properties[index]
-
+                        
                         switch property.type {
                         case .Int:
                             if let number = Int64(field) {
-                                object.setValue(NSNumber(longLong: number), forKey: property.originalName)
+                                object.setValue(NSNumber(longLong: number), forKey: property.name)
                             }
                         case .Double:
                             if let number = Double(field) {
-                                object.setValue(NSNumber(double: number), forKey: property.originalName)
+                                object.setValue(NSNumber(double: number), forKey: property.name)
                             }
                         default:
-                            object.setValue(field, forKey: property.originalName)
+                            object.setValue(field, forKey: property.name)
                         }
                     }
                     
-                    realm.addObject(object)
+                    try realm.transactionWithBlock { () -> Void in
+                        realm.addObject(object)
+                    }
                 }
-                try realm.commitWriteTransaction()
             }
-            try realm.commitWriteTransaction()
         }
-    
+        
         return realm
     }
-    
 }
