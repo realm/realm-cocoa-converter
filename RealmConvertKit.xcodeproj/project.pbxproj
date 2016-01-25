@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2212D2CA1C55FA6400455162 /* JSONObjectSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2212D2C71C55FA6400455162 /* JSONObjectSchema.swift */; };
+		2212D2CB1C55FA6400455162 /* JSONSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2212D2C81C55FA6400455162 /* JSONSchema.swift */; };
+		2212D2CC1C55FA6400455162 /* JSONTableSchemaGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2212D2C91C55FA6400455162 /* JSONTableSchemaGenerator.swift */; };
+		2212D2CF1C55FBC400455162 /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2212D2CE1C55FBC400455162 /* Encoding.swift */; };
 		2213C7011C50BE1000902618 /* RealmConvertKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2213C6F61C50BE1000902618 /* RealmConvertKit.framework */; };
-		2213C71B1C50CA3D00902618 /* Exporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7131C50CA3D00902618 /* Exporter.swift */; };
-		2213C71C1C50CA3D00902618 /* Importer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7151C50CA3D00902618 /* Importer.swift */; };
-		2213C7211C50CF3800902618 /* JSONSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7201C50CF3800902618 /* JSONSchema.swift */; };
-		2213C7231C50CF9700902618 /* JSONObjectSchama.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7221C50CF9700902618 /* JSONObjectSchama.swift */; };
-		2213C7251C50D04000902618 /* PropertyType+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7241C50D04000902618 /* PropertyType+Description.swift */; };
-		2213C7271C50D20400902618 /* JSONTableSchemaGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7261C50D20400902618 /* JSONTableSchemaGenerator.swift */; };
+		2213C71B1C50CA3D00902618 /* CSVDataExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7131C50CA3D00902618 /* CSVDataExporter.swift */; };
+		2213C71C1C50CA3D00902618 /* CSVDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2213C7151C50CA3D00902618 /* CSVDataImporter.swift */; };
 		2213C7391C52109300902618 /* RealmConvertKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2213C7111C50CA3D00902618 /* RealmConvertKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22C7F96A1C528B30006F2BE8 /* businesses.csv in Resources */ = {isa = PBXBuildFile; fileRef = 22C7F95F1C528B30006F2BE8 /* businesses.csv */; };
 		22C7F96B1C528B30006F2BE8 /* dogs.csv in Resources */ = {isa = PBXBuildFile; fileRef = 22C7F9601C528B30006F2BE8 /* dogs.csv */; };
@@ -38,17 +38,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2212D2C71C55FA6400455162 /* JSONObjectSchema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONObjectSchema.swift; sourceTree = "<group>"; };
+		2212D2C81C55FA6400455162 /* JSONSchema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSchema.swift; sourceTree = "<group>"; };
+		2212D2C91C55FA6400455162 /* JSONTableSchemaGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONTableSchemaGenerator.swift; sourceTree = "<group>"; };
+		2212D2CE1C55FBC400455162 /* Encoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encoding.swift; sourceTree = "<group>"; };
 		2213C6F61C50BE1000902618 /* RealmConvertKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RealmConvertKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2213C7001C50BE1000902618 /* RealmConvertKit.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealmConvertKit.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2213C7111C50CA3D00902618 /* RealmConvertKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RealmConvertKit.h; sourceTree = "<group>"; };
-		2213C7131C50CA3D00902618 /* Exporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exporter.swift; sourceTree = "<group>"; };
-		2213C7151C50CA3D00902618 /* Importer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Importer.swift; sourceTree = "<group>"; };
+		2213C7131C50CA3D00902618 /* CSVDataExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVDataExporter.swift; sourceTree = "<group>"; };
+		2213C7151C50CA3D00902618 /* CSVDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVDataImporter.swift; sourceTree = "<group>"; };
 		2213C7161C50CA3D00902618 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2213C7191C50CA3D00902618 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2213C7201C50CF3800902618 /* JSONSchema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSchema.swift; sourceTree = "<group>"; };
-		2213C7221C50CF9700902618 /* JSONObjectSchama.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONObjectSchama.swift; sourceTree = "<group>"; };
-		2213C7241C50D04000902618 /* PropertyType+Description.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PropertyType+Description.swift"; sourceTree = "<group>"; };
-		2213C7261C50D20400902618 /* JSONTableSchemaGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONTableSchemaGenerator.swift; sourceTree = "<group>"; };
 		22C7F95F1C528B30006F2BE8 /* businesses.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = businesses.csv; sourceTree = "<group>"; };
 		22C7F9601C528B30006F2BE8 /* dogs.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dogs.csv; sourceTree = "<group>"; };
 		22C7F9611C528B30006F2BE8 /* dogs.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = dogs.realm; sourceTree = "<group>"; };
@@ -100,6 +100,25 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		2212D2C61C55FA6400455162 /* Schema */ = {
+			isa = PBXGroup;
+			children = (
+				2212D2C71C55FA6400455162 /* JSONObjectSchema.swift */,
+				2212D2C81C55FA6400455162 /* JSONSchema.swift */,
+				2212D2C91C55FA6400455162 /* JSONTableSchemaGenerator.swift */,
+			);
+			path = Schema;
+			sourceTree = "<group>";
+		};
+		2212D2CD1C55FBB100455162 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				2212D2CE1C55FBC400455162 /* Encoding.swift */,
+			);
+			name = Support;
+			path = RealmConvertKit/Support;
+			sourceTree = SOURCE_ROOT;
+		};
 		2213C6EC1C50BE1000902618 = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +145,8 @@
 				2213C7111C50CA3D00902618 /* RealmConvertKit.h */,
 				2213C7121C50CA3D00902618 /* Exporter */,
 				2213C7141C50CA3D00902618 /* Importer */,
+				2212D2C61C55FA6400455162 /* Schema */,
+				2212D2CD1C55FBB100455162 /* Support */,
 				2213C7161C50CA3D00902618 /* Info.plist */,
 			);
 			path = RealmConvertKit;
@@ -134,7 +155,7 @@
 		2213C7121C50CA3D00902618 /* Exporter */ = {
 			isa = PBXGroup;
 			children = (
-				2213C7131C50CA3D00902618 /* Exporter.swift */,
+				2213C7131C50CA3D00902618 /* CSVDataExporter.swift */,
 			);
 			path = Exporter;
 			sourceTree = "<group>";
@@ -142,11 +163,7 @@
 		2213C7141C50CA3D00902618 /* Importer */ = {
 			isa = PBXGroup;
 			children = (
-				2213C7151C50CA3D00902618 /* Importer.swift */,
-				2213C7201C50CF3800902618 /* JSONSchema.swift */,
-				2213C7221C50CF9700902618 /* JSONObjectSchama.swift */,
-				2213C7241C50D04000902618 /* PropertyType+Description.swift */,
-				2213C7261C50D20400902618 /* JSONTableSchemaGenerator.swift */,
+				2213C7151C50CA3D00902618 /* CSVDataImporter.swift */,
 			);
 			path = Importer;
 			sourceTree = "<group>";
@@ -342,12 +359,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2213C71B1C50CA3D00902618 /* Exporter.swift in Sources */,
-				2213C71C1C50CA3D00902618 /* Importer.swift in Sources */,
-				2213C7251C50D04000902618 /* PropertyType+Description.swift in Sources */,
-				2213C7211C50CF3800902618 /* JSONSchema.swift in Sources */,
-				2213C7231C50CF9700902618 /* JSONObjectSchama.swift in Sources */,
-				2213C7271C50D20400902618 /* JSONTableSchemaGenerator.swift in Sources */,
+				2212D2CF1C55FBC400455162 /* Encoding.swift in Sources */,
+				2212D2CB1C55FA6400455162 /* JSONSchema.swift in Sources */,
+				2213C71B1C50CA3D00902618 /* CSVDataExporter.swift in Sources */,
+				2212D2CA1C55FA6400455162 /* JSONObjectSchema.swift in Sources */,
+				2212D2CC1C55FA6400455162 /* JSONTableSchemaGenerator.swift in Sources */,
+				2213C71C1C50CA3D00902618 /* CSVDataImporter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,31 +23,6 @@ import SpreadsheetWriter
 import Realm
 import RealmSwift
 
-@objc
-public enum Encoding: UInt {
-    case UTF8
-}
-
-extension Encoding : RawRepresentable {
-
-    public init?(rawValue: UInt) {
-        switch rawValue {
-        case NSUTF8StringEncoding:
-            self = UTF8
-        default:
-            self = UTF8
-        }
-    }
-
-    public var rawValue: UInt {
-        switch self {
-        case UTF8:
-            return NSUTF8StringEncoding
-        }
-    }
-
-}
-
 @objc(RLMDataImporter)
 public class DataImporter : NSObject {
     let files: [String]

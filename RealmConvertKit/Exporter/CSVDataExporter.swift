@@ -23,21 +23,44 @@ import Realm.Dynamic
 import RealmSwift
 import PathKit
 
-@objc(RLMDataExporter)
-public class DataExporter : NSObject {
-    let output: String
-    let realmFilePath: String
-    let delimiter: String = ","
-    let escapeQuotes = "\""
+/**
+ Provided a Realm file and an output destination folder,
+ `CSVDataExporter` can export the contents of a Realm file
+ to a series of CSV files.
+ 
+ A single CSV file is created for each table in the Realm file,
+ with strings being escaped in the default CSV standard.
+ 
+ - warning: Presently, relationships between Realm objects are
+ not captured in the CSV files.
+*/
+@objc(RLMCSVDataExporter)
+public class CSVDataExporter : NSObject {
     
-    @objc(initWithOutputFolderPath:realmFilePath:)
-    public init (outputFolderPath: String, realmFilePath: String) {
-        self.output = outputFolderPath
+    public var outputFolderPath = ""
+    public var realmFilePath    = ""
+    public var delimiter        = ","
+    public var escapeQuotes     = "\""
+    
+    /**
+     Create a new instance of the exporter object
+     
+     - parameter realmFilePath: An absolute path to the Realm file to be exported
+     - parameter outputFolderpath: An absolute path to a folder where the CSV files will be created
+     */
+    @objc(initWithRealmFileAtPath:outputToFolderAtPath:)
+    public init (realmFilePath: String, outputFolderPath: String) {
+        self.outputFolderPath = outputFolderPath
         self.realmFilePath = realmFilePath
     }
     
-    @objc(exportWithType:error:)
-    public func export(type: String = "csv") throws -> String {
+    /**
+     Exports all of the contents of the provided Realm file to 
+     the designated output folder, in CSV
+     */
+    @objc(exportWithError:)
+    public func export() throws {
+        
         let realmConfiguration = RLMRealmConfiguration.defaultConfiguration()
         realmConfiguration.path = self.realmFilePath
         realmConfiguration.dynamic = true
@@ -50,7 +73,7 @@ public class DataExporter : NSObject {
             
             let objectName = objectSchema.className
             let fileName = "\(objectName).csv"
-            let filePath = Path(self.output) + Path(fileName)
+            let filePath = Path(self.outputFolderPath) + Path(fileName)
             
             if filePath.exists {
                 try filePath.delete()
@@ -99,8 +122,6 @@ public class DataExporter : NSObject {
             }
             fileHandle?.closeFile()
         }
-        
-        return self.output
     }
     
     private func sanitizedValue(value: String) -> String {
