@@ -27,17 +27,36 @@ public enum ImportSchemaFormat : Int {
     case XLSX
 }
 
+/**
+ `ImportSchemaGenerator` will analyze the contents of files provided
+ to it, and intelligently generate a schema definition object
+ with which the structure of a Realm file can be created.
+*/
 @objc(RLMImportSchemaGenerator)
 public class ImportSchemaGenerator : NSObject {
     let files: [String]
     let encoding: Encoding
     let format: ImportSchemaFormat
     
+    /**
+     Creates a new instance of `ImportSchemaGenerator`, specifying a single
+     file with which to import
+     
+     - parameter file: The absolute file path to the file that will be used to create the schema.
+     - parameter encoding: The text encoding used by the file.
+     */
     @objc(initWithFile:encoding:)
     public convenience init(file: String, encoding: Encoding = .UTF8) {
         self.init(files: [file], encoding: encoding)
     }
     
+    /**
+     Creates a new instance of `ImportSchemaGenerator`, specifying a list
+     of files to analyze.
+     
+     - parameter files: An array of absolute file paths to each file that will be used for the schema.
+     - parameter encoding: The text encoding used by the file.
+     */
     @objc(initWithFiles:encoding:)
     public init(files: [String], encoding: Encoding = .UTF8) {
         self.files = files
@@ -45,6 +64,10 @@ public class ImportSchemaGenerator : NSObject {
         self.format = ImportSchemaGenerator.importSchemaFormat(files.first!)
     }
     
+    /**
+    Processes the contents of each file provided and returns a single `ImportSchema` object
+    representing all of those files.
+    */
     @objc(generatedSchemaWithError:)
     public func generate() throws -> ImportSchema {
         switch self.format {
