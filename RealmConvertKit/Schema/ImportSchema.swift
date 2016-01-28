@@ -18,11 +18,11 @@
 
 import Foundation
 
-@objc(RLMJSONSchema)
-public class JSONSchema: NSObject {
-    var schemas: [JSONObjectSchema] = []
+@objc(RLMImportSchema)
+public class ImportSchema: NSObject {
+    var schemas: [ImportObjectSchema] = []
     
-    init(schemas: [JSONObjectSchema]) {
+    init(schemas: [ImportObjectSchema]) {
         super.init()
         self.schemas = schemas
     }
@@ -36,7 +36,7 @@ public class JSONSchema: NSObject {
     }
 }
 
-extension JSONSchema: CustomDebugStringConvertible {
+extension ImportSchema: CustomDebugStringConvertible {
     
     override public var description: String {
         let data = try! NSJSONSerialization.dataWithJSONObject(toJSON() as NSDictionary, options: .PrettyPrinted)

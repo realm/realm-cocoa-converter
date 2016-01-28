@@ -29,7 +29,7 @@ public class DataImporter: NSObject {
     }
     
     @objc(createNewRealmFileWithSchema:error:)
-    public func createNewRealmFile(schema: JSONSchema) throws -> RLMRealm {
+    public func createNewRealmFile(schema: ImportSchema) throws -> RLMRealm {
         for schema in schema.schemas {
             let superclassName = "RLMObject"
             
@@ -94,7 +94,7 @@ public class DataImporter: NSObject {
     }
     
     @objc(importWithSchema:error:)
-    func `import`(schema: JSONSchema) throws -> RLMRealm {
+    func `import`(schema: ImportSchema) throws -> RLMRealm {
         fatalError("import() can not be called on the base data importer class")
     }
 }

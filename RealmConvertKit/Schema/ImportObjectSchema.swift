@@ -20,10 +20,10 @@ import Foundation
 import Realm
 import RealmSwift
 
-@objc(RLMJSONObjectSchema)
-public class JSONObjectSchema: NSObject {
+@objc(RLMImportObjectSchema)
+public class ImportObjectSchema: NSObject {
     public var objectClassName: String
-    var properties: [JSONObjectSchema.Property] = []
+    var properties: [ImportObjectSchema.Property] = []
     
     init(objectClassName: String) {
         self.objectClassName = objectClassName
@@ -65,7 +65,7 @@ public class JSONObjectSchema: NSObject {
     }
 }
 
-extension JSONObjectSchema : CustomDebugStringConvertible {
+extension ImportObjectSchema : CustomDebugStringConvertible {
     
     override public var description: String {
         let data = try! NSJSONSerialization.dataWithJSONObject(toJSON() as NSDictionary, options: .PrettyPrinted)

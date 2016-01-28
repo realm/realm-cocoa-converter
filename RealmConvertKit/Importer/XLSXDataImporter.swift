@@ -25,7 +25,7 @@ import SpreadsheetWriter
 @objc(RLMXLSXDataImporter)
 public class XLSXDataImporter: DataImporter {
 
-    public override func `import`(schema: JSONSchema) throws -> RLMRealm {
+    public override func `import`(schema: ImportSchema) throws -> RLMRealm {
         let realm = try! self.createNewRealmFile(schema)
         let workbook = SpreadsheetWriter.ReadWorkbook(NSURL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
         for (index, key) in workbook.keys.enumerate() {
