@@ -31,7 +31,10 @@ public enum ImportSchemaFormat : Int {
  `ImportSchemaGenerator` will analyze the contents of files provided
  to it, and intelligently generate a schema definition object
  with which the structure of a Realm file can be created.
-*/
+ 
+ This is then used to map the raw data to the appropriate properties
+ when performing the import to Realm.
+ */
 @objc(RLMImportSchemaGenerator)
 public class ImportSchemaGenerator : NSObject {
     let files: [String]
