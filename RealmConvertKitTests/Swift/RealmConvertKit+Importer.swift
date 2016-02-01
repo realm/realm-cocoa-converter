@@ -50,6 +50,13 @@ class RealmConvertKit_Importer: XCTestCase {
         
         // Create the input and output folders
         for path in [self.inputTestFolderPath, self.outputTestFolderPath] {
+            if NSFileManager.defaultManager().fileExistsAtPath(path) {
+                try! NSFileManager.defaultManager().removeItemAtPath(path)
+            }
+        }
+        
+        // Create the input and output folders
+        for path in [self.inputTestFolderPath, self.outputTestFolderPath] {
             try! NSFileManager.defaultManager().createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil)
         }
         
@@ -64,15 +71,6 @@ class RealmConvertKit_Importer: XCTestCase {
         }
     }
     
-    override func tearDown() {
-        // Create the input and output folders
-        for path in [self.inputTestFolderPath, self.outputTestFolderPath] {
-            try! NSFileManager.defaultManager().removeItemAtPath(path)
-        }
-        
-        super.tearDown()
-    }
-    
     func testCSVImport() {
         var filePaths = [String]()
         
@@ -82,8 +80,8 @@ class RealmConvertKit_Importer: XCTestCase {
             filePaths.append(String(filePath))
         }
         
-        let generator = JSONTableSchemaGenerator(files: filePaths, output: "")
-        let schema = try! generator.generate("csv")
+        let generator =  ImportSchemaGenerator(files: filePaths)
+        let schema = try! generator.generate()
         
         let destinationRealmPath = Path(self.outputTestFolderPath)
         let dataImporter = CSVDataImporter(files: filePaths, output: String(destinationRealmPath))

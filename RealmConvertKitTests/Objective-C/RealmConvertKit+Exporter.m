@@ -41,8 +41,16 @@ NSString * const kRLMTestRealmFileName = @"dogs.realm";
     
     NSError *error = nil;
     
-    //Create both 'input' and 'output' folders in the tmp directory
+    //Delete the directories if they were already present
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    for (NSString *filePath in @[self.outputTempFolderPath, self.inputTempFolderPath]) {
+        if ([fileManager fileExistsAtPath:filePath]) {
+            [fileManager removeItemAtPath:filePath error:&error];
+            XCTAssertNil(error);
+        }
+    }
+    
+    //Create both 'input' and 'output' folders in the tmp directory
     for (NSString *filePath in @[self.outputTempFolderPath, self.inputTempFolderPath]) {
         [fileManager createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:&error];
         XCTAssertNil(error);
@@ -55,17 +63,6 @@ NSString * const kRLMTestRealmFileName = @"dogs.realm";
     NSString *destinationPath = [self.inputTempFolderPath stringByAppendingPathComponent:realmFileBundlePath.lastPathComponent];
     [fileManager copyItemAtPath:realmFileBundlePath toPath:destinationPath error:&error];
     XCTAssertNil(error);
-}
-
-- (void)tearDown {
-    
-    NSError *error = nil;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    for (NSString *filePath in @[self.outputTempFolderPath, self.inputTempFolderPath]) {
-        [fileManager removeItemAtPath:filePath error:&error];
-        XCTAssertNil(error);
-    }
-    [super tearDown];
 }
 
 - (void)testExporter {
