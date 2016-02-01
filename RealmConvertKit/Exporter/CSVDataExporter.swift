@@ -99,7 +99,14 @@ public class CSVDataExporter: DataExporter {
                 for property in properties {
                     let value = object[property.name]
                     if value != nil {
-                        if !(value is RLMObject) {
+                        //If the value is a single child object
+                        if value is RLMObject {
+                            rowString += self.serializedObject((value as! RLMObject), realm: realm)!
+                        }
+                        else if value is RLMArray {
+                            rowString += self.serializedObjectArray((value as! RLMArray), realm: realm)!
+                        }
+                        else {
                             rowString += self.sanitizedValue(value!.description!)
                         }
                     }
@@ -138,5 +145,40 @@ public class CSVDataExporter: DataExporter {
         }
         
         return sanitizedValue
+    }
+    
+    private func serializedObject(object: RLMObject, realm: RLMRealm) -> String? {
+        let className = object.objectSchema.className
+        let allObjects = realm.allObjects(className)
+        let index = Int(allObjects.indexOfObject(object))
+        if index == NSNotFound {
+            return nil
+        }
+        
+        return "<\(className)>{\(index)}"
+    }
+    
+    private func serializedObjectArray(array: RLMArray, realm: RLMRealm) -> String? {
+        if array.count == 0 {
+            return nil
+        }
+        
+        let className = array.objectClassName
+        let allObjects = realm.allObjects(className)
+        
+        var string = "<\(className)>{"
+        
+        for var i = 0; i < Int(array.count); i++ {
+            let object = array.objectAtIndex(UInt(i))
+            let index = allObjects.indexOfObject(object)
+            
+            if Int(index) != NSNotFound {
+                string += "\(index)"
+            }
+        }
+        string = string.substringToIndex(string.endIndex.predecessor())
+        string += "}"
+        
+        return string
     }
 }
