@@ -18,6 +18,11 @@
 
 import Foundation
 
+/**
+ An abstract class manages the common logic for 
+ setting up objects that can export the contents of 
+ Realm files to another format.
+*/
 public class DataExporter: NSObject {
     
     public var outputFolderPath = ""

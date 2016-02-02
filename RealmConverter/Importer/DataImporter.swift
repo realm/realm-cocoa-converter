@@ -1,26 +1,57 @@
+////////////////////////////////////////////////////////////////////////////
 //
-//  DataImporter.swift
-//  RealmConverter
+// Copyright 2016 Realm Inc.
 //
-//  Created by Tim Oliver on 25/01/2016.
-//  Copyright © 2016 Realm. All rights reserved.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+////////////////////////////////////////////////////////////////////////////
 
 import Foundation
 import Realm
 import RealmSwift
 
+/**
+ An abstract class manages the common logic for
+ setting up objects that can take a group of files,
+ and convert them into a new Realm file.
+ */
 @objc (RLMDataImporter)
 public class DataImporter: NSObject {
     public let files: [String]
     public let output: String
     public let encoding: Encoding
     
+    /**
+     Creates a new instance of `DataImporter`, taking a single
+     file that will be converted into a Realm file.
+     
+     - parameter file: An absolute path to the file that will be imported
+     - parameter output: An absolute path to the folder that will hold the new Realm file
+     - paramter encoding: The text encoding of the file being imported
+     */
     @objc(initWithFile:output:encoding:)
     convenience public init(file: String, output: String, encoding: Encoding = .UTF8) {
         self.init(files: [file], output: output, encoding: encoding)
     }
     
+    /**
+     Creates a new instance of `DataImporter`, taking an array of files
+     that will be converted into a Realm file.
+     
+     - parameter files: An array of absolute paths to the files to import
+     - parameter output: An absolute path to the folder that will hold the new Realm file
+     - paramter encoding: The text encoding of the file being imported
+     */
     @objc(initWithFiles:output:encoding:)
     public init(files: [String], output: String, encoding: Encoding = .UTF8) {
         self.files = files
@@ -28,6 +59,12 @@ public class DataImporter: NSObject {
         self.encoding = encoding
     }
     
+    /**
+     Creates a new, empty Realm file, formatted with the schema properties
+     provided with the provided `ImportSchema` object.
+     
+     -parameter schema: The import schema with which this file will be created
+     */
     @objc(createNewRealmFileWithSchema:error:)
     public func createNewRealmFile(schema: ImportSchema) throws -> RLMRealm {
         for schema in schema.schemas {
@@ -93,8 +130,14 @@ public class DataImporter: NSObject {
         return realm
     }
     
+    /**
+     An abstract method, overidden in subclasses that performs the data import
+     into the Realm file.
+     
+     -parameter schema: The import schema with which this file will be created
+     */
     @objc(importWithSchema:error:)
-    func `import`(schema: ImportSchema) throws -> RLMRealm {
+    func importWithSchema(schema: ImportSchema) throws -> RLMRealm {
         fatalError("import() can not be called on the base data importer class")
     }
 }

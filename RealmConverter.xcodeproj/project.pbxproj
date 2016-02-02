@@ -125,10 +125,10 @@
 		228B0D611C6092CB00D7325B /* RealmConverter */ = {
 			isa = PBXGroup;
 			children = (
-				228B0D621C6092CB00D7325B /* Exporter */,
-				228B0D651C6092CB00D7325B /* Importer */,
 				228B0D691C6092CB00D7325B /* Info.plist */,
 				228B0D6A1C6092CB00D7325B /* RealmConverter.h */,
+				228B0D621C6092CB00D7325B /* Exporter */,
+				228B0D651C6092CB00D7325B /* Importer */,
 				228B0D6B1C6092CB00D7325B /* Schema */,
 				228B0D6F1C6092CB00D7325B /* Support */,
 			);
@@ -138,8 +138,8 @@
 		228B0D621C6092CB00D7325B /* Exporter */ = {
 			isa = PBXGroup;
 			children = (
-				228B0D631C6092CB00D7325B /* CSVDataExporter.swift */,
 				228B0D641C6092CB00D7325B /* DataExporter.swift */,
+				228B0D631C6092CB00D7325B /* CSVDataExporter.swift */,
 			);
 			path = Exporter;
 			sourceTree = "<group>";
@@ -147,8 +147,8 @@
 		228B0D651C6092CB00D7325B /* Importer */ = {
 			isa = PBXGroup;
 			children = (
-				228B0D661C6092CB00D7325B /* CSVDataImporter.swift */,
 				228B0D671C6092CB00D7325B /* DataImporter.swift */,
+				228B0D661C6092CB00D7325B /* CSVDataImporter.swift */,
 				228B0D681C6092CB00D7325B /* XLSXDataImporter.swift */,
 			);
 			path = Importer;
@@ -157,9 +157,9 @@
 		228B0D6B1C6092CB00D7325B /* Schema */ = {
 			isa = PBXGroup;
 			children = (
-				228B0D6C1C6092CB00D7325B /* ImportObjectSchema.swift */,
-				228B0D6D1C6092CB00D7325B /* ImportSchema.swift */,
 				228B0D6E1C6092CB00D7325B /* ImportSchemaGenerator.swift */,
+				228B0D6D1C6092CB00D7325B /* ImportSchema.swift */,
+				228B0D6C1C6092CB00D7325B /* ImportObjectSchema.swift */,
 			);
 			path = Schema;
 			sourceTree = "<group>";

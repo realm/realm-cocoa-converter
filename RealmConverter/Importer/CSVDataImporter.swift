@@ -22,10 +22,21 @@ import CSwiftV
 import Realm
 import RealmSwift
 
+/**
+ Provided a Realm file and an output destination folder,
+ `CSVDataExporter` can export the contents of a Realm file
+ to a series of CSV files.
+ 
+ A single CSV file is created for each table in the Realm file,
+ with strings being escaped in the default CSV standard.
+ 
+ - warning: Presently, relationships between Realm objects are
+ not captured in the CSV files.
+ */
 @objc(RLMCSVDataImporter)
 public class CSVDataImporter: DataImporter {
 
-    public override func `import`(schema: ImportSchema) throws -> RLMRealm {
+    public override func importWithSchema(schema: ImportSchema) throws -> RLMRealm {
         let realm = try! self.createNewRealmFile(schema)
         
         for (index, file) in files.enumerate() {

@@ -79,7 +79,6 @@ extension ImportObjectSchema : CustomDebugStringConvertible {
 }
 
 // MARK: - String Extension for Realm PropertyType -
-
 extension PropertyType : CustomStringConvertible, CustomDebugStringConvertible {
     public var description: Swift.String {
         switch self {

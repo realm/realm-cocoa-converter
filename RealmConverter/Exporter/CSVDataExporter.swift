@@ -30,9 +30,6 @@ import PathKit
  
  A single CSV file is created for each table in the Realm file,
  with strings being escaped in the default CSV standard.
- 
- - warning: Presently, relationships between Realm objects are
- not captured in the CSV files.
 */
 @objc(RLMCSVDataExporter)
 public class CSVDataExporter: DataExporter {
