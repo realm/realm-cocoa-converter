@@ -245,11 +245,11 @@ static void RLMRealmSetSchemaAndAlign(RLMRealm *realm, RLMSchema *targetSchema) 
                                                 File::PermissionDenied(err.UTF8String, ex.path())), outError);
                 break;
             }
-            case RealmFileException::Kind::Exists:
-                RLMSetErrorOrThrow(RLMMakeError(RLMErrorFileExists, ex), outError);
+            case RealmFileException::Kind::NotFound:
+                RLMSetErrorOrThrow(RLMMakeError(RLMErrorFileNotFound, ex), outError);
                 break;
             case RealmFileException::Kind::AccessError:
-                RLMSetErrorOrThrow(RLMMakeError(RLMErrorFileAccessError, ex), outError);
+                RLMSetErrorOrThrow(RLMMakeError(RLMErrorFileAccess, ex), outError);
                 break;
             case RealmFileException::Kind::FormatUpgradeRequired:
                 RLMSetErrorOrThrow(RLMMakeError(RLMErrorFileFormatUpgradeRequired, ex), outError);
@@ -628,8 +628,10 @@ static void CheckReadWrite(RLMRealm *realm, NSString *msg=@"Cannot write to a re
 
 - (RLMResults *)objects:(NSString *)objectClassName where:(NSString *)predicateFormat, ... {
     va_list args;
-    RLM_VARARG(predicateFormat, args);
-    return [self objects:objectClassName where:predicateFormat args:args];
+    va_start(args, predicateFormat);
+    RLMResults *results = [self objects:objectClassName where:predicateFormat args:args];
+    va_end(args);
+    return results;
 }
 
 - (RLMResults *)objects:(NSString *)objectClassName where:(NSString *)predicateFormat args:(va_list)args {
@@ -699,9 +701,14 @@ static void CheckReadWrite(RLMRealm *realm, NSString *msg=@"Cannot write to a re
             *error = RLMMakeError(RLMErrorFileExists, ex);
         }
     }
+    catch (File::NotFound &ex) {
+        if (error) {
+            *error = RLMMakeError(RLMErrorFileNotFound, ex);
+        }
+    }
     catch (File::AccessError &ex) {
         if (error) {
-            *error = RLMMakeError(RLMErrorFileAccessError, ex);
+            *error = RLMMakeError(RLMErrorFileAccess, ex);
         }
     }
     catch (std::exception &ex) {

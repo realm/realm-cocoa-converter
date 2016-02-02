@@ -33,7 +33,7 @@ using namespace realm;
 // private properties
 @interface RLMObjectSchema ()
 @property (nonatomic, readwrite) NSDictionary RLM_GENERIC(id, RLMProperty *) *propertiesByName;
-@property (nonatomic, readwrite, assign) NSString *className;
+@property (nonatomic, readwrite) NSString *className;
 @end
 
 @implementation RLMObjectSchema {
@@ -223,7 +223,10 @@ using namespace realm;
             }
             if (auto type = RLMCoerceToNil(propertyType)) {
                 if (existing == NSNotFound) {
-                    property = [[RLMProperty alloc] initSwiftOptionalPropertyWithName:propertyName ivar:class_getInstanceVariable(objectClass, propertyName.UTF8String) propertyType:RLMPropertyType(type.intValue)];
+                    property = [[RLMProperty alloc] initSwiftOptionalPropertyWithName:propertyName
+                                                                              indexed:[indexed containsObject:propertyName]
+                                                                                 ivar:class_getInstanceVariable(objectClass, propertyName.UTF8String)
+                                                                         propertyType:RLMPropertyType(type.intValue)];
                     [propArray addObject:property];
                 }
                 else {
