@@ -56,33 +56,23 @@ public class CSVDataExporter: DataExporter {
     public override func export() throws {
         
         let realmConfiguration = RLMRealmConfiguration.defaultConfiguration()
-        realmConfiguration.path = self.realmFilePath
+        realmConfiguration.path = realmFilePath
         realmConfiguration.dynamic = true
         
         let realm = try RLMRealm(configuration: realmConfiguration)
-        let schema = realm.schema
         
-        //Write out a .csv file for each object in the Realm
-        for objectSchema in schema.objectSchema {
-            
-            let objectName = objectSchema.className
-            let fileName = "\(objectName).csv"
-            let filePath = Path(self.outputFolderPath) + Path(fileName)
+        // Write out a .csv file for each object in the Realm
+        for objectSchema in realm.schema.objectSchema {
+            let filePath = Path(outputFolderPath) + Path("\(objectSchema.className).csv")
             
             if filePath.exists {
                 try filePath.delete()
             }
             
             // Build the initial row of property names and write to disk
-            let properties = objectSchema.properties
-            var propertyNamesRow: String = ""
-            for property in properties {
-                propertyNamesRow += "\(property.name)"
-                propertyNamesRow += self.delimiter
-            }
-            propertyNamesRow.removeAtIndex(propertyNamesRow.endIndex.predecessor())
-            
-            try filePath.write(propertyNamesRow+"\n")
+            try filePath.write(
+                objectSchema.properties.map({ $0.name }).joinWithSeparator(delimiter) + "\n"
+            )
             
             // Write the remaining objects
             let fileHandle = NSFileHandle(forWritingAtPath: String(filePath))
@@ -91,33 +81,18 @@ public class CSVDataExporter: DataExporter {
             let objects = realm.allObjects(objectSchema.className)
             
             // Loop through each object in the table
-            for index in 0..<objects.count {
-                var rowString: String = ""
-                let object = objects.objectAtIndex(index) as RLMObject
-                
-                // Loop through each property in the object
-                for property in properties {
-                    let value = object[property.name]
-                    if value != nil {
-                        //If the value is a single child object
-                        if value is RLMObject {
-                            rowString += self.serializedObject((value as! RLMObject), realm: realm)!
-                        }
-                        else if value is RLMArray {
-                            rowString += self.serializedObjectArray((value as! RLMArray), realm: realm)!
-                        }
-                        else {
-                            rowString += self.sanitizedValue(value!.description!)
-                        }
+            for object in (0..<objects.count).map({ objects.objectAtIndex($0) as RLMObject }) {
+                let rowString = objectSchema.properties.map({ property in
+                    guard let value = object[property.name] else {
+                        return ""
                     }
-                    
-                    rowString += self.delimiter
-                }
-                //remove the final delimiter
-                rowString.removeAtIndex(rowString.endIndex.predecessor())
-                
-                //add the line break
-                rowString += "\n"
+                    if let value = value as? RLMObject {
+                        return serializedObject(value, realm: realm)!
+                    } else if let value = value as? RLMArray {
+                        return serializedObjectArray(value, realm: realm)!
+                    }
+                    return sanitizedValue(value.description!)
+                }).joinWithSeparator(delimiter) + "\n"
                 
                 fileHandle?.writeData(rowString.dataUsingEncoding(NSUTF8StringEncoding)!)
             }
@@ -126,25 +101,19 @@ public class CSVDataExporter: DataExporter {
     }
     
     private func sanitizedValue(value: String) -> String {
-        var needsEscapeQuotes = false
-        var sanitizedValue = value
-        
-        //Value already contains escape quotes, replace with 2 sets of quotes
-        if sanitizedValue.rangeOfString(self.escapeQuotes) != nil {
-            let replaceString = (self.escapeQuotes+self.escapeQuotes)
-            sanitizedValue = sanitizedValue.stringByReplacingOccurrencesOfString(self.escapeQuotes, withString:replaceString)
-            needsEscapeQuotes = true
+        func valueByEscapingQuotes(string: String) -> String {
+            return escapeQuotes + string + escapeQuotes
         }
         
-        if value.rangeOfString(" ") != nil || value.rangeOfString(self.delimiter) != nil {
-            needsEscapeQuotes = true
+        // Value already contains quotes, replace with 2 sets of quotes
+        if value.rangeOfString(escapeQuotes) != nil {
+            return valueByEscapingQuotes(
+                value.stringByReplacingOccurrencesOfString(escapeQuotes, withString: escapeQuotes + escapeQuotes)
+            )
+        } else if value.rangeOfString(" ") != nil || value.rangeOfString(delimiter) != nil {
+            return valueByEscapingQuotes(value)
         }
-        
-        if needsEscapeQuotes {
-            sanitizedValue = "\(self.escapeQuotes)\(sanitizedValue)\(self.escapeQuotes)"
-        }
-        
-        return sanitizedValue
+        return value
     }
     
     private func serializedObject(object: RLMObject, realm: RLMRealm) -> String? {
@@ -166,19 +135,13 @@ public class CSVDataExporter: DataExporter {
         let className = array.objectClassName
         let allObjects = realm.allObjects(className)
         
-        var string = "<\(className)>{"
-        
-        for var i = 0; i < Int(array.count); i++ {
-            let object = array.objectAtIndex(UInt(i))
-            let index = allObjects.indexOfObject(object)
+        return "<\(className)>{" + (0..<array.count).map({ arrayIndex in
+            let tableIndex = allObjects.indexOfObject(array.objectAtIndex(arrayIndex))
             
-            if Int(index) != NSNotFound {
-                string += "\(index)"
+            if Int(tableIndex) != NSNotFound {
+                return "\(tableIndex)"
             }
-        }
-        string = string.substringToIndex(string.endIndex.predecessor())
-        string += "}"
-        
-        return string
+            return ""
+        }).joinWithSeparator("") + "}"
     }
 }
