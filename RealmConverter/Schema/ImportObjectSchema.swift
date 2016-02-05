@@ -19,21 +19,6 @@
 import Foundation
 import Realm
 
-// Re-implementation of the RealmSwift enum values 
-// for compatibility with Objective-C
-public enum PropertyType {
-    case Int
-    case Bool
-    case Float
-    case Double
-    case String
-    case Data
-    case Any
-    case Date
-    case Object
-    case Array
-}
-
 @objc(RLMImportObjectSchema)
 public class ImportObjectSchema: NSObject {
     public var objectClassName: String
@@ -55,7 +40,7 @@ public class ImportObjectSchema: NSObject {
         let column: UInt
         let originalName: String
         let name: String
-        var type: PropertyType = .String
+        var type: RLMPropertyType = .String
         var indexed: Bool = false
         var optional: Bool = false
         
@@ -93,7 +78,7 @@ extension ImportObjectSchema : CustomDebugStringConvertible {
 }
 
 // MARK: - String Extension for Realm PropertyType -
-extension PropertyType : CustomStringConvertible, CustomDebugStringConvertible {
+extension RLMPropertyType : CustomStringConvertible, CustomDebugStringConvertible {
     public var description: Swift.String {
         switch self {
         case .Int:
