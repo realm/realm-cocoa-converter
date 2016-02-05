@@ -19,7 +19,6 @@
 import Foundation
 import XCTest
 import Realm
-import RealmSwift
 import RealmConverter
 import PathKit
 
@@ -84,10 +83,9 @@ class RealmConvertKit_Importer: XCTestCase {
         let schema = try! generator.generate()
         
         let destinationRealmPath = Path(self.outputTestFolderPath)
-        let dataImporter = CSVDataImporter(files: filePaths, output: String(destinationRealmPath))
-        try! dataImporter.importWithSchema(schema)
+        let dataImporter = CSVDataImporter(files: filePaths)
+        try! dataImporter.importToPath(String(destinationRealmPath), schema: schema)
         
         XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath(String(destinationRealmPath)))
     }
-    
 }

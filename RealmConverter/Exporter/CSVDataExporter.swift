@@ -48,8 +48,10 @@ public class CSVDataExporter: DataExporter {
     /**
      Takes the provided Realm file and exports each table to a CSV file in the provided
      output folder.
+     
+     - parameter outputFolderpath: An absolute path to a folder where the transformed files will be saved
      */
-    public override func export() throws {
+    public override func exportToFolderAtPath(outputFolderPath: String) throws {
         
         let realmConfiguration = RLMRealmConfiguration.defaultConfiguration()
         realmConfiguration.path = realmFilePath
