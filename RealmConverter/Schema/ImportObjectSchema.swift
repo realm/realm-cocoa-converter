@@ -18,7 +18,21 @@
 
 import Foundation
 import Realm
-import RealmSwift
+
+// Re-implementation of the RealmSwift enum values 
+// for compatibility with Objective-C
+public enum PropertyType {
+    case Int
+    case Bool
+    case Float
+    case Double
+    case String
+    case Data
+    case Any
+    case Date
+    case Object
+    case Array
+}
 
 @objc(RLMImportObjectSchema)
 public class ImportObjectSchema: NSObject {

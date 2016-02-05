@@ -60,10 +60,6 @@
 		228B0D801C6092D200D7325B /* businesses.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = businesses.csv; sourceTree = "<group>"; };
 		228B0D811C6092D200D7325B /* dogs.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dogs.csv; sourceTree = "<group>"; };
 		228B0D821C6092D200D7325B /* dogs.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = dogs.realm; sourceTree = "<group>"; };
-		228B0D831C6092D200D7325B /* dogs.realm.lock */ = {isa = PBXFileReference; lastKnownFileType = file; path = dogs.realm.lock; sourceTree = "<group>"; };
-		228B0D841C6092D200D7325B /* dogs.realm.log */ = {isa = PBXFileReference; lastKnownFileType = file; path = dogs.realm.log; sourceTree = "<group>"; };
-		228B0D851C6092D200D7325B /* dogs.realm.log_a */ = {isa = PBXFileReference; lastKnownFileType = file; path = dogs.realm.log_a; sourceTree = "<group>"; };
-		228B0D861C6092D200D7325B /* dogs.realm.log_b */ = {isa = PBXFileReference; lastKnownFileType = file; path = dogs.realm.log_b; sourceTree = "<group>"; };
 		228B0D871C6092D200D7325B /* dogs.realm.note */ = {isa = PBXFileReference; lastKnownFileType = file; path = dogs.realm.note; sourceTree = "<group>"; };
 		228B0D881C6092D200D7325B /* inspections.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = inspections.csv; sourceTree = "<group>"; };
 		228B0D891C6092D200D7325B /* people.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = people.csv; sourceTree = "<group>"; };
@@ -192,10 +188,6 @@
 				228B0D801C6092D200D7325B /* businesses.csv */,
 				228B0D811C6092D200D7325B /* dogs.csv */,
 				228B0D821C6092D200D7325B /* dogs.realm */,
-				228B0D831C6092D200D7325B /* dogs.realm.lock */,
-				228B0D841C6092D200D7325B /* dogs.realm.log */,
-				228B0D851C6092D200D7325B /* dogs.realm.log_a */,
-				228B0D861C6092D200D7325B /* dogs.realm.log_b */,
 				228B0D871C6092D200D7325B /* dogs.realm.note */,
 				228B0D881C6092D200D7325B /* inspections.csv */,
 				228B0D891C6092D200D7325B /* people.csv */,
