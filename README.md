@@ -33,8 +33,8 @@ as well; and all classes on the Objective-C side are pre-fixed with `RLM`.
 let realmFilePath = '' // Absolute file path to my Realm file
 let outputFolderPath = '' // Absolute path to the folder which will hold the CSV files
 
-let csvDataExporter = JSONDataExporter(realmFilePath: realmFilePath, outputFolderPath: outputFolderPath)
-try! csvDataExporter.export()
+let csvDataExporter = CSVDataExporter(realmFilePath: realmFilePath)
+try! csvDataExporter.exportToFolderAtPath(outputFolderPath)
 ```
 
 ### Generate a Realm file from CSV
@@ -47,8 +47,8 @@ let generator =  ImportSchemaGenerator(files: filePaths)
 let schema = try! generator.generate()
 
 // Use the schema and files to create the Realm file, and import the data
-let dataImporter = CSVDataImporter(files: filePaths, output: destinationRealmPath)
-try! dataImporter.importWithSchema(schema)
+let dataImporter = CSVDataImporter(files: filePaths)
+try! dataImporter.importToPath(destinationRealmPath, schema: schema)
 ```
 
 # License

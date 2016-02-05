@@ -25,18 +25,15 @@ import Foundation
 */
 public class DataExporter: NSObject {
     
-    public var outputFolderPath = ""
-    public var realmFilePath    = ""
+    public var realmFilePath = ""
     
     /**
      Create a new instance of the exporter object
      
      - parameter realmFilePath: An absolute path to the Realm file to be exported
-     - parameter outputFolderpath: An absolute path to a folder where the transformed files will be saved
      */
-    @objc(initWithRealmFileAtPath:outputToFolderAtPath:)
-    public init (realmFilePath: String, outputFolderPath: String) {
-        self.outputFolderPath = outputFolderPath
+    @objc(initWithRealmFileAtPath:)
+    public init (realmFilePath: String) {
         self.realmFilePath = realmFilePath
     }
     
@@ -46,8 +43,8 @@ public class DataExporter: NSObject {
      
      - warning: This method must be overridden by a subclass, that does *not* call `super`
      */
-    @objc(exportWithError:)
-    public func export() throws {
+    @objc(exportToFolderAtPath:withError:)
+    public func exportToFolderAtPath(outputFolderPath: String) throws {
         fatalError("Cannot call export() from DataExporter base class")
     }
 }

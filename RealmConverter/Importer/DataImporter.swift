@@ -27,7 +27,6 @@ import Realm
 @objc (RLMDataImporter)
 public class DataImporter: NSObject {
     public let files: [String]
-    public let output: String
     public let encoding: Encoding
     
     /**
@@ -35,12 +34,11 @@ public class DataImporter: NSObject {
      file that will be converted into a Realm file.
      
      - parameter file: An absolute path to the file that will be imported
-     - parameter output: An absolute path to the folder that will hold the new Realm file
      - paramter encoding: The text encoding of the file being imported
      */
-    @objc(initWithFile:output:encoding:)
-    convenience public init(file: String, output: String, encoding: Encoding = .UTF8) {
-        self.init(files: [file], output: output, encoding: encoding)
+    @objc(initWithFile:encoding:)
+    convenience public init(file: String, encoding: Encoding = .UTF8) {
+        self.init(files: [file], encoding: encoding)
     }
     
     /**
@@ -48,13 +46,11 @@ public class DataImporter: NSObject {
      that will be converted into a Realm file.
      
      - parameter files: An array of absolute paths to the files to import
-     - parameter output: An absolute path to the folder that will hold the new Realm file
      - paramter encoding: The text encoding of the file being imported
      */
-    @objc(initWithFiles:output:encoding:)
-    public init(files: [String], output: String, encoding: Encoding = .UTF8) {
+    @objc(initWithFiles:encoding:)
+    public init(files: [String], encoding: Encoding = .UTF8) {
         self.files = files
-        self.output = output
         self.encoding = encoding
     }
     
@@ -62,10 +58,11 @@ public class DataImporter: NSObject {
      Creates a new, empty Realm file, formatted with the schema properties
      provided with the provided `ImportSchema` object.
      
-     -parameter schema: The import schema with which this file will be created
+     - parameter output: An absolute path to the folder that will hold the new Realm file
+     - parameter schema: The import schema with which this file will be created
      */
-    @objc(createNewRealmFileWithSchema:error:)
-    public func createNewRealmFile(schema: ImportSchema) throws -> RLMRealm {
+    @objc(createNewRealmFileAtPath:withSchema:error:)
+    public func createNewRealmFile(output: String, schema: ImportSchema) throws -> RLMRealm {
         for schema in schema.schemas {
             let superclassName = "RLMObject"
             
@@ -135,8 +132,8 @@ public class DataImporter: NSObject {
      
      -parameter schema: The import schema with which this file will be created
      */
-    @objc(importWithSchema:error:)
-    func importWithSchema(schema: ImportSchema) throws -> RLMRealm {
+    @objc(importToPath:withSchema:error:)
+    func importToPath(path: String, schema: ImportSchema) throws -> RLMRealm {
         fatalError("import() can not be called on the base data importer class")
     }
 }
