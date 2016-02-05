@@ -18,7 +18,6 @@
 
 import Foundation
 import Realm
-import RealmSwift
 
 /**
  An abstract class manages the common logic for

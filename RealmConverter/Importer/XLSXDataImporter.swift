@@ -19,7 +19,6 @@
 import Foundation
 import PathKit
 import Realm
-import RealmSwift
 import SpreadsheetWriter
 
 @objc(RLMXLSXDataImporter)

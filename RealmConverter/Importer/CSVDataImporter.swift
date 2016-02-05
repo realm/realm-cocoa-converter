@@ -20,7 +20,6 @@ import Foundation
 import PathKit
 import CSwiftV
 import Realm
-import RealmSwift
 
 /**
  Provided a Realm file and an output destination folder,
