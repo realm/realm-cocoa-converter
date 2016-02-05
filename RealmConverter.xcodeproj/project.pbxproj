@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2213C7011C50BE1000902618 /* RealmConverter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2213C6F61C50BE1000902618 /* RealmConverter.framework */; };
+		2222C9891C64553C0074D877 /* RealmConverter+Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 228B0D8E1C6092D200D7325B /* RealmConverter+Exporter.m */; };
+		2222C98A1C64553D0074D877 /* RealmConverter+Importer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228B0D901C6092D200D7325B /* RealmConverter+Importer.swift */; };
 		228B0D721C6092CB00D7325B /* CSVDataExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228B0D631C6092CB00D7325B /* CSVDataExporter.swift */; };
 		228B0D731C6092CB00D7325B /* DataExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228B0D641C6092CB00D7325B /* DataExporter.swift */; };
 		228B0D741C6092CB00D7325B /* CSVDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228B0D661C6092CB00D7325B /* CSVDataImporter.swift */; };
@@ -395,6 +397,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2222C9891C64553C0074D877 /* RealmConverter+Exporter.m in Sources */,
+				2222C98A1C64553D0074D877 /* RealmConverter+Importer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
