@@ -10,6 +10,10 @@
 		2213C7011C50BE1000902618 /* RealmConverter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2213C6F61C50BE1000902618 /* RealmConverter.framework */; };
 		2222C9891C64553C0074D877 /* RealmConverter+Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 228B0D8E1C6092D200D7325B /* RealmConverter+Exporter.m */; };
 		2222C98A1C64553D0074D877 /* RealmConverter+Importer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228B0D901C6092D200D7325B /* RealmConverter+Importer.swift */; };
+		222BC6EF1C6B4289007E3460 /* SpreadsheetWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 222BC6ED1C6B4289007E3460 /* SpreadsheetWriter.h */; };
+		222BC6F01C6B4289007E3460 /* SpreadsheetWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 222BC6EE1C6B4289007E3460 /* SpreadsheetWriter.m */; };
+		222BC6FB1C6B42B8007E3460 /* SpreadsheetWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 222BC6F91C6B42B8007E3460 /* SpreadsheetWriter.h */; };
+		222BC6FC1C6B42B8007E3460 /* SpreadsheetWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 222BC6FA1C6B42B8007E3460 /* SpreadsheetWriter.m */; };
 		228B0D721C6092CB00D7325B /* CSVDataExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228B0D631C6092CB00D7325B /* CSVDataExporter.swift */; };
 		228B0D731C6092CB00D7325B /* DataExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228B0D641C6092CB00D7325B /* DataExporter.swift */; };
 		228B0D741C6092CB00D7325B /* CSVDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228B0D661C6092CB00D7325B /* CSVDataImporter.swift */; };
@@ -45,6 +49,10 @@
 		161538277DF632E2FC94F3DD /* Pods_RealmConverter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmConverter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2213C6F61C50BE1000902618 /* RealmConverter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RealmConverter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2213C7001C50BE1000902618 /* RealmConverter.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealmConverter.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		222BC6ED1C6B4289007E3460 /* SpreadsheetWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpreadsheetWriter.h; sourceTree = "<group>"; };
+		222BC6EE1C6B4289007E3460 /* SpreadsheetWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpreadsheetWriter.m; sourceTree = "<group>"; };
+		222BC6F91C6B42B8007E3460 /* SpreadsheetWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpreadsheetWriter.h; sourceTree = "<group>"; };
+		222BC6FA1C6B42B8007E3460 /* SpreadsheetWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpreadsheetWriter.m; sourceTree = "<group>"; };
 		228B0D631C6092CB00D7325B /* CSVDataExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVDataExporter.swift; sourceTree = "<group>"; };
 		228B0D641C6092CB00D7325B /* DataExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExporter.swift; sourceTree = "<group>"; };
 		228B0D661C6092CB00D7325B /* CSVDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVDataImporter.swift; sourceTree = "<group>"; };
@@ -106,6 +114,7 @@
 				228B0D611C6092CB00D7325B /* RealmConverter */,
 				228B0D7E1C6092D200D7325B /* RealmConverterTests */,
 				2213C6F71C50BE1000902618 /* Products */,
+				222BC6EC1C6B4289007E3460 /* ExcelWriter */,
 				11521AD19685034448EFA312 /* Frameworks */,
 				D4F6F32AD29D33B99EB98269 /* Pods */,
 			);
@@ -120,6 +129,33 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		222BC6EC1C6B4289007E3460 /* ExcelWriter */ = {
+			isa = PBXGroup;
+			children = (
+				222BC6ED1C6B4289007E3460 /* SpreadsheetWriter.h */,
+				222BC6EE1C6B4289007E3460 /* SpreadsheetWriter.m */,
+			);
+			name = ExcelWriter;
+			path = RealmConverter/Frameworks/ExcelWriter;
+			sourceTree = "<group>";
+		};
+		222BC6F71C6B42B8007E3460 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				222BC6F81C6B42B8007E3460 /* ExcelWriter */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		222BC6F81C6B42B8007E3460 /* ExcelWriter */ = {
+			isa = PBXGroup;
+			children = (
+				222BC6F91C6B42B8007E3460 /* SpreadsheetWriter.h */,
+				222BC6FA1C6B42B8007E3460 /* SpreadsheetWriter.m */,
+			);
+			path = ExcelWriter;
+			sourceTree = "<group>";
+		};
 		228B0D611C6092CB00D7325B /* RealmConverter */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +165,7 @@
 				228B0D651C6092CB00D7325B /* Importer */,
 				228B0D6B1C6092CB00D7325B /* Schema */,
 				228B0D6F1C6092CB00D7325B /* Support */,
+				222BC6F71C6B42B8007E3460 /* Libraries */,
 			);
 			path = RealmConverter;
 			sourceTree = "<group>";
@@ -229,6 +266,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				222BC6EF1C6B4289007E3460 /* SpreadsheetWriter.h in Headers */,
+				222BC6FB1C6B42B8007E3460 /* SpreadsheetWriter.h in Headers */,
 				228B0D781C6092CB00D7325B /* RealmConverter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,8 +415,10 @@
 				228B0D731C6092CB00D7325B /* DataExporter.swift in Sources */,
 				228B0D7B1C6092CB00D7325B /* ImportSchemaGenerator.swift in Sources */,
 				228B0D7D1C6092CB00D7325B /* String+CamelCase.swift in Sources */,
+				222BC6F01C6B4289007E3460 /* SpreadsheetWriter.m in Sources */,
 				228B0D751C6092CB00D7325B /* DataImporter.swift in Sources */,
 				228B0D791C6092CB00D7325B /* ImportObjectSchema.swift in Sources */,
+				222BC6FC1C6B42B8007E3460 /* SpreadsheetWriter.m in Sources */,
 				228B0D761C6092CB00D7325B /* XLSXDataImporter.swift in Sources */,
 				228B0D721C6092CB00D7325B /* CSVDataExporter.swift in Sources */,
 				228B0D7A1C6092CB00D7325B /* ImportSchema.swift in Sources */,

@@ -12,5 +12,4 @@ Pod::Spec.new do |s|
   s.dependency 'Realm'
   s.dependency 'PathKit'
   s.dependency 'CSwiftV'
-  # s.dependency 'SpreadsheetWriter', git: 'https://github.com/kishikawakatsumi/SpreadsheetWriter.git', branch: 'worksheets'
 end

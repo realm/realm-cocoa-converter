@@ -14,22 +14,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-////////////////////////////////////////////////////////////////////////////
 
-#ifdef __OBJC__
 #import <Foundation/Foundation.h>
-#endif
 
-#ifdef __cplusplus
-#import <functional>
-#import <map>
-#import <memory>
-#import <string>
-#import <vector>
-
-#import <realm/group.hpp>
-#import <realm/link_view.hpp>
-#import <realm/row.hpp>
-#import <realm/table.hpp>
-#import <realm/table_view.hpp>
-#endif
+using ExpressionVisitor = NSExpression *(*)(NSExpression *);
+NSPredicate *transformPredicate(NSPredicate *, ExpressionVisitor);
