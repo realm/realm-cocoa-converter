@@ -162,7 +162,7 @@ public class ImportSchemaGenerator : NSObject {
                         var property = schema.properties[index]
                         
                         if field.isEmpty {
-                            //                                property.optional = true
+                            //property.optional = true
                             return
                         }
                         guard property.type == .String else {

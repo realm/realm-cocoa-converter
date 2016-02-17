@@ -64,7 +64,7 @@ public class ImportObjectSchema: NSObject {
     }
 }
 
-extension ImportObjectSchema : CustomDebugStringConvertible {
+extension ImportObjectSchema {
     
     override public var description: String {
         let data = try! NSJSONSerialization.dataWithJSONObject(toJSON() as NSDictionary, options: .PrettyPrinted)

@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.source   = { :git => 'https://github.com/realm/realm-cocoa-converter.git', :tag => s.version.to_s }
   s.requires_arc = true
   s.platform = :osx, '10.9'
-  s.source_files = 'RealmConverter/**/*.{swift}'
+  s.source_files = 'RealmConverter/**/*.{swift,h,m,c}'
   s.dependency 'Realm'
   s.dependency 'PathKit'
   s.dependency 'CSwiftV'

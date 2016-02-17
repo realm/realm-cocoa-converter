@@ -43,14 +43,14 @@ public class XLSXDataImporter: DataImporter {
                         switch property.type {
                         case .Int:
                             if let number = Int64(field) {
-                                object.setValue(NSNumber(longLong: number), forKey: property.name)
+                                object.setValue(NSNumber(longLong: number), forKey: property.originalName)
                             }
                         case .Double:
                             if let number = Double(field) {
-                                object.setValue(NSNumber(double: number), forKey: property.name)
+                                object.setValue(NSNumber(double: number), forKey: property.originalName)
                             }
                         default:
-                            object.setValue(field, forKey: property.name)
+                            object.setValue(field, forKey: property.originalName)
                         }
                     }
                     

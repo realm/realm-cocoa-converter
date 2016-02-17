@@ -1,35 +1,21 @@
 PODS:
   - CSwiftV (0.0.3)
   - PathKit (0.6.0)
-  - Realm (0.98.0):
-    - Realm/Headers (= 0.98.0)
-  - Realm/Headers (0.98.0)
-  - SpreadsheetWriter (1.0.0):
-    - SSZipArchive
+  - Realm (0.98.1):
+    - Realm/Headers (= 0.98.1)
+  - Realm/Headers (0.98.1)
   - SSZipArchive (1.1)
 
 DEPENDENCIES:
   - CSwiftV
   - PathKit
   - Realm
-  - SpreadsheetWriter (from `https://github.com/kishikawakatsumi/SpreadsheetWriter.git`,
-    branch `worksheets`)
-
-EXTERNAL SOURCES:
-  SpreadsheetWriter:
-    :branch: worksheets
-    :git: https://github.com/kishikawakatsumi/SpreadsheetWriter.git
-
-CHECKOUT OPTIONS:
-  SpreadsheetWriter:
-    :commit: ef5a30080bd6254b6f5d6337ef931c559a10af91
-    :git: https://github.com/kishikawakatsumi/SpreadsheetWriter.git
+  - SSZipArchive
 
 SPEC CHECKSUMS:
   CSwiftV: 93e3d4e1501f2a9b1eac3ae51d53a5edf41beb5b
   PathKit: b224b6d2c4e75b87f08f45e1c0c610a3195c94e5
-  Realm: 28efc598b8b1b378d27a222d9fc037a29ae68642
-  SpreadsheetWriter: af0f02fdd07da00f769f80d11ab61338ad03081b
+  Realm: ca4a4122e939e228e10694fc49011386cb2ecb07
   SSZipArchive: de3d215ab73f87db627f81f2ce24f1731e3886c3
 
 COCOAPODS: 0.39.0
