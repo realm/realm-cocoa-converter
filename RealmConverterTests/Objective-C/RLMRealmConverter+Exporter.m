@@ -98,4 +98,30 @@ NSString * const kRLMTestRealmFileName = @"dogs.realm";
     XCTAssertEqual(schema.objectSchema.count, numberOfGeneratedFiles);
 }
 
+- (NSString *)outputTempFolderPath
+{
+    static NSString *_outputTempFolderPath;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *filePath = NSTemporaryDirectory();
+        filePath = [filePath stringByAppendingPathComponent:@"io.realm.realm-converter.import.output"];
+        _outputTempFolderPath = filePath;
+    });
+    
+    return _outputTempFolderPath;
+}
+
+- (NSString *)inputTempFolderPath
+{
+    static NSString *_inputTempFolderPath;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *filePath = NSTemporaryDirectory();
+        filePath = [filePath stringByAppendingPathComponent:@"io.realm.realm-converter.import.input"];
+        _inputTempFolderPath = filePath;
+    });
+    
+    return _inputTempFolderPath;
+}
+
 @end
