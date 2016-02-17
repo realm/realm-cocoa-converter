@@ -19,7 +19,7 @@
 import Foundation
 import PathKit
 import Realm
-import SpreadsheetWriter
+import TGSpreadsheetWriter
 
 @objc(RLMXLSXDataImporter)
 public class XLSXDataImporter: DataImporter {
@@ -27,7 +27,7 @@ public class XLSXDataImporter: DataImporter {
     public override func importToPath(path: String, schema: ImportSchema) throws -> RLMRealm {
         let realm = try! self.createNewRealmFile(path, schema: schema)
         
-        let workbook = SpreadsheetWriter.ReadWorkbook(NSURL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
+        let workbook = TGSpreadsheetWriter.readWorkbook(NSURL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
         for (index, key) in workbook.keys.enumerate() {
             let schema = schema.schemas[index]
             

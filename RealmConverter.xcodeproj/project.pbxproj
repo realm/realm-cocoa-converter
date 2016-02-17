@@ -10,7 +10,6 @@
 		2213C7011C50BE1000902618 /* RealmConverter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2213C6F61C50BE1000902618 /* RealmConverter.framework */; };
 		2222C9891C64553C0074D877 /* RLMRealmConverter+Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 228B0D8E1C6092D200D7325B /* RLMRealmConverter+Exporter.m */; };
 		2222C98A1C64553D0074D877 /* RealmConverter+Importer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228B0D901C6092D200D7325B /* RealmConverter+Importer.swift */; };
-		2230BFA41C7444A7000CFED5 /* ZipArchive.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 22EB41AC1C73728600E8B4F2 /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		22679D6B1C74272E002248FC /* users.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 22679D6A1C74272E002248FC /* users.xlsx */; };
 		22679D6D1C742793002248FC /* RLMRealmConverter+Importer.m in Sources */ = {isa = PBXBuildFile; fileRef = 22679D6C1C742793002248FC /* RLMRealmConverter+Importer.m */; };
 		228B0D721C6092CB00D7325B /* CSVDataExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228B0D631C6092CB00D7325B /* CSVDataExporter.swift */; };
@@ -31,9 +30,6 @@
 		22D3D9D81C60A4AA0035AF1F /* people.csv in Resources */ = {isa = PBXBuildFile; fileRef = 228B0D891C6092D200D7325B /* people.csv */; };
 		22D3D9D91C60A4AA0035AF1F /* restaurant.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 228B0D8A1C6092D200D7325B /* restaurant.xlsx */; };
 		22D3D9DA1C60A4AA0035AF1F /* violations.csv in Resources */ = {isa = PBXBuildFile; fileRef = 228B0D8B1C6092D200D7325B /* violations.csv */; };
-		22EB41AD1C73728600E8B4F2 /* SpreadsheetWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 22EB41AA1C73728600E8B4F2 /* SpreadsheetWriter.h */; };
-		22EB41AE1C73728600E8B4F2 /* SpreadsheetWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EB41AB1C73728600E8B4F2 /* SpreadsheetWriter.m */; };
-		22EB41AF1C73728600E8B4F2 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22EB41AC1C73728600E8B4F2 /* ZipArchive.framework */; };
 		7D4908928073C2D4020F566A /* Pods_RealmConverter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 161538277DF632E2FC94F3DD /* Pods_RealmConverter.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,7 +50,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2230BFA41C7444A7000CFED5 /* ZipArchive.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,7 +60,6 @@
 		2213C6F61C50BE1000902618 /* RealmConverter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RealmConverter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2213C7001C50BE1000902618 /* RealmConverter.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealmConverter.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2230BFA11C74415C000CFED5 /* SSZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SSZipArchive.framework; path = "../../Library/Developer/Xcode/DerivedData/RealmConverter-aqsjjwfcrvcsbtgpltwhxtqixzen/Build/Products/Debug/SSZipArchive.framework"; sourceTree = "<group>"; };
-		223B3B0E1C735FFE00B92EF8 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		22679D6A1C74272E002248FC /* users.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = users.xlsx; sourceTree = "<group>"; };
 		22679D6C1C742793002248FC /* RLMRealmConverter+Importer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLMRealmConverter+Importer.m"; sourceTree = "<group>"; };
 		228B0D631C6092CB00D7325B /* CSVDataExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVDataExporter.swift; sourceTree = "<group>"; };
@@ -91,9 +85,6 @@
 		228B0D8C1C6092D200D7325B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		228B0D8E1C6092D200D7325B /* RLMRealmConverter+Exporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLMRealmConverter+Exporter.m"; sourceTree = "<group>"; };
 		228B0D901C6092D200D7325B /* RealmConverter+Importer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmConverter+Importer.swift"; sourceTree = "<group>"; };
-		22EB41AA1C73728600E8B4F2 /* SpreadsheetWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpreadsheetWriter.h; sourceTree = "<group>"; };
-		22EB41AB1C73728600E8B4F2 /* SpreadsheetWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpreadsheetWriter.m; sourceTree = "<group>"; };
-		22EB41AC1C73728600E8B4F2 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
 		2ACA61D4385B79DC7E3E183D /* Pods-RealmConverter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverter/Pods-RealmConverter.debug.xcconfig"; sourceTree = "<group>"; };
 		E5392CE310EE35493B02D4EC /* Pods-RealmConverter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverter.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverter/Pods-RealmConverter.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,7 +95,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D4908928073C2D4020F566A /* Pods_RealmConverter.framework in Frameworks */,
-				22EB41AF1C73728600E8B4F2 /* ZipArchive.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,7 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				2230BFA11C74415C000CFED5 /* SSZipArchive.framework */,
-				223B3B0E1C735FFE00B92EF8 /* libz.tbd */,
 				161538277DF632E2FC94F3DD /* Pods_RealmConverter.framework */,
 			);
 			name = Frameworks;
@@ -149,14 +138,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		222BC6F71C6B42B8007E3460 /* Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				22EB41A91C73728600E8B4F2 /* ExcelWriter */,
-			);
-			path = Libraries;
-			sourceTree = "<group>";
-		};
 		228B0D611C6092CB00D7325B /* RealmConverter */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,7 +147,6 @@
 				228B0D651C6092CB00D7325B /* Importer */,
 				228B0D6B1C6092CB00D7325B /* Schema */,
 				228B0D6F1C6092CB00D7325B /* Support */,
-				222BC6F71C6B42B8007E3460 /* Libraries */,
 			);
 			path = RealmConverter;
 			sourceTree = "<group>";
@@ -253,16 +233,6 @@
 			path = Swift;
 			sourceTree = "<group>";
 		};
-		22EB41A91C73728600E8B4F2 /* ExcelWriter */ = {
-			isa = PBXGroup;
-			children = (
-				22EB41AA1C73728600E8B4F2 /* SpreadsheetWriter.h */,
-				22EB41AB1C73728600E8B4F2 /* SpreadsheetWriter.m */,
-				22EB41AC1C73728600E8B4F2 /* ZipArchive.framework */,
-			);
-			path = ExcelWriter;
-			sourceTree = "<group>";
-		};
 		D4F6F32AD29D33B99EB98269 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,7 +249,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22EB41AD1C73728600E8B4F2 /* SpreadsheetWriter.h in Headers */,
 				228B0D781C6092CB00D7325B /* RealmConverter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,7 +398,6 @@
 				228B0D731C6092CB00D7325B /* DataExporter.swift in Sources */,
 				228B0D7B1C6092CB00D7325B /* ImportSchemaGenerator.swift in Sources */,
 				228B0D7D1C6092CB00D7325B /* String+CamelCase.swift in Sources */,
-				22EB41AE1C73728600E8B4F2 /* SpreadsheetWriter.m in Sources */,
 				228B0D751C6092CB00D7325B /* DataImporter.swift in Sources */,
 				228B0D791C6092CB00D7325B /* ImportObjectSchema.swift in Sources */,
 				228B0D761C6092CB00D7325B /* XLSXDataImporter.swift in Sources */,
@@ -550,6 +518,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2ACA61D4385B79DC7E3E183D /* Pods-RealmConverter.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -567,6 +536,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.realm.converter;
 				PRODUCT_NAME = RealmConverter;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -574,6 +544,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E5392CE310EE35493B02D4EC /* Pods-RealmConverter.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;

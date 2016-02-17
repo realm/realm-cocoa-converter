@@ -1,12 +1,12 @@
 //
-//  SpreadsheetWriter.m
-//  SpreadsheetWriter
+//  TGSpreadsheetWriter.m
+//  TGSpreadsheetWriter
 //
 //  Created by Tom Grill on 27.09.12.
 //  Copyright (c) 2012 Tom Grill. All rights reserved.
 //
 /*
- Copyright (c) 2012 Thomas Grill
+ Copyright (c) 2012-2016 Thomas Grill
  
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
  
@@ -14,10 +14,16 @@
  
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-#import "SpreadsheetWriter.h"
-#import <ZipArchive/ZipArchive.h>
+#import "TGSpreadsheetWriter.h"
 
-@interface SpreadsheetWriter()
+// Whether the framework was linked dynamically, or via CocoaPods
+#if __has_include(<ZipArchive/ZipArchive.h>)
+#import <ZipArchive/ZipArchive.h>
+#else
+#import "SSZipArchive.h"
+#endif
+
+@interface TGSpreadsheetWriter()
 
 - (NSString*) ColumnIndexToName:(int) columnIndex;
 
@@ -37,18 +43,17 @@
 
 //************************* SpreadsheetWriter ***************************/
 #pragma mark -
-@implementation SpreadsheetWriter
+@implementation TGSpreadsheetWriter
 
 @synthesize data;
 @synthesize sharedStrings;
-@synthesize worksheets;
 @synthesize tmpDir;
 
-static SpreadsheetWriter * spreadsheet = NULL;
+static TGSpreadsheetWriter * spreadsheet = NULL;
 
 -(id) init {
     
-    [self setTmpDir: [[NSTemporaryDirectory() stringByAppendingPathComponent:[NSUUID UUID].UUIDString] stringByAppendingPathComponent:@"ziptmp"]];
+    [self setTmpDir: [NSTemporaryDirectory() stringByAppendingPathComponent:@"ziptmp"]];
 
     //prepare temporary directory
     NSFileManager * fm = [NSFileManager defaultManager];
@@ -90,8 +95,8 @@ static SpreadsheetWriter * spreadsheet = NULL;
  FileEnding: xml
  
  */
-+ (NSArray*) ReadWorksheetXML2004: (NSURL *) input {
-
++ (NSArray*) readWorksheetXML2004: (NSURL *) input {
+    
     NSError * err=NULL;
     NSMutableArray * data = [NSMutableArray new];
     
@@ -119,7 +124,7 @@ static SpreadsheetWriter * spreadsheet = NULL;
     return data;
 }
 
-+ (void) WriteWorksheetXML2004: (NSURL*) outputFile withData: (NSArray*) data {
++ (void) writeWorksheetXML2004: (NSURL*) outputFile withData: (NSArray*) data {
     
     int cols = (int)[[data objectAtIndex:0] count];
     int rows = (int)[data count];
@@ -174,6 +179,7 @@ static SpreadsheetWriter * spreadsheet = NULL;
 			   writeToFile:outputFile.path
 			   atomically:YES];
 	if (!ok) {
+		NSBeep();
 		NSLog(@"Error when writing file %@", outputFile);
 	}
     
@@ -189,34 +195,21 @@ static SpreadsheetWriter * spreadsheet = NULL;
  FileEnding: xslx
  */
 
-+ (NSDictionary *) ReadWorkbook: (NSURL *) inputFile {
-
-    if (!spreadsheet) spreadsheet = [SpreadsheetWriter new];
-
++ (NSArray*) readWorkbook: (NSURL *) inputFile {
+    
+    if (!spreadsheet) spreadsheet = [TGSpreadsheetWriter new];
+    
     //unzip the file
     [SSZipArchive unzipFileAtPath:inputFile.path toDestination:spreadsheet.tmpDir overwrite:YES password:Nil error:Nil];
-
+    
     NSURL * url = [NSURL fileURLWithPath:[spreadsheet.tmpDir stringByAppendingPathComponent:@"xl/sharedStrings.xml"]];
     [spreadsheet ReadSharedStrings:url];
-
-    [spreadsheet ReadWorksheets:[NSURL fileURLWithPath:[spreadsheet.tmpDir stringByAppendingPathComponent:@"xl/workbook.xml"]]];
-
-    NSFileManager *fileManager = [[NSFileManager alloc] init];
-    NSArray *worksheets = [fileManager contentsOfDirectoryAtPath:[spreadsheet.tmpDir stringByAppendingPathComponent:@"xl/worksheets/"] error:nil];
-
-    NSMutableDictionary *workbook = [[NSMutableDictionary alloc] init];
-    for (NSString *worksheet in worksheets) {
-        if (![worksheet.pathExtension isEqualToString:@"xml"]) {
-            continue;
-        }
-        url = [NSURL fileURLWithPath:[[spreadsheet.tmpDir stringByAppendingPathComponent:@"xl/worksheets/"] stringByAppendingPathComponent:worksheet]];
-        [spreadsheet ReadData:url];
-
-        NSString *name = spreadsheet.worksheets[worksheet.stringByDeletingPathExtension][@"name"];
-        workbook[name] = [spreadsheet data];
-    }
-
-    return workbook;
+    
+    url = [NSURL fileURLWithPath:[spreadsheet.tmpDir stringByAppendingPathComponent:@"xl/worksheets/sheet1.xml"]];
+    
+    [spreadsheet ReadData:url];
+    
+    return [spreadsheet data];
 }
 
 - (void) ReadSharedStrings: (NSURL*) url {
@@ -238,40 +231,6 @@ static SpreadsheetWriter * spreadsheet = NULL;
     }
     
     
-}
-
-- (void) ReadWorksheets: (NSURL*) url {
-
-    NSError * err=NULL;
-
-    [self setWorksheets:[NSMutableDictionary new]];
-
-    NSXMLDocument * doc = [[NSXMLDocument alloc] initWithContentsOfURL:url
-                                                               options:NSXMLDocumentTidyXML error:&err];
-
-    if (!err){
-        NSString * querySheets = @"/workbook/sheets/sheet";
-        NSArray * sheets = [doc nodesForXPath:querySheets error:&err];
-
-        for (NSXMLElement * e in sheets){
-            NSMutableDictionary *sheet = [[NSMutableDictionary alloc] init];
-            NSString *sheetId = [e attributeForName:@"sheetId"].stringValue;
-            NSString *name = [e attributeForName:@"name"].stringValue;
-            NSString *state = [e attributeForName:@"state"].stringValue;
-            if (name) {
-                sheet[@"name"] = name;
-            }
-            if (sheetId) {
-                sheet[@"sheetId"] = sheetId;
-            }
-            if (state) {
-                sheet[@"state"] = state;
-            }
-            worksheets[[NSString stringWithFormat:@"sheet%@", sheetId]] = sheet;
-        }
-    }
-
-
 }
 
 - (void) ReadData: (NSURL*) url {
@@ -319,11 +278,11 @@ static SpreadsheetWriter * spreadsheet = NULL;
     
 }
 
-+ (void) WriteWorkbook: (NSURL*) outputFile
++ (void) writeWorkbook: (NSURL*) outputFile
               withData: (NSMutableArray*) data
-           hasTitleRow:(Boolean) hasTitleRow{
+           hasTitleRow:(BOOL) hasTitleRow{
     
-    if (!spreadsheet)spreadsheet = [SpreadsheetWriter new];
+    if (!spreadsheet)spreadsheet = [TGSpreadsheetWriter new];
     
     [spreadsheet setData:data];
     
@@ -597,12 +556,12 @@ static SpreadsheetWriter * spreadsheet = NULL;
  FileEnding: ods
  */
 
-+ (NSArray*) ReadODS: (NSURL *) inputFile {
++ (NSArray*) readODS: (NSURL *) inputFile {
     
     NSError * err=NULL;
     NSMutableArray * data = [NSMutableArray new];
     
-    if (!spreadsheet) spreadsheet = [SpreadsheetWriter new];
+    if (!spreadsheet) spreadsheet = [TGSpreadsheetWriter new];
     
     //unzip the file
     [SSZipArchive unzipFileAtPath:inputFile.path toDestination:spreadsheet.tmpDir overwrite:YES password:Nil error:Nil];
@@ -648,11 +607,11 @@ static SpreadsheetWriter * spreadsheet = NULL;
 
 + (void) WriteODS: (NSURL*) outputFile
          withData: (NSMutableArray*) data
-      hasTitleRow:(Boolean) hasTitleRow{
+      hasTitleRow:(BOOL) hasTitleRow{
     
     NSFileManager * fm = [NSFileManager defaultManager];
     
-    if (!spreadsheet) spreadsheet = [SpreadsheetWriter new];
+    if (!spreadsheet) spreadsheet = [TGSpreadsheetWriter new];
     
     [spreadsheet setData:data];
     

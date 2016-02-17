@@ -19,7 +19,7 @@
 import Foundation
 import CSwiftV
 import PathKit
-import SpreadsheetWriter
+import TGSpreadsheetWriter
 
 @objc
 public enum ImportSchemaFormat : Int {
@@ -144,7 +144,7 @@ public class ImportSchemaGenerator : NSObject {
     }
     
     private func generateForXLSX() throws -> ImportSchema {
-        let workbook = SpreadsheetWriter.ReadWorkbook(NSURL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
+        let workbook = TGSpreadsheetWriter.readWorkbook(NSURL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
         
         let schemas = workbook.keys.enumerate().map { (index, key) -> ImportObjectSchema in
             let schema = ImportObjectSchema(objectClassName: key.capitalizedString)
