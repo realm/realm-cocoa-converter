@@ -24,7 +24,7 @@ import PathKit
 
 @testable import RealmConverter
 
-class RealmConvertKit_Importer: XCTestCase {
+class RealmConverter_Importer: XCTestCase {
     
     let outputTestFolderName = "io.realm.test-output"
     let inputTestFolderName = "io.realm.test-input"

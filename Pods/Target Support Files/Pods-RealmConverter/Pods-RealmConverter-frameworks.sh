@@ -88,12 +88,12 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-RealmConverter/PathKit.framework"
   install_framework "Pods-RealmConverter/Realm.framework"
   install_framework "Pods-RealmConverter/SSZipArchive.framework"
-  install_framework "Pods-RealmConverter/SpreadsheetWriter.framework"
+  install_framework "Pods-RealmConverter/TGSpreadsheetWriter.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-RealmConverter/CSwiftV.framework"
   install_framework "Pods-RealmConverter/PathKit.framework"
   install_framework "Pods-RealmConverter/Realm.framework"
   install_framework "Pods-RealmConverter/SSZipArchive.framework"
-  install_framework "Pods-RealmConverter/SpreadsheetWriter.framework"
+  install_framework "Pods-RealmConverter/TGSpreadsheetWriter.framework"
 fi
