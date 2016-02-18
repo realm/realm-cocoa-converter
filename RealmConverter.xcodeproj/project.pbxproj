@@ -59,7 +59,6 @@
 		161538277DF632E2FC94F3DD /* Pods_RealmConverter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmConverter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2213C6F61C50BE1000902618 /* RealmConverter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RealmConverter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2213C7001C50BE1000902618 /* RealmConverter.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealmConverter.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2230BFA11C74415C000CFED5 /* SSZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SSZipArchive.framework; path = "../../Library/Developer/Xcode/DerivedData/RealmConverter-aqsjjwfcrvcsbtgpltwhxtqixzen/Build/Products/Debug/SSZipArchive.framework"; sourceTree = "<group>"; };
 		22679D6A1C74272E002248FC /* users.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = users.xlsx; sourceTree = "<group>"; };
 		22679D6C1C742793002248FC /* RLMRealmConverter+Importer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RLMRealmConverter+Importer.m"; sourceTree = "<group>"; };
 		228B0D631C6092CB00D7325B /* CSVDataExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVDataExporter.swift; sourceTree = "<group>"; };
@@ -112,7 +111,6 @@
 		11521AD19685034448EFA312 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2230BFA11C74415C000CFED5 /* SSZipArchive.framework */,
 				161538277DF632E2FC94F3DD /* Pods_RealmConverter.framework */,
 			);
 			name = Frameworks;
@@ -525,10 +523,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/RealmConverter/Libraries/ExcelWriter",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "$(SRCROOT)/RealmConverter/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -551,10 +546,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/RealmConverter/Libraries/ExcelWriter",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "$(SRCROOT)/RealmConverter/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

@@ -145,7 +145,6 @@ public class ImportSchemaGenerator : NSObject {
     
     private func generateForXLSX() throws -> ImportSchema {
         let workbook = TGSpreadsheetWriter.readWorkbook(NSURL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
-        
         let schemas = workbook.keys.enumerate().map { (index, key) -> ImportObjectSchema in
             let schema = ImportObjectSchema(objectClassName: key.capitalizedString)
             

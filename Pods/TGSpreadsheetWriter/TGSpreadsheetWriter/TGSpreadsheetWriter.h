@@ -20,15 +20,16 @@
 
 @property (strong) NSMutableArray *data;
 @property (strong) NSMutableArray *sharedStrings;
+@property (strong) NSMutableDictionary * worksheets;
 @property (strong) NSString *tmpDir;
 
 + (NSMutableArray *)readWorksheetXML2004:(NSURL*)inputFile;
-+ (void)writeWorksheetXML2004:(NSURL*) outputFile withData:(NSArray*)data;
++ (void)writeWorksheetXML2004:(NSURL*)outputFile withData:(NSArray*)data;
 
-+ (NSMutableArray *)readWorkbook:(NSURL*)inputFile;
-+ (void)writeWorkbook:(NSURL *)outputFile withData:(NSArray *) data hasTitleRow:(BOOL)hasTitleRow;
++ (NSDictionary *)readWorkbook:(NSURL*)inputFile;
++ (void)writeWorkbook:(NSURL *)outputFile withData:(NSArray *)data hasTitleRow:(BOOL)hasTitleRow;
 
 + (NSMutableArray *)readODS:(NSURL*)inputFile;
-+ (void)WriteODS:(NSURL *)outputFile withData:(NSArray *)data hasTitleRow:(BOOL)hasTitleRow;
++ (void)writeODS:(NSURL *)outputFile withData:(NSArray *)data hasTitleRow:(BOOL)hasTitleRow;
 
 @end
