@@ -25,4 +25,3 @@ FOUNDATION_EXPORT double RealmConverterVersionNumber;
 FOUNDATION_EXPORT const unsigned char RealmConverterVersionString[];
 
 
-
