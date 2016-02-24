@@ -63,6 +63,8 @@ public class DataImporter: NSObject {
      */
     @objc(createNewRealmFileAtPath:withSchema:error:)
     public func createNewRealmFile(output: String, schema: ImportSchema) throws -> RLMRealm {
+        var generatedClasses: [AnyObject] = []
+        
         for schema in schema.schemas {
             let superclassName = "RLMObject"
             
@@ -72,9 +74,7 @@ public class DataImporter: NSObject {
                 objc_disposeClassPair(cls)
             }
             let cls = objc_allocateClassPair(NSClassFromString(superclassName), className, 0) as! RLMObject.Type
-            
-            print(className)
-            
+
             schema.properties.reverse().forEach { (property) -> () in
                 let type: objc_property_attribute_t
                 let size: Int
@@ -117,11 +117,16 @@ public class DataImporter: NSObject {
                 return schema.properties.filter { !$0.optional }.map { $0.originalName }
                 } as @convention(block) () -> (NSArray), AnyObject.self))
             class_addMethod(objc_getMetaClass(className) as! AnyClass, "requiredProperties", imp, "@16@0:8")
+            
+            generatedClasses.append(cls)
         }
         
         let configuration = RLMRealmConfiguration()
         configuration.path = (output as NSString).stringByAppendingPathComponent("default.realm")
+        configuration.objectClasses = generatedClasses
         let realm = try RLMRealm(configuration: configuration)
+        
+        print("Exported \(generatedClasses.count) classes")
         
         return realm
     }
