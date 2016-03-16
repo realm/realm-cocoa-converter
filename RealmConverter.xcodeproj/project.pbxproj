@@ -30,11 +30,6 @@
 		22D3D9D81C60A4AA0035AF1F /* people.csv in Resources */ = {isa = PBXBuildFile; fileRef = 228B0D891C6092D200D7325B /* people.csv */; };
 		22D3D9D91C60A4AA0035AF1F /* restaurant.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 228B0D8A1C6092D200D7325B /* restaurant.xlsx */; };
 		22D3D9DA1C60A4AA0035AF1F /* violations.csv in Resources */ = {isa = PBXBuildFile; fileRef = 228B0D8B1C6092D200D7325B /* violations.csv */; };
-		22FAADBC1C7C54AE00832102 /* CSwiftV.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 22FAADB71C7C54AE00832102 /* CSwiftV.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		22FAADBD1C7C54AE00832102 /* PathKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 22FAADB81C7C54AE00832102 /* PathKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		22FAADBE1C7C54AE00832102 /* Realm.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 22FAADB91C7C54AE00832102 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		22FAADBF1C7C54AE00832102 /* SSZipArchive.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 22FAADBA1C7C54AE00832102 /* SSZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		22FAADC01C7C54AE00832102 /* TGSpreadsheetWriter.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 22FAADBB1C7C54AE00832102 /* TGSpreadsheetWriter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7D4908928073C2D4020F566A /* Pods_RealmConverter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 161538277DF632E2FC94F3DD /* Pods_RealmConverter.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,11 +50,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				22FAADBC1C7C54AE00832102 /* CSwiftV.framework in CopyFiles */,
-				22FAADBD1C7C54AE00832102 /* PathKit.framework in CopyFiles */,
-				22FAADBE1C7C54AE00832102 /* Realm.framework in CopyFiles */,
-				22FAADBF1C7C54AE00832102 /* SSZipArchive.framework in CopyFiles */,
-				22FAADC01C7C54AE00832102 /* TGSpreadsheetWriter.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
