@@ -27,7 +27,7 @@
 #include <realm/string_data.hpp>
 #include <realm/data_type.hpp>
 #include <realm/binary_data.hpp>
-#include <realm/datetime.hpp>
+#include <realm/olddatetime.hpp>
 #include <realm/mixed.hpp>
 #include <realm/util/safe_int_ops.hpp>
 #include <realm/util/buffer.hpp>
@@ -56,7 +56,8 @@ enum Instruction {
     instr_SetString             =  9,
     instr_SetStringUnique       = 32,
     instr_SetBinary             = 10,
-    instr_SetDateTime           = 11,
+    instr_SetOldDateTime        = 11,
+    instr_SetTimestamp          = 48,
     instr_SetTable              = 12,
     instr_SetMixed              = 13,
     instr_SetLink               = 14,
@@ -67,7 +68,7 @@ enum Instruction {
     instr_InsertEmptyRows       = 17,
     instr_EraseRows             = 18, // Remove (multiple) rows
     instr_SwapRows              = 19,
-    instr_ChangeLinkTargets       = 47, // Replace links pointing to row A with links to row B
+    instr_ChangeLinkTargets     = 47, // Replace links pointing to row A with links to row B
     instr_ClearTable            = 20, // Remove all rows in selected table
     instr_OptimizeTable         = 21,
     instr_SelectDescriptor      = 22, // Select descriptor from currently selected root table
@@ -156,7 +157,8 @@ public:
     bool set_string(size_t, size_t, StringData) { return true; }
     bool set_string_unique(size_t, size_t, size_t, StringData) { return true; }
     bool set_binary(size_t, size_t, BinaryData) { return true; }
-    bool set_date_time(size_t, size_t, DateTime) { return true; }
+    bool set_olddatetime(size_t, size_t, OldDateTime) { return true; }
+    bool set_timestamp(size_t, size_t, Timestamp) { return true; }
     bool set_table(size_t, size_t) { return true; }
     bool set_mixed(size_t, size_t, const Mixed&) { return true; }
     bool set_link(size_t, size_t, size_t, size_t) { return true; }
@@ -205,7 +207,7 @@ public:
     bool insert_group_level_table(size_t table_ndx, size_t num_tables, StringData name);
     bool erase_group_level_table(size_t table_ndx, size_t num_tables);
     bool rename_group_level_table(size_t table_ndx, StringData new_name);
-    bool move_group_level_table(size_t table_ndx_1, size_t table_ndx_2);
+    bool move_group_level_table(size_t from_table_ndx, size_t to_table_ndx);
 
     /// Must have table selected.
     bool insert_empty_rows(size_t row_ndx, size_t num_rows_to_insert, size_t prior_num_rows,
@@ -224,7 +226,8 @@ public:
     bool set_string(size_t col_ndx, size_t row_ndx, StringData);
     bool set_string_unique(size_t col_ndx, size_t row_ndx, size_t prior_num_rows, StringData);
     bool set_binary(size_t col_ndx, size_t row_ndx, BinaryData);
-    bool set_date_time(size_t col_ndx, size_t row_ndx, DateTime);
+    bool set_olddatetime(size_t col_ndx, size_t row_ndx, OldDateTime);
+    bool set_timestamp(size_t col_ndx, size_t row_ndx, Timestamp);
     bool set_table(size_t col_ndx, size_t row_ndx);
     bool set_mixed(size_t col_ndx, size_t row_ndx, const Mixed&);
     bool set_link(size_t col_ndx, size_t row_ndx, size_t, size_t target_group_level_ndx);
@@ -249,7 +252,7 @@ public:
     bool link_list_set(size_t link_ndx, size_t value);
     bool link_list_set_all(const IntegerColumn& values);
     bool link_list_insert(size_t link_ndx, size_t value);
-    bool link_list_move(size_t old_link_ndx, size_t new_link_ndx);
+    bool link_list_move(size_t from_link_ndx, size_t to_link_ndx);
     bool link_list_swap(size_t link1_ndx, size_t link2_ndx);
     bool link_list_erase(size_t link_ndx);
     bool link_list_nullify(size_t link_ndx);
@@ -275,8 +278,8 @@ private:
     // These two delimit a contiguous region of free space in a
     // transaction log buffer following the last written data. It may
     // be empty.
-    char* m_transact_log_free_begin;
-    char* m_transact_log_free_end;
+    char* m_transact_log_free_begin = 0;
+    char* m_transact_log_free_end   = 0;
 
     char* reserve(size_t size);
     /// \param ptr Must be in the range [m_transact_log_free_begin, m_transact_log_free_end]
@@ -308,9 +311,9 @@ public:
     void insert_group_level_table(size_t table_ndx, size_t num_tables, StringData name);
     void erase_group_level_table(size_t table_ndx, size_t num_tables);
     void rename_group_level_table(size_t table_ndx, StringData new_name);
-    void move_group_level_table(size_t table_ndx_1, size_t table_ndx_2);
+    void move_group_level_table(size_t from_table_ndx, size_t to_table_ndx);
     void insert_column(const Descriptor&, size_t col_ndx, DataType type, StringData name,
-                       const Table* link_target_table, bool nullable = false);
+                       LinkTargetInfo& link, bool nullable = false);
     void erase_column(const Descriptor&, size_t col_ndx);
     void rename_column(const Descriptor&, size_t col_ndx, StringData name);
     void move_column(const Descriptor&, size_t from, size_t to);
@@ -323,7 +326,8 @@ public:
     void set_string(const Table*, size_t col_ndx, size_t ndx, StringData value);
     void set_string_unique(const Table*, size_t col_ndx, size_t ndx, StringData value);
     void set_binary(const Table*, size_t col_ndx, size_t ndx, BinaryData value);
-    void set_date_time(const Table*, size_t col_ndx, size_t ndx, DateTime value);
+    void set_olddatetime(const Table*, size_t col_ndx, size_t ndx, OldDateTime value);
+    void set_timestamp(const Table*, size_t col_ndx, size_t ndx, Timestamp value);
     void set_table(const Table*, size_t col_ndx, size_t ndx);
     void set_mixed(const Table*, size_t col_ndx, size_t ndx, const Mixed& value);
     void set_link(const Table*, size_t col_ndx, size_t ndx, size_t value);
@@ -352,7 +356,7 @@ public:
 
     void link_list_set(const LinkView&, size_t link_ndx, size_t value);
     void link_list_insert(const LinkView&, size_t link_ndx, size_t value);
-    void link_list_move(const LinkView&, size_t old_link_ndx, size_t new_link_ndx);
+    void link_list_move(const LinkView&, size_t from_link_ndx, size_t to_link_ndx);
     void link_list_swap(const LinkView&, size_t link_ndx_1, size_t link_ndx_2);
     void link_list_erase(const LinkView&, size_t link_ndx);
     void link_list_clear(const LinkView&);
@@ -378,7 +382,7 @@ public:
 protected:
     TransactLogConvenientEncoder(TransactLogStream& encoder);
 
-    void reset_selection_caches();
+    void reset_selection_caches() noexcept;
     void set_buffer(char* new_free_begin, char* new_free_end) { m_encoder.set_buffer(new_free_begin, new_free_end); }
     char* write_position() const { return m_encoder.write_position(); }
 
@@ -388,12 +392,16 @@ private:
     mutable util::Buffer<size_t> m_subtab_path_buf;
     mutable const Table*    m_selected_table;
     mutable const Spec*     m_selected_spec;
-    mutable const LinkView* m_selected_link_list;
+    // Has to be atomic to support concurrent reset when a linklist
+    // is unselected. This can happen on a different thread. In case
+    // of races, setting of a new value must win.
+    mutable std::atomic<const LinkView*> m_selected_link_list;
 
-    void select_table(const Table*);
-    void select_desc(const Descriptor&);
-    void select_link_list(const LinkView&);
-    // These reset the above caches and modify them as necessary
+    void unselect_all() noexcept;
+    void select_table(const Table*); // unselects descriptor and link list
+    void select_desc(const Descriptor&); // unselects link list
+    void select_link_list(const LinkView&); // unselects descriptor
+
     void record_subtable_path(const Table&, size_t*& out_begin, size_t*& out_end);
     void do_select_table(const Table*);
     void do_select_desc(const Descriptor&);
@@ -455,6 +463,7 @@ private:
 
     StringData read_string(util::StringBuffer&);
     BinaryData read_binary(util::StringBuffer&);
+    Timestamp read_timestamp();
     void read_mixed(Mixed*);
 
     // Advance m_input_begin and m_input_end to reflect the next block of instructions
@@ -505,9 +514,7 @@ inline const char* TransactLogBufferStream::transact_log_data() const
 }
 
 inline TransactLogEncoder::TransactLogEncoder(TransactLogStream& stream):
-    m_stream(stream),
-    m_transact_log_free_begin(nullptr),
-    m_transact_log_free_end(nullptr)
+    m_stream(stream)
 {
 }
 
@@ -518,11 +525,9 @@ inline void TransactLogEncoder::set_buffer(char* free_begin, char* free_end)
     m_transact_log_free_end   = free_end;
 }
 
-inline void TransactLogConvenientEncoder::reset_selection_caches()
+inline void TransactLogConvenientEncoder::reset_selection_caches() noexcept
 {
-    m_selected_table = nullptr;
-    m_selected_spec  = nullptr;
-    m_selected_link_list  = nullptr;
+    unselect_all();
 }
 
 inline char* TransactLogEncoder::reserve(size_t n)
@@ -703,8 +708,8 @@ void TransactLogEncoder::append_mixed_instr(Instruction instr, const util::Tuple
         case type_Double:
             append_simple_instr(instr, append(numbers_2, value.get_double())); // Throws
             return;
-        case type_DateTime: {
-            auto value_2 = value.get_datetime().get_datetime();
+        case type_OldDateTime: {
+            auto value_2 = value.get_olddatetime().get_olddatetime();
             append_simple_instr(instr, append(numbers_2, value_2)); // Throws
             return;
         }
@@ -716,6 +721,14 @@ void TransactLogEncoder::append_mixed_instr(Instruction instr, const util::Tuple
             BinaryData value_2 = value.get_binary();
             StringData value_3(value_2.data(), value_2.size());
             append_string_instr(instr, numbers_2, value_3); // Throws
+            return;
+        }
+        case type_Timestamp: {
+            Timestamp ts= value.get_timestamp();
+            auto seconds = ts.get_seconds();
+            auto nano_seconds = ts.get_nanoseconds();
+            auto numbers_3 = append(numbers_2, seconds);
+            append_simple_instr(instr, append(numbers_3, nano_seconds)); // Throws
             return;
         }
         case type_Table:
@@ -762,43 +775,62 @@ bool TransactLogEncoder::append_variable_size_instr(Instruction instr,
     return true;
 }
 
-inline
-void TransactLogConvenientEncoder::select_table(const Table* table)
+inline void TransactLogConvenientEncoder::unselect_all() noexcept
 {
-    if (table != m_selected_table) {
-        do_select_table(table);
-    }
+    m_selected_table     = nullptr;
+    m_selected_spec      = nullptr;
+    // no race with on_link_list_destroyed since both are setting to nullptr
+    m_selected_link_list = nullptr;
 }
 
-inline
-void TransactLogConvenientEncoder::select_desc(const Descriptor& desc)
+inline void TransactLogConvenientEncoder::select_table(const Table* table)
+{
+    if (table != m_selected_table)
+        do_select_table(table); // Throws
+    m_selected_spec      = nullptr;
+    // no race with on_link_list_destroyed since both are setting to nullptr
+    m_selected_link_list = nullptr;
+}
+
+inline void TransactLogConvenientEncoder::select_desc(const Descriptor& desc)
 {
     typedef _impl::DescriptorFriend df;
     if (&df::get_spec(desc) != m_selected_spec)
         do_select_desc(desc); // Throws
+    // no race with on_link_list_destroyed since both are setting to nullptr
+    m_selected_link_list = nullptr;
 }
 
-inline
-void TransactLogConvenientEncoder::select_link_list(const LinkView& list)
+inline void TransactLogConvenientEncoder::select_link_list(const LinkView& list)
 {
-    if (&list != m_selected_link_list)
+    // A race between this and a call to on_link_list_destroyed() must
+    // end up with m_selected_link_list pointing to the list argument given
+    // here. We assume that the list given to on_link_list_destroyed() can
+    // *never* be the same as the list argument given here. We resolve the
+    // race by a) always updating m_selected_link_list in do_select_link_list()
+    // and b) only atomically and conditionally updating it in 
+    // on_link_list_destroyed().
+    if (&list != m_selected_link_list) {
         do_select_link_list(list); // Throws
+    }
+    m_selected_spec = nullptr;
 }
 
 
-inline bool TransactLogEncoder::insert_group_level_table(size_t table_ndx, size_t num_tables,
+inline bool TransactLogEncoder::insert_group_level_table(size_t table_ndx, size_t prior_num_tables,
                                                          StringData name)
 {
-    append_string_instr(instr_InsertGroupLevelTable, util::tuple(table_ndx, num_tables),
+    append_string_instr(instr_InsertGroupLevelTable, util::tuple(table_ndx, prior_num_tables),
                         name); // Throws
     return true;
 }
 
 inline void TransactLogConvenientEncoder::insert_group_level_table(size_t table_ndx,
-                                                                   size_t num_tables,
+                                                                   size_t prior_num_tables,
                                                                    StringData name)
 {
-    m_encoder.insert_group_level_table(table_ndx, num_tables, name); // Throws
+    unselect_all();
+    m_encoder.insert_group_level_table(table_ndx, prior_num_tables, name); // Throws
 }
 
 inline bool TransactLogEncoder::erase_group_level_table(size_t table_ndx, size_t prior_num_tables)
@@ -809,6 +841,7 @@ inline bool TransactLogEncoder::erase_group_level_table(size_t table_ndx, size_t
 
 inline void TransactLogConvenientEncoder::erase_group_level_table(size_t table_ndx, size_t prior_num_tables)
 {
+    unselect_all();
     m_encoder.erase_group_level_table(table_ndx, prior_num_tables); // Throws
 }
 
@@ -821,18 +854,21 @@ inline bool TransactLogEncoder::rename_group_level_table(size_t table_ndx, Strin
 inline void TransactLogConvenientEncoder::rename_group_level_table(size_t table_ndx,
                                                                    StringData new_name)
 {
+    unselect_all();
     m_encoder.rename_group_level_table(table_ndx, new_name); // Throws
 }
 
-inline bool TransactLogEncoder::move_group_level_table(size_t table_ndx_1, size_t table_ndx_2)
+inline bool TransactLogEncoder::move_group_level_table(size_t from_table_ndx, size_t to_table_ndx)
 {
-    append_simple_instr(instr_MoveGroupLevelTable, util::tuple(table_ndx_1, table_ndx_2));
+    REALM_ASSERT(from_table_ndx != to_table_ndx);
+    append_simple_instr(instr_MoveGroupLevelTable, util::tuple(from_table_ndx, to_table_ndx));
     return true;
 }
 
-inline void TransactLogConvenientEncoder::move_group_level_table(size_t table_ndx_1, size_t table_ndx_2)
+inline void TransactLogConvenientEncoder::move_group_level_table(size_t from_table_ndx, size_t to_table_ndx)
 {
-    m_encoder.move_group_level_table(table_ndx_1, table_ndx_2);
+    unselect_all();
+    m_encoder.move_group_level_table(from_table_ndx, to_table_ndx);
 }
 
 inline bool TransactLogEncoder::insert_column(size_t col_ndx, DataType type, StringData name,
@@ -857,19 +893,20 @@ inline bool TransactLogEncoder::insert_link_column(size_t col_ndx, DataType type
 inline void TransactLogConvenientEncoder::insert_column(const Descriptor& desc, size_t col_ndx,
                                                         DataType type,
                                                         StringData name,
-                                                        const Table* link_target_table,
+                                                        LinkTargetInfo& link,
                                                         bool nullable)
 {
     select_desc(desc); // Throws
-    if (link_target_table) {
+    if (link.is_valid()) {
         typedef _impl::TableFriend tf;
         typedef _impl::DescriptorFriend df;
-        size_t target_table_ndx = link_target_table->get_index_in_group();
+        size_t target_table_ndx = link.m_target_table->get_index_in_group();
         const Table& origin_table = df::get_root_table(desc);
         REALM_ASSERT(origin_table.is_group_level());
-        const Spec& target_spec = tf::get_spec(*link_target_table);
+        const Spec& target_spec = tf::get_spec(*(link.m_target_table));
         size_t origin_table_ndx = origin_table.get_index_in_group();
         size_t backlink_col_ndx = target_spec.find_backlink_column(origin_table_ndx, col_ndx);
+        REALM_ASSERT_3(backlink_col_ndx, ==, link.m_backlink_col_ndx);
         m_encoder.insert_link_column(col_ndx, type, name, target_table_ndx, backlink_col_ndx); // Throws
     }
     else {
@@ -1062,18 +1099,31 @@ inline void TransactLogConvenientEncoder::set_binary(const Table* t, size_t col_
     m_encoder.set_binary(col_ndx, ndx, value); // Throws
 }
 
-inline bool TransactLogEncoder::set_date_time(size_t col_ndx, size_t ndx, DateTime value)
+inline bool TransactLogEncoder::set_olddatetime(size_t col_ndx, size_t ndx, OldDateTime value)
 {
-    append_simple_instr(instr_SetDateTime, util::tuple(col_ndx, ndx,
-                                                       value.get_datetime())); // Throws
+    append_simple_instr(instr_SetOldDateTime, util::tuple(col_ndx, ndx,
+                                                          value.get_olddatetime())); // Throws
     return true;
 }
 
-inline void TransactLogConvenientEncoder::set_date_time(const Table* t, size_t col_ndx,
-                                       size_t ndx, DateTime value)
+inline void TransactLogConvenientEncoder::set_olddatetime(const Table* t, size_t col_ndx,
+                                                          size_t ndx, OldDateTime value)
 {
     select_table(t); // Throws
-    m_encoder.set_date_time(col_ndx, ndx, value); // Throws
+    m_encoder.set_olddatetime(col_ndx, ndx, value); // Throws
+}
+
+inline bool TransactLogEncoder::set_timestamp(size_t col_ndx, size_t ndx, Timestamp value)
+{
+    append_simple_instr(instr_SetTimestamp, util::tuple(col_ndx, ndx,
+                                                        value.get_seconds(), value.get_nanoseconds())); // Throws
+    return true;
+}
+
+inline void TransactLogConvenientEncoder::set_timestamp(const Table* t, size_t col_ndx, size_t ndx, Timestamp value)
+{
+    select_table(t); // Throws
+    m_encoder.set_timestamp(col_ndx, ndx, value); // Throws
 }
 
 inline bool TransactLogEncoder::set_table(size_t col_ndx, size_t ndx)
@@ -1372,17 +1422,18 @@ inline void TransactLogConvenientEncoder::link_list_insert(const LinkView& list,
     m_encoder.link_list_insert(link_ndx, value); // Throws
 }
 
-inline bool TransactLogEncoder::link_list_move(size_t old_link_ndx, size_t new_link_ndx)
+inline bool TransactLogEncoder::link_list_move(size_t from_link_ndx, size_t to_link_ndx)
 {
-    append_simple_instr(instr_LinkListMove, util::tuple(old_link_ndx, new_link_ndx)); // Throws
+    REALM_ASSERT(from_link_ndx != to_link_ndx);
+    append_simple_instr(instr_LinkListMove, util::tuple(from_link_ndx, to_link_ndx)); // Throws
     return true;
 }
 
-inline void TransactLogConvenientEncoder::link_list_move(const LinkView& list, size_t old_link_ndx,
-                                        size_t new_link_ndx)
+inline void TransactLogConvenientEncoder::link_list_move(const LinkView& list, size_t from_link_ndx,
+                                                         size_t to_link_ndx)
 {
     select_link_list(list); // Throws
-    m_encoder.link_list_move(old_link_ndx, new_link_ndx); // Throws
+    m_encoder.link_list_move(from_link_ndx, to_link_ndx); // Throws
 }
 
 inline bool TransactLogEncoder::link_list_swap(size_t link1_ndx, size_t link2_ndx)
@@ -1431,8 +1482,12 @@ inline void TransactLogConvenientEncoder::on_spec_destroyed(const Spec* s) noexc
 
 inline void TransactLogConvenientEncoder::on_link_list_destroyed(const LinkView& list) noexcept
 {
-    if (m_selected_link_list == &list)
-        m_selected_link_list = nullptr;
+    const LinkView* lw_ptr = &list;
+    // atomically clear m_selected_link_list iff it already points to 'list':
+    // (lw_ptr will be modified if the swap fails, but we ignore that)
+    m_selected_link_list.compare_exchange_strong(lw_ptr, nullptr,
+                                                 std::memory_order_relaxed,
+                                                 std::memory_order_relaxed);
 }
 
 
@@ -1549,11 +1604,21 @@ void TransactLogParser::parse_one(InstructionHandler& handler)
                 parser_error();
             return;
         }
-        case instr_SetDateTime: {
+        case instr_SetOldDateTime: {
             size_t col_ndx = read_int<size_t>(); // Throws
             size_t row_ndx = read_int<size_t>(); // Throws
             int_fast64_t value = read_int<int_fast64_t>(); // Throws
-            if (!handler.set_date_time(col_ndx, row_ndx, value)) // Throws
+            if (!handler.set_olddatetime(col_ndx, row_ndx, value)) // Throws
+                parser_error();
+            return;
+        }
+        case instr_SetTimestamp: {
+            size_t col_ndx = read_int<size_t>(); // Throws
+            size_t row_ndx = read_int<size_t>(); // Throws
+            int64_t seconds = read_int<int64_t>(); // Throws
+            uint32_t nanoseconds = read_int<uint32_t>(); // Throws
+            Timestamp value = Timestamp(seconds, nanoseconds);
+            if (!handler.set_timestamp(col_ndx, row_ndx, value)) // Throws
                 parser_error();
             return;
         }
@@ -1698,9 +1763,9 @@ void TransactLogParser::parse_one(InstructionHandler& handler)
             return;
         }
         case instr_LinkListMove: {
-            size_t old_link_ndx = read_int<size_t>(); // Throws
-            size_t new_link_ndx = read_int<size_t>(); // Throws
-            if (!handler.link_list_move(old_link_ndx, new_link_ndx)) // Throws
+            size_t from_link_ndx = read_int<size_t>(); // Throws
+            size_t to_link_ndx   = read_int<size_t>(); // Throws
+            if (!handler.link_list_move(from_link_ndx, to_link_ndx)) // Throws
                 parser_error();
             return;
         }
@@ -1857,9 +1922,9 @@ void TransactLogParser::parse_one(InstructionHandler& handler)
             return;
         }
         case instr_MoveGroupLevelTable: {
-            size_t table_ndx_1 = read_int<size_t>(); // Throws
-            size_t table_ndx_2 = read_int<size_t>(); // Throws
-            if (!handler.move_group_level_table(table_ndx_1, table_ndx_2)) // Throws
+            size_t from_table_ndx = read_int<size_t>(); // Throws
+            size_t to_table_ndx   = read_int<size_t>(); // Throws
+            if (!handler.move_group_level_table(from_table_ndx, to_table_ndx)) // Throws
                 parser_error();
             return;
         }
@@ -1980,6 +2045,12 @@ inline StringData TransactLogParser::read_string(util::StringBuffer& buf)
     return StringData{buffer.data(), size};
 }
 
+inline Timestamp TransactLogParser::read_timestamp()
+{
+    REALM_ASSERT(false);
+    return Timestamp(null{});
+}
+
 
 inline BinaryData TransactLogParser::read_binary(util::StringBuffer& buf)
 {
@@ -2019,9 +2090,14 @@ inline void TransactLogParser::read_mixed(Mixed* mixed)
             mixed->set_double(value);
             return;
         }
-        case type_DateTime: {
+        case type_OldDateTime: {
             int_fast64_t value = read_int<int_fast64_t>(); // Throws
-            mixed->set_datetime(value);
+            mixed->set_olddatetime(value);
+            return;
+        }
+        case type_Timestamp: {
+            Timestamp value = read_timestamp(); // Throws
+            mixed->set_timestamp(value);
             return;
         }
         case type_String: {
@@ -2077,7 +2153,8 @@ inline bool TransactLogParser::is_valid_data_type(int type)
         case type_Double:
         case type_String:
         case type_Binary:
-        case type_DateTime:
+        case type_OldDateTime:
+        case type_Timestamp:
         case type_Table:
         case type_Mixed:
         case type_Link:
@@ -2119,6 +2196,7 @@ public:
 
     bool insert_group_level_table(size_t table_ndx, size_t num_tables, StringData)
     {
+        sync_table();
         m_encoder.erase_group_level_table(table_ndx, num_tables + 1);
         append_instruction();
         return true;
@@ -2126,6 +2204,7 @@ public:
 
     bool erase_group_level_table(size_t table_ndx, size_t num_tables)
     {
+        sync_table();
         m_encoder.insert_group_level_table(table_ndx, num_tables - 1, "");
         append_instruction();
         return true;
@@ -2133,12 +2212,16 @@ public:
 
     bool rename_group_level_table(size_t, StringData)
     {
-        return true; // No-op
+        sync_table();
+        return true;
     }
 
-    bool move_group_level_table(size_t, size_t)
+    bool move_group_level_table(size_t from_table_ndx, size_t to_table_ndx)
     {
-        return true; // No-op
+        sync_table();
+        m_encoder.move_group_level_table(to_table_ndx, from_table_ndx);
+        append_instruction();
+        return true;
     }
 
     bool optimize_table()
@@ -2239,9 +2322,16 @@ public:
         return true;
     }
 
-    bool set_date_time(size_t col_ndx, size_t row_ndx, DateTime value)
+    bool set_olddatetime(size_t col_ndx, size_t row_ndx, OldDateTime value)
     {
-        m_encoder.set_date_time(col_ndx, row_ndx, value);
+        m_encoder.set_olddatetime(col_ndx, row_ndx, value);
+        append_instruction();
+        return true;
+    }
+
+    bool set_timestamp(size_t col_ndx, size_t row_ndx, Timestamp value)
+    {
+        m_encoder.set_timestamp(col_ndx, row_ndx, value);
         append_instruction();
         return true;
     }
@@ -2372,9 +2462,9 @@ public:
         return true;
     }
 
-    bool link_list_move(size_t old_link_ndx, size_t new_link_ndx)
+    bool link_list_move(size_t from_link_ndx, size_t to_link_ndx)
     {
-        m_encoder.link_list_move(new_link_ndx, old_link_ndx);
+        m_encoder.link_list_move(from_link_ndx, to_link_ndx);
         append_instruction();
         return true;
     }
