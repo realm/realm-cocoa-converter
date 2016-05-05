@@ -87,7 +87,7 @@ NSString * const kRLMTestRealmFileName = @"dogs.realm";
     XCTAssertGreaterThan(numberOfGeneratedFiles, 0);
     
     RLMRealmConfiguration *configuration = [RLMRealmConfiguration defaultConfiguration];
-    configuration.path = realmFilePath;
+    configuration.fileURL   = [NSURL fileURLWithPath:realmFilePath];
     configuration.dynamic = YES;
     
     RLMRealm *realm = [RLMRealm realmWithConfiguration:configuration error:&error];
