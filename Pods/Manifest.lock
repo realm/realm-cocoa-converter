@@ -1,9 +1,9 @@
 PODS:
   - CSwiftV (0.0.5)
   - PathKit (0.6.0)
-  - Realm (0.102.0):
-    - Realm/Headers (= 0.102.0)
-  - Realm/Headers (0.102.0)
+  - Realm (0.102.1):
+    - Realm/Headers (= 0.102.1)
+  - Realm/Headers (0.102.1)
   - SSZipArchive (1.2)
   - TGSpreadsheetWriter (1.0.2):
     - SSZipArchive
@@ -17,7 +17,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   CSwiftV: 2560532e2e5b04d95c36b0f49a8dc745071fa525
   PathKit: b224b6d2c4e75b87f08f45e1c0c610a3195c94e5
-  Realm: 5d219f9037e3ec2019c599b8227bfc95433cb10e
+  Realm: 5254be610db3e5024879684717bf038990bb59ec
   SSZipArchive: 251093c65f98d6ea282c50bc404bfa631d9fd721
   TGSpreadsheetWriter: 09bbb2c18a111a11c94ff9c1af2320e2530c958e
 
