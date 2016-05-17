@@ -30,7 +30,7 @@
 		22D3D9D81C60A4AA0035AF1F /* people.csv in Resources */ = {isa = PBXBuildFile; fileRef = 228B0D891C6092D200D7325B /* people.csv */; };
 		22D3D9D91C60A4AA0035AF1F /* restaurant.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 228B0D8A1C6092D200D7325B /* restaurant.xlsx */; };
 		22D3D9DA1C60A4AA0035AF1F /* violations.csv in Resources */ = {isa = PBXBuildFile; fileRef = 228B0D8B1C6092D200D7325B /* violations.csv */; };
-		46838A8100686F25CD39B402 /* Pods_RealmConverter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7D3F035062069EA7EE1D07F /* Pods_RealmConverter.framework */; };
+		C9CD7DF43BF26CEC7ABE0052 /* Pods_RealmConverter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FE3B6977D4FAAB5FE14274C /* Pods_RealmConverter.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +56,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		02CE50F7C3DD4FCEE4DAE8B6 /* Pods-RealmConverter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverter/Pods-RealmConverter.debug.xcconfig"; sourceTree = "<group>"; };
+		146F56966659A88E186F4D31 /* Pods-RealmConverter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverter.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverter/Pods-RealmConverter.release.xcconfig"; sourceTree = "<group>"; };
 		2213C6F61C50BE1000902618 /* RealmConverter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RealmConverter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2213C7001C50BE1000902618 /* RealmConverter.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RealmConverter.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		22679D6A1C74272E002248FC /* users.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = users.xlsx; sourceTree = "<group>"; };
@@ -88,9 +90,7 @@
 		22FAADB91C7C54AE00832102 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		22FAADBA1C7C54AE00832102 /* SSZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SSZipArchive.framework; sourceTree = "<group>"; };
 		22FAADBB1C7C54AE00832102 /* TGSpreadsheetWriter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TGSpreadsheetWriter.framework; sourceTree = "<group>"; };
-		6E4179B1ADFEFF96E4C770CE /* Pods-RealmConverter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverter.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverter/Pods-RealmConverter.release.xcconfig"; sourceTree = "<group>"; };
-		A56670D06FDECD3D43370213 /* Pods-RealmConverter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverter/Pods-RealmConverter.debug.xcconfig"; sourceTree = "<group>"; };
-		E7D3F035062069EA7EE1D07F /* Pods_RealmConverter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmConverter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FE3B6977D4FAAB5FE14274C /* Pods_RealmConverter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmConverter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46838A8100686F25CD39B402 /* Pods_RealmConverter.framework in Frameworks */,
+				C9CD7DF43BF26CEC7ABE0052 /* Pods_RealmConverter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +121,7 @@
 				22FAADB91C7C54AE00832102 /* Realm.framework */,
 				22FAADBA1C7C54AE00832102 /* SSZipArchive.framework */,
 				22FAADBB1C7C54AE00832102 /* TGSpreadsheetWriter.framework */,
-				E7D3F035062069EA7EE1D07F /* Pods_RealmConverter.framework */,
+				3FE3B6977D4FAAB5FE14274C /* Pods_RealmConverter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -133,7 +133,7 @@
 				228B0D7E1C6092D200D7325B /* RealmConverterTests */,
 				2213C6F71C50BE1000902618 /* Products */,
 				11521AD19685034448EFA312 /* Frameworks */,
-				B7CDA46C8E46265FEA045974 /* Pods */,
+				5D6EEA19411694471E83AF83 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -241,11 +241,11 @@
 			path = Swift;
 			sourceTree = "<group>";
 		};
-		B7CDA46C8E46265FEA045974 /* Pods */ = {
+		5D6EEA19411694471E83AF83 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A56670D06FDECD3D43370213 /* Pods-RealmConverter.debug.xcconfig */,
-				6E4179B1ADFEFF96E4C770CE /* Pods-RealmConverter.release.xcconfig */,
+				02CE50F7C3DD4FCEE4DAE8B6 /* Pods-RealmConverter.debug.xcconfig */,
+				146F56966659A88E186F4D31 /* Pods-RealmConverter.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -268,13 +268,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2213C70A1C50BE1000902618 /* Build configuration list for PBXNativeTarget "RealmConverter" */;
 			buildPhases = (
-				F19086637D1DD336EDEA91B0 /* 📦 Check Pods Manifest.lock */,
+				E3D08E5608DF2804D22F36E6 /* 📦 Check Pods Manifest.lock */,
 				2213C6F11C50BE1000902618 /* Sources */,
 				2213C6F21C50BE1000902618 /* Frameworks */,
 				2213C6F31C50BE1000902618 /* Headers */,
 				2213C6F41C50BE1000902618 /* Resources */,
 				22FAADB61C7C549700832102 /* CopyFiles */,
-				A01A1192C9AAB0CEC4A6EF7C /* 📦 Copy Pods Resources */,
+				86155DDBD5E1F194007CE606 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -365,7 +365,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		A01A1192C9AAB0CEC4A6EF7C /* 📦 Copy Pods Resources */ = {
+		86155DDBD5E1F194007CE606 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -380,7 +380,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RealmConverter/Pods-RealmConverter-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F19086637D1DD336EDEA91B0 /* 📦 Check Pods Manifest.lock */ = {
+		E3D08E5608DF2804D22F36E6 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -524,10 +524,9 @@
 		};
 		2213C70B1C50BE1000902618 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A56670D06FDECD3D43370213 /* Pods-RealmConverter.debug.xcconfig */;
+			baseConfigurationReference = 02CE50F7C3DD4FCEE4DAE8B6 /* Pods-RealmConverter.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -547,10 +546,9 @@
 		};
 		2213C70C1C50BE1000902618 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6E4179B1ADFEFF96E4C770CE /* Pods-RealmConverter.release.xcconfig */;
+			baseConfigurationReference = 146F56966659A88E186F4D31 /* Pods-RealmConverter.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -571,7 +569,7 @@
 		2213C70E1C50BE1000902618 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = RealmConverterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -584,7 +582,7 @@
 		2213C70F1C50BE1000902618 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = RealmConverterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
