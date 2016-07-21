@@ -7,3 +7,10 @@ target 'RealmConverter' do
     pod 'CSwiftV'
     pod 'TGSpreadsheetWriter'
 end
+
+target 'RealmConverterTests' do
+    pod 'Realm'
+    pod 'PathKit'
+    pod 'CSwiftV'
+    pod 'TGSpreadsheetWriter'
+end
