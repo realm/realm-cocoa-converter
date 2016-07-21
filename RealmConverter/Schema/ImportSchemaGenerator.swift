@@ -22,7 +22,7 @@ import PathKit
 import TGSpreadsheetWriter
 
 @objc
-public enum ImportSchemaFormat : Int {
+public enum ImportSchemaFormat: Int {
     case CSV
     case XLSX
 }
@@ -36,7 +36,7 @@ public enum ImportSchemaFormat : Int {
  when performing the import to Realm.
  */
 @objc(RLMImportSchemaGenerator)
-public class ImportSchemaGenerator : NSObject {
+public class ImportSchemaGenerator: NSObject {
     let files: [String]
     let encoding: Encoding
     let format: ImportSchemaFormat

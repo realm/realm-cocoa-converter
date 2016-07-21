@@ -78,7 +78,7 @@ extension ImportObjectSchema {
 }
 
 // MARK: - String Extension for Realm PropertyType -
-extension RLMPropertyType : CustomStringConvertible, CustomDebugStringConvertible {
+extension RLMPropertyType: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: Swift.String {
         switch self {
         case .Int:

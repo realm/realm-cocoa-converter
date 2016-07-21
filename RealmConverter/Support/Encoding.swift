@@ -23,7 +23,7 @@ public enum Encoding: UInt {
     case UTF8
 }
 
-extension Encoding : RawRepresentable {
+extension Encoding: RawRepresentable {
     public init?(rawValue: UInt) {
         switch rawValue {
         case NSUTF8StringEncoding:
