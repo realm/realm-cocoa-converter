@@ -29,15 +29,15 @@ class RealmConverter_Importer: XCTestCase {
     let outputTestFolderName = "io.realm.test-output"
     let inputTestFolderName = "io.realm.test-input"
     
-    var outputTestFolderPath:String {
+    var outputTestFolderPath: String {
         var path = Path(NSTemporaryDirectory())
-        path = path + Path(self.outputTestFolderName)
+        path = path + Path(outputTestFolderName)
         return String(path)
     }
     
-    var inputTestFolderPath:String {
+    var inputTestFolderPath: String {
         var path = Path(NSTemporaryDirectory())
-        path = path + Path(self.inputTestFolderName)
+        path = path + Path(inputTestFolderName)
         return String(path)
     }
     
@@ -86,6 +86,19 @@ class RealmConverter_Importer: XCTestCase {
         let dataImporter = CSVDataImporter(files: filePaths)
         try! dataImporter.importToPath(String(destinationRealmPath), schema: schema)
         
+        XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath(String(destinationRealmPath)))
+    }
+
+    func testJSONImport() {
+        let filePaths = [NSBundle(forClass: self.dynamicType).pathForResource("realm", ofType: "json")!]
+
+        let generator =  ImportSchemaGenerator(files: filePaths)
+        let schema = try! generator.generate()
+
+        let destinationRealmPath = Path(self.outputTestFolderPath)
+        let dataImporter = JSONDataImporter(files: filePaths)
+        try! dataImporter.importToPath(String(destinationRealmPath), schema: schema)
+
         XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath(String(destinationRealmPath)))
     }
 }

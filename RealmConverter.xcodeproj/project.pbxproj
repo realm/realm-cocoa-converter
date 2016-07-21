@@ -32,6 +32,8 @@
 		22D3D9DA1C60A4AA0035AF1F /* violations.csv in Resources */ = {isa = PBXBuildFile; fileRef = 228B0D8B1C6092D200D7325B /* violations.csv */; };
 		A9F2949387585C86B085320E /* Pods_RealmConverterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F9C9F5B8576152EFDF1283 /* Pods_RealmConverterTests.framework */; };
 		BDAB0F89B2C50E564F3F42A4 /* Pods_RealmConverter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA428FB6575339B815CF5815 /* Pods_RealmConverter.framework */; };
+		E8BD7B541D414CE000086117 /* JSONDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BD7B531D414CE000086117 /* JSONDataImporter.swift */; };
+		E8BD7B561D41866B00086117 /* realm.json in Resources */ = {isa = PBXBuildFile; fileRef = E8BD7B551D41866B00086117 /* realm.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +78,6 @@
 		228B0D801C6092D200D7325B /* businesses.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = businesses.csv; sourceTree = "<group>"; };
 		228B0D811C6092D200D7325B /* dogs.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dogs.csv; sourceTree = "<group>"; };
 		228B0D821C6092D200D7325B /* dogs.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = dogs.realm; sourceTree = "<group>"; };
-		228B0D871C6092D200D7325B /* dogs.realm.note */ = {isa = PBXFileReference; lastKnownFileType = file; path = dogs.realm.note; sourceTree = "<group>"; };
 		228B0D881C6092D200D7325B /* inspections.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = inspections.csv; sourceTree = "<group>"; };
 		228B0D891C6092D200D7325B /* people.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = people.csv; sourceTree = "<group>"; };
 		228B0D8A1C6092D200D7325B /* restaurant.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = restaurant.xlsx; sourceTree = "<group>"; };
@@ -93,6 +94,8 @@
 		BBC252296F134E6F04B6C0F5 /* Pods-RealmConverterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverterTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverterTests/Pods-RealmConverterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C21934579C4B43F3C75ED46C /* Pods-RealmConverter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverter/Pods-RealmConverter.debug.xcconfig"; sourceTree = "<group>"; };
 		C7F9C9F5B8576152EFDF1283 /* Pods_RealmConverterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmConverterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8BD7B531D414CE000086117 /* JSONDataImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDataImporter.swift; sourceTree = "<group>"; };
+		E8BD7B551D41866B00086117 /* realm.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = realm.json; sourceTree = "<group>"; };
 		EA428FB6575339B815CF5815 /* Pods_RealmConverter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmConverter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED32A774C1D64083A0252FD1 /* Pods-RealmConverterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverterTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverterTests/Pods-RealmConverterTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -179,6 +182,7 @@
 			children = (
 				228B0D671C6092CB00D7325B /* DataImporter.swift */,
 				228B0D661C6092CB00D7325B /* CSVDataImporter.swift */,
+				E8BD7B531D414CE000086117 /* JSONDataImporter.swift */,
 				228B0D681C6092CB00D7325B /* XLSXDataImporter.swift */,
 			);
 			path = Importer;
@@ -217,11 +221,11 @@
 		228B0D7F1C6092D200D7325B /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				E8BD7B551D41866B00086117 /* realm.json */,
 				22679D6A1C74272E002248FC /* users.xlsx */,
 				228B0D801C6092D200D7325B /* businesses.csv */,
 				228B0D811C6092D200D7325B /* dogs.csv */,
 				228B0D821C6092D200D7325B /* dogs.realm */,
-				228B0D871C6092D200D7325B /* dogs.realm.note */,
 				228B0D881C6092D200D7325B /* inspections.csv */,
 				228B0D891C6092D200D7325B /* people.csv */,
 				228B0D8A1C6092D200D7325B /* restaurant.xlsx */,
@@ -364,6 +368,7 @@
 			files = (
 				22D3D9D41C60A4AA0035AF1F /* businesses.csv in Resources */,
 				22679D6B1C74272E002248FC /* users.xlsx in Resources */,
+				E8BD7B561D41866B00086117 /* realm.json in Resources */,
 				22D3D9D51C60A4AA0035AF1F /* dogs.csv in Resources */,
 				22D3D9D61C60A4AA0035AF1F /* dogs.realm in Resources */,
 				22D3D9D71C60A4AA0035AF1F /* inspections.csv in Resources */,
@@ -459,6 +464,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				228B0D7C1C6092CB00D7325B /* Encoding.swift in Sources */,
+				E8BD7B541D414CE000086117 /* JSONDataImporter.swift in Sources */,
 				228B0D731C6092CB00D7325B /* DataExporter.swift in Sources */,
 				228B0D7B1C6092CB00D7325B /* ImportSchemaGenerator.swift in Sources */,
 				228B0D7D1C6092CB00D7325B /* String+CamelCase.swift in Sources */,

@@ -24,6 +24,7 @@ import TGSpreadsheetWriter
 @objc
 public enum ImportSchemaFormat: Int {
     case CSV
+    case JSON
     case XLSX
 }
 
@@ -73,14 +74,42 @@ public class ImportSchemaGenerator: NSObject {
     */
     @objc(generatedSchemaWithError:)
     public func generate() throws -> ImportSchema {
-        switch self.format {
-        case .CSV:
-            return try! generateForCSV()
-        case .XLSX:
-            return try! generateForXLSX()
+        switch format {
+        case .CSV: return try! generateForCSV()
+        case .XLSX: return try! generateForXLSX()
+        case .JSON: return try! generateForJSON()
         }
     }
-    
+
+    private func generateForJSON() throws -> ImportSchema {
+        // We only use a single JSON file to import/export Realms.
+        let jsonObject = try NSJSONSerialization.JSONObjectWithData(NSData(contentsOfFile: files[0])!, options: [])
+
+        guard let jsonDictionary = jsonObject as? NSDictionary else {
+            throw NSError(domain: "io.realm.converter.error", code: 0, userInfo: nil)
+        }
+
+        let schemas = (jsonDictionary.allKeys as! [String]).map { modelName -> ImportObjectSchema in
+            let schema = ImportObjectSchema(objectClassName: modelName)
+            let jsonModelObjects = jsonDictionary[modelName]! as! [NSDictionary]
+            let firstJSONModelObject = jsonModelObjects.first!
+            schema.properties = (firstJSONModelObject.allKeys as! [String]).enumerate().map { (index, propertyName) in
+                var property = ImportObjectSchema.Property(column: UInt(index), originalName: propertyName, name: propertyName)
+                let value = firstJSONModelObject[propertyName]!
+                switch value {
+                case _ as Int: property.type = .Int
+                case _ as Bool: property.type = .Bool
+                case _ as Double: property.type = .Double
+                case _ as String: property.type = .String
+                default: property.type = .String
+                }
+                return property
+            }
+            return schema
+        }
+        return ImportSchema(schemas: schemas)
+    }
+
     private func generateForCSV() throws -> ImportSchema {
         let schemas = files.map { (file) -> ImportObjectSchema in
             let inputString = try! NSString(contentsOfFile: file, encoding: encoding.rawValue) as String
@@ -209,11 +238,10 @@ public class ImportSchemaGenerator: NSObject {
     }
     
     private class func importSchemaFormat(file: String) -> ImportSchemaFormat {
-        let fileExtension = Path(file).`extension`!.lowercaseString
-        if fileExtension == "xlsx" {
-            return .XLSX
+        switch Path(file).`extension`!.lowercaseString {
+        case "xlsx": return .XLSX
+        case "json": return .JSON
+        default: return .CSV
         }
-        
-        return .CSV
     }
 }
