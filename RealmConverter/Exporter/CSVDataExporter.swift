@@ -85,9 +85,9 @@ public class CSVDataExporter: DataExporter {
                         return ""
                     }
                     if let value = value as? RLMObject {
-                        return serializedObject(value, realm: realm)!
+                        return serializedObject(value, realm: realm)
                     } else if let value = value as? RLMArray {
-                        return serializedObjectArray(value, realm: realm)!
+                        return serializedObjectArray(value, realm: realm)
                     }
                     return sanitizedValue(value.description!)
                 }).joinWithSeparator(delimiter) + "\n"
@@ -114,32 +114,23 @@ public class CSVDataExporter: DataExporter {
         return value
     }
     
-    private func serializedObject(object: RLMObject, realm: RLMRealm) -> String? {
+    private func serializedObject(object: RLMObject, realm: RLMRealm) -> String {
         let className = object.objectSchema.className
         let allObjects = realm.allObjects(className)
         let index = Int(allObjects.indexOfObject(object))
-        if index == NSNotFound {
-            return nil
-        }
         
-        return "<\(className)>{\(index)}"
+        return index == NSNotFound ? "<\(className)>{}" : "<\(className)>{\(index)}"
     }
     
-    private func serializedObjectArray(array: RLMArray, realm: RLMRealm) -> String? {
-        if array.count == 0 {
-            return nil
-        }
-        
+    private func serializedObjectArray(array: RLMArray, realm: RLMRealm) -> String {
         let className = array.objectClassName
         let allObjects = realm.allObjects(className)
         
         return "<\(className)>{" + (0..<array.count).map({ arrayIndex in
             let tableIndex = allObjects.indexOfObject(array.objectAtIndex(arrayIndex))
             
-            if Int(tableIndex) != NSNotFound {
-                return "\(tableIndex)"
-            }
-            return ""
-        }).joinWithSeparator("") + "}"
+            return Int(tableIndex) != NSNotFound ? "\(tableIndex)" : ""
+        }).joinWithSeparator(" ") + "}"
     }
+    
 }
