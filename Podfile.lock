@@ -1,26 +1,26 @@
 PODS:
   - CSwiftV (0.0.5)
   - PathKit (0.6.0)
-  - Realm (1.0.2):
-    - Realm/Headers (= 1.0.2)
-  - Realm/Headers (1.0.2)
-  - SSZipArchive (1.4)
+  - Realm (1.1.0):
+    - Realm/Headers (= 1.1.0)
+  - Realm/Headers (1.1.0)
+  - SSZipArchive (1.6.1)
   - TGSpreadsheetWriter (1.0.2):
     - SSZipArchive
 
 DEPENDENCIES:
   - CSwiftV
-  - PathKit
+  - PathKit (~> 0.6.0)
   - Realm
   - TGSpreadsheetWriter
 
 SPEC CHECKSUMS:
   CSwiftV: 2560532e2e5b04d95c36b0f49a8dc745071fa525
   PathKit: b224b6d2c4e75b87f08f45e1c0c610a3195c94e5
-  Realm: 9d5c46a4d7d27958530a8dfc58f63a99e5c2cba3
-  SSZipArchive: bab21000ee11b7ba68d5880bcd87d80e4eb93e65
-  TGSpreadsheetWriter: 09bbb2c18a111a11c94ff9c1af2320e2530c958e
+  Realm: ceecf1a4540c4ce9efe196fe73fa9855bce05bd8
+  SSZipArchive: '0847403f612553a361f9b44f1c7e135cefbc668d'
+  TGSpreadsheetWriter: '09bbb2c18a111a11c94ff9c1af2320e2530c958e'
 
-PODFILE CHECKSUM: 3621f0702d1b9bea175cc52d061cb823ac9a3f12
+PODFILE CHECKSUM: 216a41fce9cfc4cd6fc1facb2e543b6b52bba4e9
 
 COCOAPODS: 1.0.1
