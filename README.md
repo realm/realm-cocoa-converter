@@ -18,7 +18,7 @@ OS X 10.9 and above.
 a compatible schema set that can be used to generate the Realm file
 
 ### Importer
-* Imports from both CSV and XLSX.
+* Imports from CSV, XLSX and JSON.
 
 ### Exporter
 * Exports a Realm file to CSV.

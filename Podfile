@@ -3,14 +3,9 @@ use_frameworks!
 
 target 'RealmConverter' do
     pod 'Realm'
-    pod 'PathKit'
+    pod 'PathKit', '~> 0.6.0' # 0.7+ requires swift 3
     pod 'CSwiftV'
     pod 'TGSpreadsheetWriter'
-end
 
-target 'RealmConverterTests' do
-    pod 'Realm'
-    pod 'PathKit'
-    pod 'CSwiftV'
-    pod 'TGSpreadsheetWriter'
+    target 'RealmConverterTests'
 end
