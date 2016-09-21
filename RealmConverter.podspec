@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.platform = :osx, '10.9'
   s.source_files = 'RealmConverter/**/*.{swift,h,m,c}'
   s.dependency 'Realm'
-  s.dependency 'PathKit'
+  s.dependency 'PathKit', '~> 0.6.0'
   s.dependency 'CSwiftV'
   s.dependency 'TGSpreadsheetWriter'
 end
