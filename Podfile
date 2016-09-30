@@ -6,6 +6,5 @@ target 'RealmConverter' do
     pod 'PathKit', '~> 0.6.0' # 0.7+ requires swift 3
     pod 'CSwiftV'
     pod 'TGSpreadsheetWriter'
-
-    target 'RealmConverterTests'
 end
+
