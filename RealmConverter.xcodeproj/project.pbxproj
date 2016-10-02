@@ -639,7 +639,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CBFB94544D660341F6300A85 /* Pods-RealmConverterTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = RealmConverterTests/Info.plist;
@@ -655,7 +654,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DB19FA3CB58ACD41AB339F0C /* Pods-RealmConverterTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = RealmConverterTests/Info.plist;
