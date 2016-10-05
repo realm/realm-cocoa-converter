@@ -117,55 +117,55 @@ public class ImportSchemaGenerator: NSObject {
             
             let schema = ImportObjectSchema(objectClassName: Path(file).lastComponentWithoutExtension)
             
-            schema.properties = csv.headers.enumerate().map { (index, field) -> ImportObjectSchema.Property in
-                return ImportObjectSchema.Property(column: UInt(index), originalName: field, name: field.camelcaseString)
-            }
-            
-            csv.rows.forEach { (row) -> () in
-                row.enumerate().forEach { (index, field) -> () in
-                    var property = schema.properties[index]
-                    
-                    if field.isEmpty {
-                        //property.optional = true
-                        return
-                    }
-                    guard property.type == .String else {
-                        return
-                    }
-                    
-                    let numberFormatter = NSNumberFormatter()
-                    if let number = numberFormatter.numberFromString(field) {
-                        let numberType = CFNumberGetType(number)
-                        switch (numberType) {
-                        case .SInt8Type: fallthrough
-                        case .SInt16Type: fallthrough
-                        case .SInt32Type: fallthrough
-                        case .SInt64Type: fallthrough
-                        case .CharType: fallthrough
-                        case .ShortType: fallthrough
-                        case .IntType: fallthrough
-                        case .LongType: fallthrough
-                        case .LongLongType: fallthrough
-                        case .CFIndexType: fallthrough
-                        case .NSIntegerType:
-                            if (property.type != .Double) {
-                                property.type = .Int;
-                            }
-                            break;
-                        case .Float32Type: fallthrough
-                        case .Float64Type: fallthrough
-                        case .FloatType: fallthrough
-                        case .DoubleType: fallthrough
-                        case .CGFloatType:
-                            property.type = .Double;
-                            break;
+            schema.properties = csv.headers.enumerate().map { index, field in
+                var property = ImportObjectSchema.Property(column: UInt(index), originalName: field, name: field.camelcaseString)
+
+                let numberFormatter = NSNumberFormatter()
+
+                csv.rows.forEach { row in
+                    row.enumerate().forEach { col, value in
+                        if value.isEmpty {
+                            //property.optional = true
+                            return
                         }
-                    } else {
-                        property.type = .String
+
+                        guard property.type == .String else {
+                            return
+                        }
+
+                        if let number = numberFormatter.numberFromString(value) {
+                            let numberType = CFNumberGetType(number)
+                            switch (numberType) {
+                            case .SInt8Type: fallthrough
+                            case .SInt16Type: fallthrough
+                            case .SInt32Type: fallthrough
+                            case .SInt64Type: fallthrough
+                            case .CharType: fallthrough
+                            case .ShortType: fallthrough
+                            case .IntType: fallthrough
+                            case .LongType: fallthrough
+                            case .LongLongType: fallthrough
+                            case .CFIndexType: fallthrough
+                            case .NSIntegerType:
+                                if (property.type != .Double) {
+                                    property.type = .Int;
+                                }
+                            case .Float32Type: fallthrough
+                            case .Float64Type: fallthrough
+                            case .FloatType: fallthrough
+                            case .DoubleType: fallthrough
+                            case .CGFloatType:
+                                property.type = .Double;
+                            }
+                        } else {
+                            property.type = .String
+                        }
                     }
                 }
+
+                return property
             }
-            
+
             return schema
         }
         
