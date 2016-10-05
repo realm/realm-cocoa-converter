@@ -1,7 +1,8 @@
 {
   "MyModel": [
     {
-      "prop": "a"
+      "stringProperty": "a",
+      "intProperty": 1
     }
   ]
 }
