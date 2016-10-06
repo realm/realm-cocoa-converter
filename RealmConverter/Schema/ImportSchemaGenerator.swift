@@ -136,25 +136,27 @@ public class ImportSchemaGenerator: NSObject {
                         if let number = numberFormatter.numberFromString(value) {
                             let numberType = CFNumberGetType(number)
                             switch (numberType) {
-                            case .SInt8Type: fallthrough
-                            case .SInt16Type: fallthrough
-                            case .SInt32Type: fallthrough
-                            case .SInt64Type: fallthrough
-                            case .CharType: fallthrough
-                            case .ShortType: fallthrough
-                            case .IntType: fallthrough
-                            case .LongType: fallthrough
-                            case .LongLongType: fallthrough
-                            case .CFIndexType: fallthrough
-                            case .NSIntegerType:
+                            case
+                            .SInt8Type,
+                            .SInt16Type,
+                            .SInt32Type,
+                            .SInt64Type,
+                            .CharType,
+                            .ShortType,
+                            .IntType,
+                            .LongType,
+                            .LongLongType,
+                            .CFIndexType,
+                            .NSIntegerType:
                                 if (property.type != .Double) {
                                     property.type = .Int;
                                 }
-                            case .Float32Type: fallthrough
-                            case .Float64Type: fallthrough
-                            case .FloatType: fallthrough
-                            case .DoubleType: fallthrough
-                            case .CGFloatType:
+                            case
+                            .Float32Type,
+                            .Float64Type,
+                            .FloatType,
+                            .DoubleType,
+                            .CGFloatType:
                                 property.type = .Double;
                             }
                         } else {
@@ -201,28 +203,28 @@ public class ImportSchemaGenerator: NSObject {
                         if let number = numberFormatter.numberFromString(field) {
                             let numberType = CFNumberGetType(number)
                             switch (numberType) {
-                            case .SInt8Type: fallthrough
-                            case .SInt16Type: fallthrough
-                            case .SInt32Type: fallthrough
-                            case .SInt64Type: fallthrough
-                            case .CharType: fallthrough
-                            case .ShortType: fallthrough
-                            case .IntType: fallthrough
-                            case .LongType: fallthrough
-                            case .LongLongType: fallthrough
-                            case .CFIndexType: fallthrough
-                            case .NSIntegerType:
+                            case
+                            .SInt8Type,
+                            .SInt16Type,
+                            .SInt32Type,
+                            .SInt64Type,
+                            .CharType,
+                            .ShortType,
+                            .IntType,
+                            .LongType,
+                            .LongLongType,
+                            .CFIndexType,
+                            .NSIntegerType:
                                 if (property.type != .Double) {
                                     property.type = .Int;
                                 }
-                                break;
-                            case .Float32Type: fallthrough
-                            case .Float64Type: fallthrough
-                            case .FloatType: fallthrough
-                            case .DoubleType: fallthrough
-                            case .CGFloatType:
+                            case
+                            .Float32Type,
+                            .Float64Type,
+                            .FloatType,
+                            .DoubleType,
+                            .CGFloatType:
                                 property.type = .Double;
-                                break;
                             }
                         } else {
                             property.type = .String
