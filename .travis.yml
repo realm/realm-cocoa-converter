@@ -1,5 +1,9 @@
 language: objective-c
 osx_image: xcode8
 before_install:
+- gem uninstall cocoapods --all
+- gem install cocoapods --pre
 - pod repo update --silent
-script: xcodebuild -workspace "RealmConverter.xcworkspace" -scheme "RealmConverter" clean test | xcpretty && exit ${PIPESTATUS[0]}
+script:
+- set -o pipefail && xcodebuild -workspace "RealmConverter.xcworkspace" -scheme "RealmConverter" clean test | xcpretty
+- pod lib lint
