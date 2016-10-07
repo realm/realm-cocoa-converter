@@ -1,5 +1,5 @@
 language: objective-c
 osx_image: xcode8
 before_install:
-- pod repo update
+- pod repo update --silent
 script: xcodebuild -workspace "RealmConverter.xcworkspace" -scheme "RealmConverter" clean test | xcpretty && exit ${PIPESTATUS[0]}
