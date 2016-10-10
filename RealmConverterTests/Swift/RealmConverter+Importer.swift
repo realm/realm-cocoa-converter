@@ -43,6 +43,10 @@ class RealmConverter_Importer: XCTestCase {
     
     let testRealmFileName = "businesses.realm"
     let csvAssetNames = ["businesses"]
+
+    var bundle: NSBundle {
+        return NSBundle(forClass: self.dynamicType)
+    }
     
     override func setUp() {
         super.setUp()
@@ -61,7 +65,7 @@ class RealmConverter_Importer: XCTestCase {
         
         // Copy our CSV test data to the input folder
         for fileName in self.csvAssetNames {
-            let filePath = NSBundle(forClass: self.dynamicType).pathForResource(fileName, ofType: "csv")
+            let filePath = bundle.pathForResource(fileName, ofType: "csv")
             let destinationPath = Path(self.inputTestFolderPath) + Path(filePath!).lastComponent
             
             if NSFileManager.defaultManager().fileExistsAtPath(String(destinationPath)) == false {
@@ -90,7 +94,7 @@ class RealmConverter_Importer: XCTestCase {
     }
 
     func testJSONImport() {
-        let filePaths = [NSBundle(forClass: self.dynamicType).pathForResource("realm", ofType: "json")!]
+        let filePaths = [bundle.pathForResource("realm", ofType: "json")!]
 
         let generator =  ImportSchemaGenerator(files: filePaths)
         let schema = try! generator.generate()
@@ -101,4 +105,26 @@ class RealmConverter_Importer: XCTestCase {
 
         XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath(String(destinationRealmPath)))
     }
+
+    func testThatPropertyTypesAreDetectedProperlyWhenImportingFromCSV() {
+        let csvSchema = try! generateSchemaForFileAtPath(bundle.pathForResource("dogs", ofType: "csv")!)
+        XCTAssertTrue(csvSchema.schemas[0].properties[1].type == .Int)
+    }
+
+    // FIXME: XLSX import doesn't seem to work at all :(
+    func DISABLED_testThatPropertyTypesAreDetectedProperlyWhenImportingFromXLSX() {
+        let xlsxSchema = try! generateSchemaForFileAtPath(bundle.pathForResource("restaurant", ofType: "xlsx")!)
+        XCTAssertTrue(xlsxSchema.schemas[0].properties[0].type == .Int)
+    }
+
+    func testThatPropertyTypesAreDetectedProperlyWhenImportingFromJSON() {
+        let jsonSchema = try! generateSchemaForFileAtPath(bundle.pathForResource("realm", ofType: "json")!)
+        XCTAssertTrue(jsonSchema.schemas[0].properties[0].type == .Int)
+    }
+
+    func generateSchemaForFileAtPath(path: String) throws -> ImportSchema {
+        let generator = ImportSchemaGenerator(files: [path])
+        return try generator.generate()
+    }
+
 }
