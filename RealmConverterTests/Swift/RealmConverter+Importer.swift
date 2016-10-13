@@ -107,8 +107,16 @@ class RealmConverter_Importer: XCTestCase {
     }
 
     func testThatPropertyTypesAreDetectedProperlyWhenImportingFromCSV() {
-        let csvSchema = try! generateSchemaForFileAtPath(bundle.pathForResource("dogs", ofType: "csv")!)
+        let csvSchema = try! generateSchemaForFileAtPath(bundle.pathForResource("import-test", ofType: "csv")!)
+
+        XCTAssertTrue(csvSchema.schemas[0].properties[0].type == .Int)
         XCTAssertTrue(csvSchema.schemas[0].properties[1].type == .Int)
+        XCTAssertTrue(csvSchema.schemas[0].properties[2].type == .Double)
+        XCTAssertTrue(csvSchema.schemas[0].properties[3].type == .Double)
+        XCTAssertTrue(csvSchema.schemas[0].properties[4].type == .String)
+        XCTAssertTrue(csvSchema.schemas[0].properties[5].type == .String)
+        XCTAssertTrue(csvSchema.schemas[0].properties[5].type == .String)
+        XCTAssertTrue(csvSchema.schemas[0].properties[5].type == .String)
     }
 
     // FIXME: XLSX import doesn't seem to work at all :(
@@ -120,6 +128,7 @@ class RealmConverter_Importer: XCTestCase {
     func testThatPropertyTypesAreDetectedProperlyWhenImportingFromJSON() {
         let jsonSchema = try! generateSchemaForFileAtPath(bundle.pathForResource("realm", ofType: "json")!)
         XCTAssertTrue(jsonSchema.schemas[0].properties[0].type == .Int)
+        XCTAssertTrue(jsonSchema.schemas[0].properties[1].type == .String)
     }
 
     func generateSchemaForFileAtPath(path: String) throws -> ImportSchema {
