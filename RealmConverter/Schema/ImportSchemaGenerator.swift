@@ -112,6 +112,15 @@ public class ImportSchemaGenerator: NSObject {
     }
 
     private func generateForCSV() throws -> ImportSchema {
+        let propertyTypeFallbackOrder: [RLMPropertyType] = [.Int, .Double, .String]
+        let propertyTypeFallbacksToType = { (type: RLMPropertyType?, fallbackType: RLMPropertyType) -> Bool in
+            guard let type = type else {
+                return true
+            }
+
+            return propertyTypeFallbackOrder.indexOf(type) <= propertyTypeFallbackOrder.indexOf(fallbackType)
+        }
+
         let schemas = files.map { (file) -> ImportObjectSchema in
             let inputString = try! NSString(contentsOfFile: file, encoding: encoding.rawValue) as String
             let csv = CSwiftV(string: inputString)
@@ -122,11 +131,9 @@ public class ImportSchemaGenerator: NSObject {
                 var property = ImportObjectSchema.Property(column: UInt(index), originalName: field, name: field.camelcaseString)
 
                 property.type = csv.rows.map({ $0[index] }).reduce(nil as RLMPropertyType?) { type, value in
-                    let typeRawValue = type?.rawValue ?? 0
-
-                    if Int(value) != nil && typeRawValue <= RLMPropertyType.Int.rawValue {
+                    if Int(value) != nil && propertyTypeFallbacksToType(type, .Int) {
                         return .Int
-                    } else if Double(value) != nil && typeRawValue <= RLMPropertyType.Double.rawValue {
+                    } else if Double(value) != nil && propertyTypeFallbacksToType(type, .Double) {
                         return .Double
                     } else {
                         return .String
