@@ -20,6 +20,7 @@ import Foundation
 import CSwiftV
 import PathKit
 import TGSpreadsheetWriter
+import Realm
 
 @objc
 public enum ImportSchemaFormat: Int {
@@ -111,6 +112,15 @@ public class ImportSchemaGenerator: NSObject {
     }
 
     private func generateForCSV() throws -> ImportSchema {
+        let propertyTypeFallbackOrder: [RLMPropertyType] = [.Int, .Double, .String]
+        let propertyTypeFallbacksToType = { (type: RLMPropertyType?, fallbackType: RLMPropertyType) -> Bool in
+            guard let type = type else {
+                return true
+            }
+
+            return propertyTypeFallbackOrder.indexOf(type) <= propertyTypeFallbackOrder.indexOf(fallbackType)
+        }
+
         let schemas = files.map { (file) -> ImportObjectSchema in
             let inputString = try! NSString(contentsOfFile: file, encoding: encoding.rawValue) as String
             let csv = CSwiftV(string: inputString)
@@ -120,50 +130,15 @@ public class ImportSchemaGenerator: NSObject {
             schema.properties = csv.headers.enumerate().map { index, field in
                 var property = ImportObjectSchema.Property(column: UInt(index), originalName: field, name: field.camelcaseString)
 
-                let numberFormatter = NSNumberFormatter()
-
-                csv.rows.forEach { row in
-                    row.enumerate().forEach { col, value in
-                        if value.isEmpty {
-                            //property.optional = true
-                            return
-                        }
-
-                        guard property.type == .String else {
-                            return
-                        }
-
-                        if let number = numberFormatter.numberFromString(value) {
-                            let numberType = CFNumberGetType(number)
-                            switch (numberType) {
-                            case
-                            .SInt8Type,
-                            .SInt16Type,
-                            .SInt32Type,
-                            .SInt64Type,
-                            .CharType,
-                            .ShortType,
-                            .IntType,
-                            .LongType,
-                            .LongLongType,
-                            .CFIndexType,
-                            .NSIntegerType:
-                                if (property.type != .Double) {
-                                    property.type = .Int;
-                                }
-                            case
-                            .Float32Type,
-                            .Float64Type,
-                            .FloatType,
-                            .DoubleType,
-                            .CGFloatType:
-                                property.type = .Double;
-                            }
-                        } else {
-                            property.type = .String
-                        }
+                property.type = csv.rows.map({ $0[index] }).reduce(nil as RLMPropertyType?) { type, value in
+                    if Int(value) != nil && propertyTypeFallbacksToType(type, .Int) {
+                        return .Int
+                    } else if Double(value) != nil && propertyTypeFallbacksToType(type, .Double) {
+                        return .Double
+                    } else {
+                        return .String
                     }
-                }
+                } ?? .String
 
                 return property
             }

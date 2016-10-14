@@ -32,6 +32,7 @@
 		22D3D9DA1C60A4AA0035AF1F /* violations.csv in Resources */ = {isa = PBXBuildFile; fileRef = 228B0D8B1C6092D200D7325B /* violations.csv */; };
 		70B4695665CBC41615A3632A /* Pods_RealmConverterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF9D6F8908645032FE73866E /* Pods_RealmConverterTests.framework */; };
 		BDAB0F89B2C50E564F3F42A4 /* Pods_RealmConverter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA428FB6575339B815CF5815 /* Pods_RealmConverter.framework */; };
+		C28AA3771DAFA72D006B8E6C /* import-test.csv in Resources */ = {isa = PBXBuildFile; fileRef = C28AA3761DAFA72D006B8E6C /* import-test.csv */; };
 		C2ED12621D422EE6006BAB04 /* CSVExportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED12611D422EE6006BAB04 /* CSVExportTests.swift */; };
 		C2ED12641D422F3C006BAB04 /* relationships.realm in Resources */ = {isa = PBXBuildFile; fileRef = C2ED12631D422F3C006BAB04 /* relationships.realm */; };
 		E8BD7B541D414CE000086117 /* JSONDataImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BD7B531D414CE000086117 /* JSONDataImporter.swift */; };
@@ -90,6 +91,7 @@
 		68C1B4EDBEF2F7F41DBB9D4E /* Pods_RealmConverter_RealmConverterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmConverter_RealmConverterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		742296CB838BEF008EAD248F /* Pods-RealmConverter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverter.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverter/Pods-RealmConverter.release.xcconfig"; sourceTree = "<group>"; };
 		C21934579C4B43F3C75ED46C /* Pods-RealmConverter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverter/Pods-RealmConverter.debug.xcconfig"; sourceTree = "<group>"; };
+		C28AA3761DAFA72D006B8E6C /* import-test.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "import-test.csv"; sourceTree = "<group>"; };
 		C2ED12611D422EE6006BAB04 /* CSVExportTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVExportTests.swift; sourceTree = "<group>"; };
 		C2ED12631D422F3C006BAB04 /* relationships.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = relationships.realm; sourceTree = "<group>"; };
 		CBFB94544D660341F6300A85 /* Pods-RealmConverterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverterTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverterTests/Pods-RealmConverterTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				228B0D891C6092D200D7325B /* people.csv */,
 				228B0D8A1C6092D200D7325B /* restaurant.xlsx */,
 				228B0D8B1C6092D200D7325B /* violations.csv */,
+				C28AA3761DAFA72D006B8E6C /* import-test.csv */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				22679D6B1C74272E002248FC /* users.xlsx in Resources */,
 				E8BD7B561D41866B00086117 /* realm.json in Resources */,
 				22D3D9D51C60A4AA0035AF1F /* dogs.csv in Resources */,
+				C28AA3771DAFA72D006B8E6C /* import-test.csv in Resources */,
 				22D3D9D61C60A4AA0035AF1F /* dogs.realm in Resources */,
 				22D3D9D71C60A4AA0035AF1F /* inspections.csv in Resources */,
 				22D3D9D81C60A4AA0035AF1F /* people.csv in Resources */,
