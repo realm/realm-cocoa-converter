@@ -29,6 +29,18 @@ public enum ImportSchemaFormat: Int {
     case XLSX
 }
 
+extension String {
+    private var boolValue: Bool? {
+        let lower = lowercaseString
+        if ["true", "yes"].contains(lower) {
+            return true
+        } else if ["false", "no"].contains(lower) {
+            return false
+        }
+        return nil
+    }
+}
+
 /**
  `ImportSchemaGenerator` will analyze the contents of files provided
  to it, and intelligently generate a schema definition object
@@ -112,7 +124,7 @@ public class ImportSchemaGenerator: NSObject {
     }
 
     private func generateForCSV() throws -> ImportSchema {
-        let propertyTypeFallbackOrder: [RLMPropertyType] = [.Int, .Double, .String]
+        let propertyTypeFallbackOrder: [RLMPropertyType] = [.Bool, .Int, .Double, .String]
         let propertyTypeFallbacksToType = { (type: RLMPropertyType?, fallbackType: RLMPropertyType) -> Bool in
             guard let type = type else {
                 return true
@@ -131,13 +143,14 @@ public class ImportSchemaGenerator: NSObject {
                 var property = ImportObjectSchema.Property(column: UInt(index), originalName: field, name: field.camelcaseString)
 
                 property.type = csv.rows.map({ $0[index] }).reduce(nil as RLMPropertyType?) { type, value in
-                    if Int(value) != nil && propertyTypeFallbacksToType(type, .Int) {
+                    if value.boolValue != nil && propertyTypeFallbacksToType(type, .Bool) {
+                        return .Bool
+                    } else if Int(value) != nil && propertyTypeFallbacksToType(type, .Int) {
                         return .Int
                     } else if Double(value) != nil && propertyTypeFallbacksToType(type, .Double) {
                         return .Double
-                    } else {
-                        return .String
                     }
+                    return .String
                 } ?? .String
 
                 return property
