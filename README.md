@@ -33,7 +33,7 @@ as well; and all classes on the Objective-C side are pre-fixed with `RLM`.
 let realmFilePath = '' // Absolute file path to my Realm file
 let outputFolderPath = '' // Absolute path to the folder which will hold the CSV files
 
-let csvDataExporter = CSVDataExporter(realmFilePath: realmFilePath)
+let csvDataExporter = try! CSVDataExporter(realmFilePath: realmFilePath)
 try! csvDataExporter.exportToFolderAtPath(outputFolderPath)
 ```
 
