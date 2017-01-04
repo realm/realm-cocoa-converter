@@ -84,11 +84,17 @@ public class CSVDataExporter: DataExporter {
                     guard let value = object[property.name] else {
                         return ""
                     }
+
                     if let value = value as? RLMObject {
                         return serializedObject(value, realm: realm)
                     } else if let value = value as? RLMArray {
                         return serializedObjectArray(value, realm: realm)
                     }
+
+                    if let boolValue = value.boolValue where property.type == .Bool {
+                        return boolValue.description
+                    }
+
                     return sanitizedValue(value.description!)
                 }).joinWithSeparator(delimiter) + "\n"
                 

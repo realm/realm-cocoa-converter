@@ -109,14 +109,12 @@ class RealmConverter_Importer: XCTestCase {
     func testThatPropertyTypesAreDetectedProperlyWhenImportingFromCSV() {
         let csvSchema = try! generateSchemaForFileAtPath(bundle.pathForResource("import-test", ofType: "csv")!)
 
-        XCTAssertTrue(csvSchema.schemas[0].properties[0].type == .Int)
-        XCTAssertTrue(csvSchema.schemas[0].properties[1].type == .Int)
-        XCTAssertTrue(csvSchema.schemas[0].properties[2].type == .Double)
-        XCTAssertTrue(csvSchema.schemas[0].properties[3].type == .Double)
-        XCTAssertTrue(csvSchema.schemas[0].properties[4].type == .String)
-        XCTAssertTrue(csvSchema.schemas[0].properties[5].type == .String)
-        XCTAssertTrue(csvSchema.schemas[0].properties[5].type == .String)
-        XCTAssertTrue(csvSchema.schemas[0].properties[5].type == .String)
+        // integerValue,boolValue,floatValue,doubleValue,stringValue,dateValue,arrayReference,mixedValue
+        let expectedTypes: [RLMPropertyType] = [.Int, .Bool, .Double, .Double, .String, .String, .String, .String]
+
+        for (index, type) in expectedTypes.enumerate() {
+            XCTAssertEqual(csvSchema.schemas[0].properties[index].type, type)
+        }
     }
 
     // FIXME: XLSX import doesn't seem to work at all :(
