@@ -74,7 +74,9 @@ NSString * const kRLMTestRealmFileName = @"dogs.realm";
     XCTAssertNotNil(realmFilePath);
     
     // Test the exporter and ensure it didn't generate any errors
-    RLMCSVDataExporter *exporter = [[RLMCSVDataExporter alloc] initWithRealmFileAtPath:realmFilePath];
+    RLMCSVDataExporter *exporter = [[RLMCSVDataExporter alloc] initWithRealmFileAtPath:realmFilePath error:&error];
+    XCTAssertNil(error);
+
     [exporter exportToFolderAtPath:self.outputTempFolderPath withError:&error];
     XCTAssertNil(error);
     

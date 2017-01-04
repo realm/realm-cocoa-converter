@@ -60,7 +60,7 @@ class CSVExportTests: XCTestCase {
     }
     
     func exportToCSVAndCheckResults(realmPath: String, outputDirectoryPath: String) throws {
-        let exporter = CSVDataExporter(realmFilePath: realmPath)
+        let exporter = try CSVDataExporter(realmFilePath: realmPath)
         
         try exporter.exportToFolderAtPath(outputDirectoryPath)
         

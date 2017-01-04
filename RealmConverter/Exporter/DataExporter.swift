@@ -17,6 +17,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 import Foundation
+import Realm
 
 /**
  An abstract class manages the common logic for 
@@ -25,18 +26,41 @@ import Foundation
 */
 public class DataExporter: NSObject {
     
-    public var realmFilePath = ""
+    public let realm: RLMRealm
     
     /**
      Create a new instance of the exporter object
      
      - parameter realmFilePath: An absolute path to the Realm file to be exported
      */
-    @objc(initWithRealmFileAtPath:)
-    public init (realmFilePath: String) {
-        self.realmFilePath = realmFilePath
+    @objc(initWithRealmFileAtPath:error:)
+    public convenience init(realmFilePath: String) throws {
+        let configuration = RLMRealmConfiguration.defaultConfiguration()
+        configuration.fileURL = NSURL(fileURLWithPath: realmFilePath)
+        configuration.dynamic = true
+
+        let realm = try RLMRealm(configuration: configuration)
+
+        self.init(realm: realm)
     }
-    
+
+    /**
+     Create a new instance of the exporter object
+
+     - parameter realm: An instance of Realm to be exported
+     */
+    @objc(initWithRealm:)
+    public init(realm: RLMRealm) {
+        if realm.configuration.dynamic {
+            self.realm = realm
+        } else {
+            let configuration = realm.configuration
+            configuration.dynamic = true
+
+            self.realm = try! RLMRealm(configuration: configuration)
+        }
+    }
+
     /**
      Exports all of the contents of the provided Realm file to
      the designated output folder.
@@ -47,4 +71,5 @@ public class DataExporter: NSObject {
     public func exportToFolderAtPath(outputFolderPath: String) throws {
         fatalError("Cannot call export() from DataExporter base class")
     }
+
 }
