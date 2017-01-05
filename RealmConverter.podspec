@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name     = 'RealmConverter'
   s.version  = '0.3.0'
-  s.license  =  { :type => 'Apache', :file => 'LICENSE' }
+  s.license  =  { :type => 'Apache-2.0', :file => 'LICENSE' }
   s.summary  = 'A library that provides the ability to import/export Realm files from a variety of data container formats.'
   s.homepage = 'https://realm.io'
   s.author   = { 'Realm' => 'help@realm.io' }
