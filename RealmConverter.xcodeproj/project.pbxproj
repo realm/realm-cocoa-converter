@@ -91,6 +91,8 @@
 		68C1B4EDBEF2F7F41DBB9D4E /* Pods_RealmConverter_RealmConverterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmConverter_RealmConverterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		742296CB838BEF008EAD248F /* Pods-RealmConverter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverter.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverter/Pods-RealmConverter.release.xcconfig"; sourceTree = "<group>"; };
 		C21934579C4B43F3C75ED46C /* Pods-RealmConverter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmConverter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealmConverter/Pods-RealmConverter.debug.xcconfig"; sourceTree = "<group>"; };
+		C25413E11E1E49A500A544E5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C25413E21E1E49A500A544E5 /* RealmConverter.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = RealmConverter.podspec; sourceTree = "<group>"; };
 		C28AA3761DAFA72D006B8E6C /* import-test.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "import-test.csv"; sourceTree = "<group>"; };
 		C2ED12611D422EE6006BAB04 /* CSVExportTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVExportTests.swift; sourceTree = "<group>"; };
 		C2ED12631D422F3C006BAB04 /* relationships.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = relationships.realm; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 		2213C6EC1C50BE1000902618 = {
 			isa = PBXGroup;
 			children = (
+				C25413E01E1E48F800A544E5 /* Podspec */,
 				228B0D611C6092CB00D7325B /* RealmConverter */,
 				228B0D7E1C6092D200D7325B /* RealmConverterTests */,
 				2213C6F71C50BE1000902618 /* Products */,
@@ -261,6 +264,15 @@
 				DB19FA3CB58ACD41AB339F0C /* Pods-RealmConverterTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C25413E01E1E48F800A544E5 /* Podspec */ = {
+			isa = PBXGroup;
+			children = (
+				C25413E11E1E49A500A544E5 /* README.md */,
+				C25413E21E1E49A500A544E5 /* RealmConverter.podspec */,
+			);
+			name = Podspec;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
