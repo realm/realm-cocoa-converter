@@ -51,14 +51,7 @@ public class CSVDataExporter: DataExporter {
      
      - parameter outputFolderpath: An absolute path to a folder where the transformed files will be saved
      */
-    public override func exportToFolderAtPath(outputFolderPath: String) throws {
-        
-        let realmConfiguration = RLMRealmConfiguration.defaultConfiguration()
-        realmConfiguration.fileURL = NSURL(fileURLWithPath: realmFilePath)
-        realmConfiguration.dynamic = true
-        
-        let realm = try RLMRealm(configuration: realmConfiguration)
-        
+    public override func exportToFolderAtPath(outputFolderPath: String) throws {        
         // Write out a .csv file for each object in the Realm
         for objectSchema in realm.schema.objectSchema {
             let filePath = Path(outputFolderPath) + Path("\(objectSchema.className).csv")
