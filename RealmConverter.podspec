@@ -12,5 +12,6 @@ Pod::Spec.new do |s|
   s.dependency 'Realm'
   s.dependency 'PathKit', '~> 0.6.0'
   s.dependency 'CSwiftV'
+  s.dependency 'SSZipArchive', '~> 1.6.2'
   s.dependency 'TGSpreadsheetWriter'
 end

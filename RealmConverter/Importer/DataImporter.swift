@@ -92,6 +92,11 @@ public class DataImporter: NSObject {
                     size = sizeof(Double)
                     alignment = UInt8(log2(Double(size)))
                     encode = "d"
+                case .Bool:
+                    type = objc_property_attribute_t(name: "T".cStringUsingEncoding(NSUTF8StringEncoding), value: "B".cStringUsingEncoding(NSUTF8StringEncoding))
+                    size = sizeof(Bool)
+                    alignment = UInt8(log2(Double(size)))
+                    encode = "B"
                 default:
                     type = objc_property_attribute_t(name: "T".cStringUsingEncoding(NSUTF8StringEncoding), value: "@\"NSString\"".cStringUsingEncoding(NSUTF8StringEncoding))
                     size = sizeof(NSObject)

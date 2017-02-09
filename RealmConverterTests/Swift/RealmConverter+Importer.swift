@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 import Realm
+import Realm.Dynamic
 import RealmConverter
 import PathKit
 
@@ -115,6 +116,11 @@ class RealmConverter_Importer: XCTestCase {
         for (index, type) in expectedTypes.enumerate() {
             XCTAssertEqual(csvSchema.schemas[0].properties[index].type, type)
         }
+
+        let importer = CSVDataImporter(file: bundle.pathForResource("import-test", ofType: "csv")!)
+        let realm = try! importer.importToPath(outputTestFolderPath, schema: csvSchema)
+
+        validatePropertyTypes(in: realm, className: "import-test", expectedTypes: expectedTypes)
     }
 
     // FIXME: XLSX import doesn't seem to work at all :(
@@ -132,6 +138,18 @@ class RealmConverter_Importer: XCTestCase {
     func generateSchemaForFileAtPath(path: String) throws -> ImportSchema {
         let generator = ImportSchemaGenerator(files: [path])
         return try generator.generate()
+    }
+
+    func validatePropertyTypes(in realm: RLMRealm, className: String, expectedTypes: [RLMPropertyType]) {
+        guard let objectSchema = realm.schema.objectSchema.filter({ $0.className == className }).first else {
+            return XCTFail("Specified class is not found")
+        }
+
+        XCTAssertEqual(objectSchema.properties.count, expectedTypes.count)
+
+        for i in 0..<expectedTypes.count {
+            XCTAssertEqual(objectSchema.properties[i].type, expectedTypes[i])
+        }
     }
 
 }
