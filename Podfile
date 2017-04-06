@@ -3,8 +3,8 @@ use_frameworks!
 
 target 'RealmConverter' do
     pod 'Realm'
-    pod 'PathKit', '~> 0.6.0' # 0.7+ requires swift 3
-    pod 'CSwiftV'
+    pod 'PathKit'
+    pod 'CSwiftV', :git => 'https://github.com/Daniel1of1/CSwiftV.git', :tag => '0.0.7'
     pod 'TGSpreadsheetWriter'
 
     target 'RealmConverterTests' do
