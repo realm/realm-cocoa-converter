@@ -31,19 +31,19 @@ import PathKit
  with strings being escaped in the default CSV standard.
 */
 @objc(RLMCSVDataExporter)
-public class CSVDataExporter: DataExporter {
+open class CSVDataExporter: DataExporter {
     
     /**
      The delimiter symbol used to separate each property on each row.
      Defaults to the CSV standard ',' comma.
      */
-    public var delimiter        = ","
+    open var delimiter        = ","
     
     /**
      When it's necessary to escape a Realm property on a CSV row, this is the escape symbol
      Defaults to the CSV standard '"' double-quotes.
      */
-    public var escapeQuotes     = "\""
+    open var escapeQuotes     = "\""
     
     /**
      Takes the provided Realm file and exports each table to a CSV file in the provided
@@ -51,7 +51,7 @@ public class CSVDataExporter: DataExporter {
      
      - parameter outputFolderpath: An absolute path to a folder where the transformed files will be saved
      */
-    public override func exportToFolderAtPath(outputFolderPath: String) throws {        
+    open override func exportToFolderAtPath(_ outputFolderPath: String) throws {        
         // Write out a .csv file for each object in the Realm
         for objectSchema in realm.schema.objectSchema {
             let filePath = Path(outputFolderPath) + Path("\(objectSchema.className).csv")
@@ -62,21 +62,19 @@ public class CSVDataExporter: DataExporter {
             
             // Build the initial row of property names and write to disk
             try filePath.write(
-                objectSchema.properties.map({ $0.name }).joinWithSeparator(delimiter) + "\n"
+                objectSchema.properties.map({ $0.name }).joined(separator: delimiter) + "\n"
             )
             
             // Write the remaining objects
-            let fileHandle = NSFileHandle(forWritingAtPath: String(filePath))
+            let fileHandle = FileHandle(forWritingAtPath: String(describing: filePath))
             fileHandle?.seekToEndOfFile()
             
             let objects = realm.allObjects(objectSchema.className)
             
             // Loop through each object in the table
-            for object in (0..<objects.count).map({ objects.objectAtIndex($0) as RLMObject }) {
+            for object in (0..<objects.count).map({ objects.object(at: $0) as RLMObject }) {
                 let rowString = objectSchema.properties.map({ property in
-                    guard let value = object[property.name] else {
-                        return ""
-                    }
+                    let value = object[property.name] as AnyObject
 
                     if let value = value as? RLMObject {
                         return serializedObject(value, realm: realm)
@@ -84,52 +82,52 @@ public class CSVDataExporter: DataExporter {
                         return serializedObjectArray(value, realm: realm)
                     }
 
-                    if let boolValue = value.boolValue where property.type == .Bool {
+                    if let boolValue = value.boolValue, property.type == .bool {
                         return boolValue.description
                     }
 
                     return sanitizedValue(value.description!)
-                }).joinWithSeparator(delimiter) + "\n"
+                }).joined(separator: delimiter) + "\n"
                 
-                fileHandle?.writeData(rowString.dataUsingEncoding(NSUTF8StringEncoding)!)
+                fileHandle?.write(rowString.data(using: .utf8)!)
             }
             fileHandle?.closeFile()
         }
     }
     
-    private func sanitizedValue(value: String) -> String {
-        func valueByEscapingQuotes(string: String) -> String {
+    fileprivate func sanitizedValue(_ value: String) -> String {
+        func valueByEscapingQuotes(_ string: String) -> String {
             return escapeQuotes + string + escapeQuotes
         }
         
         // Value already contains quotes, replace with 2 sets of quotes
-        if value.rangeOfString(escapeQuotes) != nil {
+        if value.range(of: escapeQuotes) != nil {
             return valueByEscapingQuotes(
-                value.stringByReplacingOccurrencesOfString(escapeQuotes, withString: escapeQuotes + escapeQuotes)
+                value.replacingOccurrences(of: escapeQuotes, with: escapeQuotes + escapeQuotes)
             )
-        } else if value.rangeOfString(" ") != nil || value.rangeOfString(delimiter) != nil {
+        } else if value.range(of: " ") != nil || value.range(of: delimiter) != nil {
             return valueByEscapingQuotes(value)
         }
         return value
     }
     
-    private func serializedObject(object: RLMObject, realm: RLMRealm) -> String {
+    fileprivate func serializedObject(_ object: RLMObject, realm: RLMRealm) -> String {
         let className = object.objectSchema.className
         let allObjects = realm.allObjects(className)
-        let index = Int(allObjects.indexOfObject(object))
+        let index = Int(allObjects.index(of: object))
         
         return index == NSNotFound ? "<\(className)>{}" : "<\(className)>{\(index)}"
     }
     
-    private func serializedObjectArray(array: RLMArray, realm: RLMRealm) -> String {
+    fileprivate func serializedObjectArray(_ array: RLMArray<RLMObject>, realm: RLMRealm) -> String {
         let className = array.objectClassName
         let allObjects = realm.allObjects(className)
         
         return "<\(className)>{" + (0..<array.count).map({ arrayIndex in
-            let tableIndex = allObjects.indexOfObject(array.objectAtIndex(arrayIndex))
+            let tableIndex = allObjects.index(of: array.object(at: arrayIndex))
             
             return Int(tableIndex) != NSNotFound ? "\(tableIndex)" : ""
-        }).joinWithSeparator(" ") + "}"
+        }).joined(separator: " ") + "}"
     }
     
 }

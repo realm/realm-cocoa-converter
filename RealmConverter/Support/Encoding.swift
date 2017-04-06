@@ -20,23 +20,23 @@ import Foundation
 
 @objc
 public enum Encoding: UInt {
-    case UTF8
+    case utf8
 }
 
 extension Encoding: RawRepresentable {
     public init?(rawValue: UInt) {
         switch rawValue {
-        case NSUTF8StringEncoding:
-            self = UTF8
+        case String.Encoding.utf8.rawValue:
+            self = .utf8
         default:
-            self = UTF8
+            self = .utf8
         }
     }
     
     public var rawValue: UInt {
         switch self {
-        case UTF8:
-            return NSUTF8StringEncoding
+        case .utf8:
+            return String.Encoding.utf8.rawValue
         }
     }
 }

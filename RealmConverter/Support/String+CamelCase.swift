@@ -24,9 +24,10 @@ extension String {
         guard !isEmpty else {
             return ""
         }
-        let delimiters = NSCharacterSet(charactersInString: "_-")
-        let pascalcaseString = capitalizedString.componentsSeparatedByCharactersInSet(delimiters).joinWithSeparator("")
-        return "\(pascalcaseString.substringToIndex(startIndex.advancedBy(1)).lowercaseString)\(pascalcaseString.substringFromIndex(startIndex.advancedBy(1)))"
+
+        let delimiters = CharacterSet(charactersIn: "_-")
+        let pascalcaseString = capitalized.components(separatedBy: delimiters).joined(separator: "")
+        return "\(pascalcaseString.substring(to: characters.index(startIndex, offsetBy: 1)).lowercased())\(pascalcaseString.substring(from: characters.index(startIndex, offsetBy: 1)))"
     }
     
 }

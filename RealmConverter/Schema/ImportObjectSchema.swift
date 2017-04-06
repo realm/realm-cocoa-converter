@@ -20,8 +20,8 @@ import Foundation
 import Realm
 
 @objc(RLMImportObjectSchema)
-public class ImportObjectSchema: NSObject {
-    public var objectClassName: String
+open class ImportObjectSchema: NSObject {
+    open var objectClassName: String
     var properties: [ImportObjectSchema.Property] = []
     
     init(objectClassName: String) {
@@ -29,8 +29,8 @@ public class ImportObjectSchema: NSObject {
         super.init()
     }
     
-    func toJSON() -> [String: AnyObject] {
-        let fields = properties.map { (property) -> [String: AnyObject] in
+    func toJSON() -> [String: Any] {
+        let fields = properties.map { (property) -> [String: Any] in
             return property.toJSON()
         }
         return ["fields": fields, "primaryKey": NSNull()]
@@ -40,9 +40,9 @@ public class ImportObjectSchema: NSObject {
         let column: UInt
         let originalName: String
         let name: String
-        var type: RLMPropertyType = .String
-        var indexed: Bool = false
-        var optional: Bool = false
+        var type: RLMPropertyType = .string
+        var indexed = false
+        var optional = false
         
         init(column: UInt, originalName: String, name: String) {
             self.column = column
@@ -50,28 +50,27 @@ public class ImportObjectSchema: NSObject {
             self.name = name
         }
         
-        func toJSON() -> [String: AnyObject] {
-            var field = [String: AnyObject]()
-            field["column"] = column
-            field["originalName"] = originalName
-            field["name"] = name
-            field["type"] = "\(type)"
-            field["indexed"] = indexed
-            field["optional"] = optional
-            
-            return field
+        func toJSON() -> [String: Any] {
+            return [
+                "column": column,
+                "originalName": originalName,
+                "name": name,
+                "type": "\(type)",
+                "indexed": indexed,
+                "optional": optional
+            ]
         }
     }
 }
 
 extension ImportObjectSchema {
     
-    override public var description: String {
-        let data = try! NSJSONSerialization.dataWithJSONObject(toJSON() as NSDictionary, options: .PrettyPrinted)
-        return NSString(data: data, encoding: NSUTF8StringEncoding) as! String
+    override open var description: String {
+        let data = try! JSONSerialization.data(withJSONObject: toJSON(), options: .prettyPrinted)
+        return String(data: data, encoding: .utf8)!
     }
     
-    override public var debugDescription: String {
+    override open var debugDescription: String {
         return description
     }
     
@@ -81,27 +80,27 @@ extension ImportObjectSchema {
 extension RLMPropertyType: CustomStringConvertible, CustomDebugStringConvertible {
     public var description: Swift.String {
         switch self {
-        case .Int:
+        case .int:
             return "integer"
-        case .Bool:
+        case .bool:
             return "boolean"
-        case .Float:
+        case .float:
             return "float"
-        case .Double:
+        case .double:
             return "double"
-        case .String:
+        case .string:
             return "string"
-        case .Data:
+        case .data:
             return "data"
-        case .Any:
+        case .any:
             return "any"
-        case .Date:
+        case .date:
             return "date"
-        case .Object:
+        case .object:
             return "object"
-        case .Array:
+        case .array:
             return "array"
-        case .LinkingObjects:
+        case .linkingObjects:
             return "linkingobjects"
         }
     }

@@ -343,9 +343,11 @@
 				TargetAttributes = {
 					2213C6F51C50BE1000902618 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0830;
 					};
 					2213C6FF1C50BE1000902618 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -624,7 +626,7 @@
 				PRODUCT_NAME = RealmConverter;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -647,7 +649,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.realm.converter;
 				PRODUCT_NAME = RealmConverter;
 				SDKROOT = macosx;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -662,7 +664,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.realm.ConverterTests;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)Tests";
 				PRODUCT_NAME = RealmConverter;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -677,7 +679,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.realm.ConverterTests;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)Tests";
 				PRODUCT_NAME = RealmConverter;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

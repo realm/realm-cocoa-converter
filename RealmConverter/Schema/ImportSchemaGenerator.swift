@@ -21,17 +21,41 @@ import CSwiftV
 import PathKit
 import TGSpreadsheetWriter
 import Realm
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
 
 @objc
 public enum ImportSchemaFormat: Int {
-    case CSV
-    case JSON
-    case XLSX
+    case csv
+    case json
+    case xlsx
 }
 
 extension String {
-    private var boolValue: Bool? {
-        let lower = lowercaseString
+    fileprivate var boolValue: Bool? {
+        let lower = lowercased()
         if ["true", "yes"].contains(lower) {
             return true
         } else if ["false", "no"].contains(lower) {
@@ -50,7 +74,7 @@ extension String {
  when performing the import to Realm.
  */
 @objc(RLMImportSchemaGenerator)
-public class ImportSchemaGenerator: NSObject {
+open class ImportSchemaGenerator: NSObject {
     let files: [String]
     let encoding: Encoding
     let format: ImportSchemaFormat
@@ -63,7 +87,7 @@ public class ImportSchemaGenerator: NSObject {
      - parameter encoding: The text encoding used by the file.
      */
     @objc(initWithFile:encoding:)
-    public convenience init(file: String, encoding: Encoding = .UTF8) {
+    public convenience init(file: String, encoding: Encoding = .utf8) {
         self.init(files: [file], encoding: encoding)
     }
     
@@ -75,7 +99,7 @@ public class ImportSchemaGenerator: NSObject {
      - parameter encoding: The text encoding used by the file.
      */
     @objc(initWithFiles:encoding:)
-    public init(files: [String], encoding: Encoding = .UTF8) {
+    public init(files: [String], encoding: Encoding = .utf8) {
         self.files = files
         self.encoding = encoding
         self.format = ImportSchemaGenerator.importSchemaFormat(files.first!)
@@ -86,17 +110,17 @@ public class ImportSchemaGenerator: NSObject {
     representing all of those files.
     */
     @objc(generatedSchemaWithError:)
-    public func generate() throws -> ImportSchema {
+    open func generate() throws -> ImportSchema {
         switch format {
-        case .CSV: return try! generateForCSV()
-        case .XLSX: return try! generateForXLSX()
-        case .JSON: return try! generateForJSON()
+        case .csv: return try! generateForCSV()
+        case .xlsx: return try! generateForXLSX()
+        case .json: return try! generateForJSON()
         }
     }
 
-    private func generateForJSON() throws -> ImportSchema {
+    fileprivate func generateForJSON() throws -> ImportSchema {
         // We only use a single JSON file to import/export Realms.
-        let jsonObject = try NSJSONSerialization.JSONObjectWithData(NSData(contentsOfFile: files[0])!, options: [])
+        let jsonObject = try JSONSerialization.jsonObject(with: Data(contentsOf: URL(fileURLWithPath: files[0])))
 
         guard let jsonDictionary = jsonObject as? NSDictionary else {
             throw NSError(domain: "io.realm.converter.error", code: 0, userInfo: nil)
@@ -106,15 +130,15 @@ public class ImportSchemaGenerator: NSObject {
             let schema = ImportObjectSchema(objectClassName: modelName)
             let jsonModelObjects = jsonDictionary[modelName]! as! [NSDictionary]
             let firstJSONModelObject = jsonModelObjects.first!
-            schema.properties = (firstJSONModelObject.allKeys as! [String]).enumerate().map { (index, propertyName) in
+            schema.properties = (firstJSONModelObject.allKeys as! [String]).enumerated().map { (index, propertyName) in
                 var property = ImportObjectSchema.Property(column: UInt(index), originalName: propertyName, name: propertyName)
                 let value = firstJSONModelObject[propertyName]!
                 switch value {
-                case _ as Int: property.type = .Int
-                case _ as Bool: property.type = .Bool
-                case _ as Double: property.type = .Double
-                case _ as String: property.type = .String
-                default: property.type = .String
+                case _ as Int: property.type = .int
+                case _ as Bool: property.type = .bool
+                case _ as Double: property.type = .double
+                case _ as String: property.type = .string
+                default: property.type = .string
                 }
                 return property
             }
@@ -123,99 +147,99 @@ public class ImportSchemaGenerator: NSObject {
         return ImportSchema(schemas: schemas)
     }
 
-    private func generateForCSV() throws -> ImportSchema {
-        let propertyTypeFallbackOrder: [RLMPropertyType] = [.Bool, .Int, .Double, .String]
+    fileprivate func generateForCSV() throws -> ImportSchema {
+        let propertyTypeFallbackOrder: [RLMPropertyType] = [.bool, .int, .double, .string]
         let propertyTypeFallbacksToType = { (type: RLMPropertyType?, fallbackType: RLMPropertyType) -> Bool in
             guard let type = type else {
                 return true
             }
 
-            return propertyTypeFallbackOrder.indexOf(type) <= propertyTypeFallbackOrder.indexOf(fallbackType)
+            return propertyTypeFallbackOrder.index(of: type) <= propertyTypeFallbackOrder.index(of: fallbackType)
         }
 
         let schemas = files.map { (file) -> ImportObjectSchema in
             let inputString = try! NSString(contentsOfFile: file, encoding: encoding.rawValue) as String
-            let csv = CSwiftV(string: inputString)
+            let csv = CSwiftV(with: inputString)
             
             let schema = ImportObjectSchema(objectClassName: Path(file).lastComponentWithoutExtension)
             
-            schema.properties = csv.headers.enumerate().map { index, field in
+            schema.properties = csv.headers.enumerated().map { index, field in
                 var property = ImportObjectSchema.Property(column: UInt(index), originalName: field, name: field.camelcaseString)
 
                 property.type = csv.rows.map({ $0[index] }).reduce(nil as RLMPropertyType?) { type, value in
-                    if value.boolValue != nil && propertyTypeFallbacksToType(type, .Bool) {
-                        return .Bool
-                    } else if Int(value) != nil && propertyTypeFallbacksToType(type, .Int) {
-                        return .Int
-                    } else if Double(value) != nil && propertyTypeFallbacksToType(type, .Double) {
-                        return .Double
+                    if value.boolValue != nil && propertyTypeFallbacksToType(type, .bool) {
+                        return .bool
+                    } else if Int(value) != nil && propertyTypeFallbacksToType(type, .int) {
+                        return .int
+                    } else if Double(value) != nil && propertyTypeFallbacksToType(type, .double) {
+                        return .double
                     }
-                    return .String
-                } ?? .String
+                    return .string
+                } ?? .string
 
                 return property
             }
 
             return schema
         }
-        
+
         return ImportSchema(schemas: schemas)
     }
     
-    private func generateForXLSX() throws -> ImportSchema {
-        let workbook = TGSpreadsheetWriter.readWorkbook(NSURL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
-        let schemas = workbook.keys.enumerate().map { (index, key) -> ImportObjectSchema in
-            let schema = ImportObjectSchema(objectClassName: key.capitalizedString)
+    fileprivate func generateForXLSX() throws -> ImportSchema {
+        let workbook = TGSpreadsheetWriter.readWorkbook(URL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
+        let schemas = workbook.keys.enumerated().map { (index, key) -> ImportObjectSchema in
+            let schema = ImportObjectSchema(objectClassName: key.capitalized)
             
             if let sheet = workbook[key] {
                 if let headers = sheet.first {
-                    schema.properties = headers.enumerate().map({ (index, field) -> ImportObjectSchema.Property in
+                    schema.properties = headers.enumerated().map({ (index, field) -> ImportObjectSchema.Property in
                         return ImportObjectSchema.Property(column: UInt(index), originalName: field, name: field.camelcaseString)
                     })
                 }
                 
                 let rows = sheet.dropFirst()
                 rows.forEach { (row) -> () in
-                    row.enumerate().forEach { (index, field) -> () in
+                    row.enumerated().forEach { (index, field) -> () in
                         var property = schema.properties[index]
                         
                         if field.isEmpty {
                             //property.optional = true
                             return
                         }
-                        guard property.type == .String else {
+                        guard property.type == .string else {
                             return
                         }
                         
-                        let numberFormatter = NSNumberFormatter()
-                        if let number = numberFormatter.numberFromString(field) {
+                        let numberFormatter = NumberFormatter()
+                        if let number = numberFormatter.number(from: field) {
                             let numberType = CFNumberGetType(number)
                             switch (numberType) {
                             case
-                            .SInt8Type,
-                            .SInt16Type,
-                            .SInt32Type,
-                            .SInt64Type,
-                            .CharType,
-                            .ShortType,
-                            .IntType,
-                            .LongType,
-                            .LongLongType,
-                            .CFIndexType,
-                            .NSIntegerType:
-                                if (property.type != .Double) {
-                                    property.type = .Int;
+                            .sInt8Type,
+                            .sInt16Type,
+                            .sInt32Type,
+                            .sInt64Type,
+                            .charType,
+                            .shortType,
+                            .intType,
+                            .longType,
+                            .longLongType,
+                            .cfIndexType,
+                            .nsIntegerType:
+                                if (property.type != .double) {
+                                    property.type = .int;
                                 }
                             case
-                            .Float32Type,
-                            .Float64Type,
-                            .FloatType,
-                            .DoubleType,
-                            .CGFloatType:
-                                property.type = .Double;
+                            .float32Type,
+                            .float64Type,
+                            .floatType,
+                            .doubleType,
+                            .cgFloatType:
+                                property.type = .double;
                             }
                         } else {
-                            property.type = .String
+                            property.type = .string
                         }
                     }
                 }
@@ -227,11 +251,11 @@ public class ImportSchemaGenerator: NSObject {
         return ImportSchema(schemas: schemas)
     }
     
-    private class func importSchemaFormat(file: String) -> ImportSchemaFormat {
-        switch Path(file).`extension`!.lowercaseString {
-        case "xlsx": return .XLSX
-        case "json": return .JSON
-        default: return .CSV
+    fileprivate class func importSchemaFormat(_ file: String) -> ImportSchemaFormat {
+        switch Path(file).`extension`!.lowercased() {
+        case "xlsx": return .xlsx
+        case "json": return .json
+        default: return .csv
         }
     }
 }
