@@ -29,24 +29,24 @@ class CSVExportTests: XCTestCase {
         super.setUp()
         
         do {
-            try NSFileManager.defaultManager().createDirectoryAtPath(outputDirectoryPath, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(atPath: outputDirectoryPath, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
-            XCTFail("Failed to create output directory: \(error.localizedFailureReason)")
+            XCTFail("Failed to create output directory: \(String(describing: error.localizedFailureReason))")
         }
     }
     
     override func tearDown() {
         do {
-            try NSFileManager.defaultManager().removeItemAtPath(outputDirectoryPath)
+            try FileManager.default.removeItem(atPath: outputDirectoryPath)
         } catch let error as NSError {
-            XCTFail("Failed to remove output directory: \(error.localizedFailureReason)")
+            XCTFail("Failed to remove output directory: \(String(describing: error.localizedFailureReason))")
         }
         
         super.tearDown()
     }
     
     func testThatCSVDataExorterExportsEmptyRelationships() {
-        guard let realmPath = NSBundle(forClass: self.dynamicType).pathForResource("relationships", ofType: "realm") else {
+        guard let realmPath = Bundle(for: type(of: self)).path(forResource: "relationships", ofType: "realm") else {
             XCTFail("Realm not found")
             return
         }
@@ -59,13 +59,13 @@ class CSVExportTests: XCTestCase {
         
     }
     
-    func exportToCSVAndCheckResults(realmPath: String, outputDirectoryPath: String) throws {
+    func exportToCSVAndCheckResults(_ realmPath: String, outputDirectoryPath: String) throws {
         let exporter = try CSVDataExporter(realmFilePath: realmPath)
         
         try exporter.exportToFolderAtPath(outputDirectoryPath)
         
-        let configuration = RLMRealmConfiguration.defaultConfiguration()
-        configuration.fileURL = NSURL(fileURLWithPath: realmPath)
+        let configuration = RLMRealmConfiguration.default()
+        configuration.fileURL = URL(fileURLWithPath: realmPath)
         configuration.dynamic = true
         
         let realm = try RLMRealm(configuration: configuration)
@@ -73,7 +73,7 @@ class CSVExportTests: XCTestCase {
         let schema = realm.schema
         
         for object in schema.objectSchema {
-            XCTAssert(NSFileManager.defaultManager().fileExistsAtPath("\(outputDirectoryPath)/\(object.className).csv"))
+            XCTAssert(FileManager.default.fileExists(atPath: "\(outputDirectoryPath)/\(object.className).csv"))
         }
     }
     
