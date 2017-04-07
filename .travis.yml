@@ -1,3 +1,4 @@
+language: objective-c
 osx_image: xcode8.3
 install:
     - bundle install
