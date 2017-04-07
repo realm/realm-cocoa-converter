@@ -1,7 +1,8 @@
 language: objective-c
 osx_image: xcode8
-before_install:
-- pod repo update --silent
+install:
+    - bundle install
+    - pod repo update --silent
 script:
-- set -o pipefail && xcodebuild -workspace "RealmConverter.xcworkspace" -scheme "RealmConverter" clean test | xcpretty
-- pod lib lint
+    - set -o pipefail && xcodebuild -workspace "RealmConverter.xcworkspace" -scheme "RealmConverter" clean test | xcpretty
+    - pod lib lint
