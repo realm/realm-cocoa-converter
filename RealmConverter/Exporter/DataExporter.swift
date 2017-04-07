@@ -68,7 +68,7 @@ open class DataExporter: NSObject {
      - warning: This method must be overridden by a subclass, that does *not* call `super`
      */
     @objc(exportToFolderAtPath:withError:)
-    open func exportToFolderAtPath(_ outputFolderPath: String) throws {
+    open func export(toFolderAtPath outputFolderPath: String) throws {
         fatalError("Cannot call export() from DataExporter base class")
     }
 

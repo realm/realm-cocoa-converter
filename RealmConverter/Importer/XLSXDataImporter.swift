@@ -24,8 +24,8 @@ import TGSpreadsheetWriter
 @objc(RLMXLSXDataImporter)
 open class XLSXDataImporter: DataImporter {
 
-    open override func importToPath(_ path: String, schema: ImportSchema) throws -> RLMRealm {
-        let realm = try! self.createNewRealmFile(path, schema: schema)
+    open override func `import`(toPath path: String, schema: ImportSchema) throws -> RLMRealm {
+        let realm = try! self.createNewRealmFile(atPath: path, schema: schema)
         
         let workbook = TGSpreadsheetWriter.readWorkbook(URL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
         for (index, key) in workbook.keys.enumerated() {

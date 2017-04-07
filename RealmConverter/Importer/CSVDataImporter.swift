@@ -35,8 +35,9 @@ import Realm
 @objc(RLMCSVDataImporter)
 open class CSVDataImporter: DataImporter {
 
-    open override func importToPath(_ path: String, schema: ImportSchema) throws -> RLMRealm {
-        let realm = try! self.createNewRealmFile(path, schema: schema)
+    @discardableResult
+    open override func `import`(toPath path: String, schema: ImportSchema) throws -> RLMRealm {
+        let realm = try! self.createNewRealmFile(atPath: path, schema: schema)
         
         for (index, file) in files.enumerated() {
             let schema = schema.schemas[index]

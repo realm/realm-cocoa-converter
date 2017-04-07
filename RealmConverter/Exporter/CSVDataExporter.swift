@@ -51,7 +51,7 @@ open class CSVDataExporter: DataExporter {
      
      - parameter outputFolderpath: An absolute path to a folder where the transformed files will be saved
      */
-    open override func exportToFolderAtPath(_ outputFolderPath: String) throws {        
+    open override func export(toFolderAtPath outputFolderPath: String) throws {        
         // Write out a .csv file for each object in the Realm
         for objectSchema in realm.schema.objectSchema {
             let filePath = Path(outputFolderPath) + Path("\(objectSchema.className).csv")

@@ -62,7 +62,7 @@ class CSVExportTests: XCTestCase {
     func exportToCSVAndCheckResults(_ realmPath: String, outputDirectoryPath: String) throws {
         let exporter = try CSVDataExporter(realmFilePath: realmPath)
         
-        try exporter.exportToFolderAtPath(outputDirectoryPath)
+        try exporter.export(toFolderAtPath: outputDirectoryPath)
         
         let configuration = RLMRealmConfiguration.default()
         configuration.fileURL = URL(fileURLWithPath: realmPath)

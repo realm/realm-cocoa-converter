@@ -62,7 +62,7 @@ open class DataImporter: NSObject {
      - parameter schema: The import schema with which this file will be created
      */
     @objc(createNewRealmFileAtPath:withSchema:error:)
-    open func createNewRealmFile(_ output: String, schema: ImportSchema) throws -> RLMRealm {
+    open func createNewRealmFile(atPath output: String, schema: ImportSchema) throws -> RLMRealm {
         var generatedClasses: [AnyObject] = []
         
         for schema in schema.schemas {
@@ -145,9 +145,9 @@ open class DataImporter: NSObject {
      
      -parameter schema: The import schema with which this file will be created
      */
-    @discardableResult
     @objc(importToPath:withSchema:error:)
-    func importToPath(_ path: String, schema: ImportSchema) throws -> RLMRealm {
+    @discardableResult
+    func `import`(toPath path: String, schema: ImportSchema) throws -> RLMRealm {
         fatalError("import() can not be called on the base data importer class")
     }
 }

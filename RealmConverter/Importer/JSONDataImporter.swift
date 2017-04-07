@@ -32,8 +32,9 @@ import Realm
 @objc(RLMJSONDataImporter)
 open class JSONDataImporter: DataImporter {
 
-    open override func importToPath(_ path: String, schema: ImportSchema) throws -> RLMRealm {
-        let realm = try createNewRealmFile(path, schema: schema)
+    @discardableResult
+    open override func `import`(toPath path: String, schema: ImportSchema) throws -> RLMRealm {
+        let realm = try createNewRealmFile(atPath: path, schema: schema)
 
         // We only use a single JSON file to import/export Realms.
         let jsonObject = try JSONSerialization.jsonObject(with: Data(contentsOf: URL(fileURLWithPath: files[0])))

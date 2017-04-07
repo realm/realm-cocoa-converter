@@ -89,7 +89,7 @@ class RealmConverter_Importer: XCTestCase {
         
         let destinationRealmPath = Path(self.outputTestFolderPath)
         let dataImporter = CSVDataImporter(files: filePaths)
-        try! dataImporter.importToPath(String(describing: destinationRealmPath), schema: schema)
+        try! dataImporter.import(toPath: String(describing: destinationRealmPath), schema: schema)
         
         XCTAssertTrue(FileManager.default.fileExists(atPath: String(describing: destinationRealmPath)))
     }
@@ -102,7 +102,7 @@ class RealmConverter_Importer: XCTestCase {
 
         let destinationRealmPath = Path(self.outputTestFolderPath)
         let dataImporter = JSONDataImporter(files: filePaths)
-        try! dataImporter.importToPath(String(describing: destinationRealmPath), schema: schema)
+        try! dataImporter.import(toPath: String(describing: destinationRealmPath), schema: schema)
 
         XCTAssertTrue(FileManager.default.fileExists(atPath: String(describing: destinationRealmPath)))
     }
@@ -118,7 +118,7 @@ class RealmConverter_Importer: XCTestCase {
         }
 
         let importer = CSVDataImporter(file: bundle.path(forResource: "import-test", ofType: "csv")!)
-        let realm = try! importer.importToPath(outputTestFolderPath, schema: csvSchema)
+        let realm = try! importer.import(toPath: outputTestFolderPath, schema: csvSchema)
 
         validatePropertyTypes(in: realm, className: "import-test", expectedTypes: expectedTypes)
     }
