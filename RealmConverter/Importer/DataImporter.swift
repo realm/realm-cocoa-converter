@@ -75,7 +75,7 @@ open class DataImporter: NSObject {
             }
             let cls = objc_allocateClassPair(NSClassFromString(superclassName), className, 0) as! RLMObject.Type
 
-            schema.properties.reversed().forEach { (property) -> () in
+            schema.properties.reversed().forEach { property in
                 let type: objc_property_attribute_t
                 let size: Int
                 let alignment: UInt8
@@ -83,22 +83,22 @@ open class DataImporter: NSObject {
                 
                 switch property.type {
                 case .int:
-                    type = objc_property_attribute_t(name: "T".cString(using: .utf8), value: "i".cString(using: .utf8))
+                    type = objc_property_attribute_t(name: "T".utf8CString, value: "i".utf8CString)
                     size = MemoryLayout<Int64>.size
                     alignment = UInt8(log2(Double(size)))
                     encode = "q"
                 case .double:
-                    type = objc_property_attribute_t(name: "T".cString(using: .utf8), value: "d".cString(using: .utf8))
+                    type = objc_property_attribute_t(name: "T".utf8CString, value: "d".utf8CString)
                     size = MemoryLayout<Double>.size
                     alignment = UInt8(log2(Double(size)))
                     encode = "d"
                 case .bool:
-                    type = objc_property_attribute_t(name: "T".cString(using: .utf8), value: "B".cString(using: .utf8))
+                    type = objc_property_attribute_t(name: "T".utf8CString, value: "B".utf8CString)
                     size = MemoryLayout<Bool>.size
                     alignment = UInt8(log2(Double(size)))
                     encode = "B"
                 default:
-                    type = objc_property_attribute_t(name: "T".cString(using: .utf8), value: "@\"NSString\"".cString(using: .utf8))
+                    type = objc_property_attribute_t(name: "T".utf8CString, value: "@\"NSString\"".utf8CString)
                     size = MemoryLayout<NSObject>.size
                     alignment = UInt8(log2(Double(size)))
                     encode = "@"
@@ -112,7 +112,8 @@ open class DataImporter: NSObject {
                 
                 let imp = imp_implementationWithBlock(unsafeBitCast({ () -> Bool in
                     return true
-                    } as @convention(block) () -> (Bool), to: AnyObject.self))
+                } as @convention(block) () -> (Bool), to: AnyObject.self))
+
                 class_addMethod(cls, #selector(NSObjectProtocol.responds(to:)), imp, "b@::")
             }
             
@@ -120,14 +121,14 @@ open class DataImporter: NSObject {
             
             let imp = imp_implementationWithBlock(unsafeBitCast({ () -> NSArray in
                 return schema.properties.filter { !$0.optional }.map { $0.originalName } as NSArray
-                } as @convention(block) () -> (NSArray), to: AnyObject.self))
+            } as @convention(block) () -> (NSArray), to: AnyObject.self))
+
             class_addMethod(objc_getMetaClass(className) as! AnyClass, #selector(RLMObject.requiredProperties), imp, "@16@0:8")
             
             generatedClasses.append(cls)
         }
         
         let configuration = RLMRealmConfiguration()
-
 
         configuration.fileURL = URL(fileURLWithPath: output).appendingPathComponent("default.realm")
         configuration.objectClasses = generatedClasses
@@ -149,4 +150,12 @@ open class DataImporter: NSObject {
     func importToPath(_ path: String, schema: ImportSchema) throws -> RLMRealm {
         fatalError("import() can not be called on the base data importer class")
     }
+}
+
+private extension String {
+
+    var utf8CString: UnsafePointer<Int8> {
+        return (self as NSString).utf8String!
+    }
+
 }
