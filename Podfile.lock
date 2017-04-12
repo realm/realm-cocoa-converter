@@ -1,36 +1,26 @@
 PODS:
-  - CSwiftV (0.0.5)
+  - CSwiftV (0.0.7)
   - PathKit (0.8.0)
   - Realm (2.5.1):
     - Realm/Headers (= 2.5.1)
   - Realm/Headers (2.5.1)
-  - SSZipArchive (1.7)
+  - SSZipArchive (1.8)
   - TGSpreadsheetWriter (1.0.2):
     - SSZipArchive
 
 DEPENDENCIES:
-  - CSwiftV (from `https://github.com/Daniel1of1/CSwiftV.git`, tag `0.0.7`)
+  - CSwiftV
   - PathKit
   - Realm
   - TGSpreadsheetWriter
 
-EXTERNAL SOURCES:
-  CSwiftV:
-    :git: https://github.com/Daniel1of1/CSwiftV.git
-    :tag: 0.0.7
-
-CHECKOUT OPTIONS:
-  CSwiftV:
-    :git: https://github.com/Daniel1of1/CSwiftV.git
-    :tag: 0.0.7
-
 SPEC CHECKSUMS:
-  CSwiftV: 2560532e2e5b04d95c36b0f49a8dc745071fa525
+  CSwiftV: 602a0cb1df5f758d6005eacb6472c9bc752a7e7c
   PathKit: dcab05d701474011aae0e40cf892298a831f63d6
   Realm: 32f86104d37c8521f864d4274050b38ba6190733
-  SSZipArchive: 63f8e11cfcc33e03e4cd666b4359ea8bd6facd0c
+  SSZipArchive: bcc95475eec29f3f60079b6b0714e4cd6c05e1eb
   TGSpreadsheetWriter: '09bbb2c18a111a11c94ff9c1af2320e2530c958e'
 
-PODFILE CHECKSUM: 7e8cb8af9203e649a4faf7e8eaa2a86ad1b8ac6a
+PODFILE CHECKSUM: faa7cbb2ba0d371faa0f70a21566bec782ac6b14
 
 COCOAPODS: 1.2.0
