@@ -30,12 +30,14 @@ import Realm
  not captured in the JSON files.
  */
 @objc(RLMJSONDataImporter)
-public class JSONDataImporter: DataImporter {
-    public override func importToPath(path: String, schema: ImportSchema) throws -> RLMRealm {
-        let realm = try createNewRealmFile(path, schema: schema)
+open class JSONDataImporter: DataImporter {
+
+    @discardableResult
+    open override func `import`(toPath path: String, schema: ImportSchema) throws -> RLMRealm {
+        let realm = try createNewRealmFile(atPath: path, schema: schema)
 
         // We only use a single JSON file to import/export Realms.
-        let jsonObject = try NSJSONSerialization.JSONObjectWithData(NSData(contentsOfFile: files[0])!, options: [])
+        let jsonObject = try JSONSerialization.jsonObject(with: Data(contentsOf: URL(fileURLWithPath: files[0])))
 
         guard let jsonDictionary = jsonObject as? NSDictionary else {
             throw NSError(domain: "io.realm.converter.error", code: 0, userInfo: nil)

@@ -25,9 +25,9 @@ import Realm
  and convert them into a new Realm file.
  */
 @objc (RLMDataImporter)
-public class DataImporter: NSObject {
-    public let files: [String]
-    public let encoding: Encoding
+open class DataImporter: NSObject {
+    open let files: [String]
+    open let encoding: Encoding
     
     /**
      Creates a new instance of `DataImporter`, taking a single
@@ -37,7 +37,7 @@ public class DataImporter: NSObject {
      - paramter encoding: The text encoding of the file being imported
      */
     @objc(initWithFile:encoding:)
-    convenience public init(file: String, encoding: Encoding = .UTF8) {
+    convenience public init(file: String, encoding: Encoding = .utf8) {
         self.init(files: [file], encoding: encoding)
     }
     
@@ -49,7 +49,7 @@ public class DataImporter: NSObject {
      - paramter encoding: The text encoding of the file being imported
      */
     @objc(initWithFiles:encoding:)
-    public init(files: [String], encoding: Encoding = .UTF8) {
+    public init(files: [String], encoding: Encoding = .utf8) {
         self.files = files
         self.encoding = encoding
     }
@@ -62,7 +62,7 @@ public class DataImporter: NSObject {
      - parameter schema: The import schema with which this file will be created
      */
     @objc(createNewRealmFileAtPath:withSchema:error:)
-    public func createNewRealmFile(output: String, schema: ImportSchema) throws -> RLMRealm {
+    open func createNewRealmFile(atPath output: String, schema: ImportSchema) throws -> RLMRealm {
         var generatedClasses: [AnyObject] = []
         
         for schema in schema.schemas {
@@ -75,59 +75,62 @@ public class DataImporter: NSObject {
             }
             let cls = objc_allocateClassPair(NSClassFromString(superclassName), className, 0) as! RLMObject.Type
 
-            schema.properties.reverse().forEach { (property) -> () in
+            schema.properties.reversed().forEach { property in
                 let type: objc_property_attribute_t
                 let size: Int
                 let alignment: UInt8
                 let encode: String
                 
                 switch property.type {
-                case .Int:
-                    type = objc_property_attribute_t(name: "T".cStringUsingEncoding(NSUTF8StringEncoding), value: "i".cStringUsingEncoding(NSUTF8StringEncoding))
-                    size = sizeof(Int64)
+                case .int:
+                    type = objc_property_attribute_t(name: "T".utf8CString, value: "i".utf8CString)
+                    size = MemoryLayout<Int64>.size
                     alignment = UInt8(log2(Double(size)))
                     encode = "q"
-                case .Double:
-                    type = objc_property_attribute_t(name: "T".cStringUsingEncoding(NSUTF8StringEncoding), value: "d".cStringUsingEncoding(NSUTF8StringEncoding))
-                    size = sizeof(Double)
+                case .double:
+                    type = objc_property_attribute_t(name: "T".utf8CString, value: "d".utf8CString)
+                    size = MemoryLayout<Double>.size
                     alignment = UInt8(log2(Double(size)))
                     encode = "d"
-                case .Bool:
-                    type = objc_property_attribute_t(name: "T".cStringUsingEncoding(NSUTF8StringEncoding), value: "B".cStringUsingEncoding(NSUTF8StringEncoding))
-                    size = sizeof(Bool)
+                case .bool:
+                    type = objc_property_attribute_t(name: "T".utf8CString, value: "B".utf8CString)
+                    size = MemoryLayout<Bool>.size
                     alignment = UInt8(log2(Double(size)))
                     encode = "B"
                 default:
-                    type = objc_property_attribute_t(name: "T".cStringUsingEncoding(NSUTF8StringEncoding), value: "@\"NSString\"".cStringUsingEncoding(NSUTF8StringEncoding))
-                    size = sizeof(NSObject)
+                    type = objc_property_attribute_t(name: "T".utf8CString, value: "@\"NSString\"".utf8CString)
+                    size = MemoryLayout<NSObject>.size
                     alignment = UInt8(log2(Double(size)))
                     encode = "@"
                 }
                 
                 class_addIvar(cls, property.originalName, size, alignment, encode)
                 
-                let ivar = objc_property_attribute_t(name: "V".cStringUsingEncoding(NSUTF8StringEncoding), value: property.name.cStringUsingEncoding(NSUTF8StringEncoding)!)
+                let ivar = objc_property_attribute_t(name: "V".cString(using: .utf8), value: property.name.cString(using: .utf8)!)
                 let attrs = [type, ivar]
                 class_addProperty(cls, property.originalName, attrs, 2)
                 
                 let imp = imp_implementationWithBlock(unsafeBitCast({ () -> Bool in
                     return true
-                    } as @convention(block) () -> (Bool), AnyObject.self))
-                class_addMethod(cls, #selector(NSObjectProtocol.respondsToSelector(_:)), imp, "b@::")
+                } as @convention(block) () -> (Bool), to: AnyObject.self))
+
+                class_addMethod(cls, #selector(NSObjectProtocol.responds(to:)), imp, "b@::")
             }
             
             objc_registerClassPair(cls);
             
             let imp = imp_implementationWithBlock(unsafeBitCast({ () -> NSArray in
-                return schema.properties.filter { !$0.optional }.map { $0.originalName }
-                } as @convention(block) () -> (NSArray), AnyObject.self))
+                return schema.properties.filter { !$0.optional }.map { $0.originalName } as NSArray
+            } as @convention(block) () -> (NSArray), to: AnyObject.self))
+
             class_addMethod(objc_getMetaClass(className) as! AnyClass, #selector(RLMObject.requiredProperties), imp, "@16@0:8")
             
             generatedClasses.append(cls)
         }
         
         let configuration = RLMRealmConfiguration()
-        configuration.fileURL = NSURL(fileURLWithPath: (output as NSString).stringByAppendingPathComponent("default.realm"))
+
+        configuration.fileURL = URL(fileURLWithPath: output).appendingPathComponent("default.realm")
         configuration.objectClasses = generatedClasses
         let realm = try RLMRealm(configuration: configuration)
         
@@ -143,7 +146,16 @@ public class DataImporter: NSObject {
      -parameter schema: The import schema with which this file will be created
      */
     @objc(importToPath:withSchema:error:)
-    func importToPath(path: String, schema: ImportSchema) throws -> RLMRealm {
+    @discardableResult
+    func `import`(toPath path: String, schema: ImportSchema) throws -> RLMRealm {
         fatalError("import() can not be called on the base data importer class")
     }
+}
+
+private extension String {
+
+    var utf8CString: UnsafePointer<Int8> {
+        return (self as NSString).utf8String!
+    }
+
 }

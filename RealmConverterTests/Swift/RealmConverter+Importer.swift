@@ -33,20 +33,20 @@ class RealmConverter_Importer: XCTestCase {
     var outputTestFolderPath: String {
         var path = Path(NSTemporaryDirectory())
         path = path + Path(outputTestFolderName)
-        return String(path)
+        return String(describing: path)
     }
     
     var inputTestFolderPath: String {
         var path = Path(NSTemporaryDirectory())
         path = path + Path(inputTestFolderName)
-        return String(path)
+        return String(describing: path)
     }
     
     let testRealmFileName = "businesses.realm"
     let csvAssetNames = ["businesses"]
 
-    var bundle: NSBundle {
-        return NSBundle(forClass: self.dynamicType)
+    var bundle: Bundle {
+        return Bundle(for: type(of: self))
     }
     
     override func setUp() {
@@ -54,23 +54,23 @@ class RealmConverter_Importer: XCTestCase {
         
         // Create the input and output folders
         for path in [self.inputTestFolderPath, self.outputTestFolderPath] {
-            if NSFileManager.defaultManager().fileExistsAtPath(path) {
-                try! NSFileManager.defaultManager().removeItemAtPath(path)
+            if FileManager.default.fileExists(atPath: path) {
+                try! FileManager.default.removeItem(atPath: path)
             }
         }
         
         // Create the input and output folders
         for path in [self.inputTestFolderPath, self.outputTestFolderPath] {
-            try! NSFileManager.defaultManager().createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil)
+            try! FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
         }
         
         // Copy our CSV test data to the input folder
         for fileName in self.csvAssetNames {
-            let filePath = bundle.pathForResource(fileName, ofType: "csv")
+            let filePath = bundle.path(forResource: fileName, ofType: "csv")
             let destinationPath = Path(self.inputTestFolderPath) + Path(filePath!).lastComponent
             
-            if NSFileManager.defaultManager().fileExistsAtPath(String(destinationPath)) == false {
-                try! NSFileManager.defaultManager().copyItemAtPath(filePath!, toPath: String(destinationPath))
+            if FileManager.default.fileExists(atPath: String(describing: destinationPath)) == false {
+                try! FileManager.default.copyItem(atPath: filePath!, toPath: String(describing: destinationPath))
             }
         }
     }
@@ -78,10 +78,10 @@ class RealmConverter_Importer: XCTestCase {
     func testCSVImport() {
         var filePaths = [String]()
         
-        let folderContents = try! NSFileManager.defaultManager().contentsOfDirectoryAtPath(self.inputTestFolderPath)
+        let folderContents = try! FileManager.default.contentsOfDirectory(atPath: self.inputTestFolderPath)
         for file in folderContents {
             let filePath = Path(self.inputTestFolderPath) + Path(file)
-            filePaths.append(String(filePath))
+            filePaths.append(String(describing: filePath))
         }
         
         let generator =  ImportSchemaGenerator(files: filePaths)
@@ -89,53 +89,53 @@ class RealmConverter_Importer: XCTestCase {
         
         let destinationRealmPath = Path(self.outputTestFolderPath)
         let dataImporter = CSVDataImporter(files: filePaths)
-        try! dataImporter.importToPath(String(destinationRealmPath), schema: schema)
+        try! dataImporter.import(toPath: String(describing: destinationRealmPath), schema: schema)
         
-        XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath(String(destinationRealmPath)))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: String(describing: destinationRealmPath)))
     }
 
     func testJSONImport() {
-        let filePaths = [bundle.pathForResource("realm", ofType: "json")!]
+        let filePaths = [bundle.path(forResource: "realm", ofType: "json")!]
 
         let generator =  ImportSchemaGenerator(files: filePaths)
         let schema = try! generator.generate()
 
         let destinationRealmPath = Path(self.outputTestFolderPath)
         let dataImporter = JSONDataImporter(files: filePaths)
-        try! dataImporter.importToPath(String(destinationRealmPath), schema: schema)
+        try! dataImporter.import(toPath: String(describing: destinationRealmPath), schema: schema)
 
-        XCTAssertTrue(NSFileManager.defaultManager().fileExistsAtPath(String(destinationRealmPath)))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: String(describing: destinationRealmPath)))
     }
 
     func testThatPropertyTypesAreDetectedProperlyWhenImportingFromCSV() {
-        let csvSchema = try! generateSchemaForFileAtPath(bundle.pathForResource("import-test", ofType: "csv")!)
+        let csvSchema = try! generateSchemaForFileAtPath(bundle.path(forResource: "import-test", ofType: "csv")!)
 
         // integerValue,boolValue,floatValue,doubleValue,stringValue,dateValue,arrayReference,mixedValue
-        let expectedTypes: [RLMPropertyType] = [.Int, .Bool, .Double, .Double, .String, .String, .String, .String]
+        let expectedTypes: [RLMPropertyType] = [.int, .bool, .double, .double, .string, .string, .string, .string]
 
-        for (index, type) in expectedTypes.enumerate() {
+        for (index, type) in expectedTypes.enumerated() {
             XCTAssertEqual(csvSchema.schemas[0].properties[index].type, type)
         }
 
-        let importer = CSVDataImporter(file: bundle.pathForResource("import-test", ofType: "csv")!)
-        let realm = try! importer.importToPath(outputTestFolderPath, schema: csvSchema)
+        let importer = CSVDataImporter(file: bundle.path(forResource: "import-test", ofType: "csv")!)
+        let realm = try! importer.import(toPath: outputTestFolderPath, schema: csvSchema)
 
         validatePropertyTypes(in: realm, className: "import-test", expectedTypes: expectedTypes)
     }
 
     // FIXME: XLSX import doesn't seem to work at all :(
     func DISABLED_testThatPropertyTypesAreDetectedProperlyWhenImportingFromXLSX() {
-        let xlsxSchema = try! generateSchemaForFileAtPath(bundle.pathForResource("restaurant", ofType: "xlsx")!)
-        XCTAssertTrue(xlsxSchema.schemas[0].properties[0].type == .Int)
+        let xlsxSchema = try! generateSchemaForFileAtPath(bundle.path(forResource: "restaurant", ofType: "xlsx")!)
+        XCTAssertTrue(xlsxSchema.schemas[0].properties[0].type == .int)
     }
 
     func testThatPropertyTypesAreDetectedProperlyWhenImportingFromJSON() {
-        let jsonSchema = try! generateSchemaForFileAtPath(bundle.pathForResource("realm", ofType: "json")!)
-        XCTAssertTrue(jsonSchema.schemas[0].properties[0].type == .Int)
-        XCTAssertTrue(jsonSchema.schemas[0].properties[1].type == .String)
+        let jsonSchema = try! generateSchemaForFileAtPath(bundle.path(forResource: "realm", ofType: "json")!)
+        XCTAssertTrue(jsonSchema.schemas[0].properties[0].type == .int)
+        XCTAssertTrue(jsonSchema.schemas[0].properties[1].type == .string)
     }
 
-    func generateSchemaForFileAtPath(path: String) throws -> ImportSchema {
+    func generateSchemaForFileAtPath(_ path: String) throws -> ImportSchema {
         let generator = ImportSchemaGenerator(files: [path])
         return try generator.generate()
     }

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'RealmConverter'
-  s.version  = '0.3.1'
+  s.version  = '0.4.0'
   s.license  =  { :type => 'Apache-2.0', :file => 'LICENSE' }
   s.summary  = 'A library that provides the ability to import/export Realm files from a variety of data container formats.'
   s.homepage = 'https://realm.io'
@@ -10,8 +10,8 @@ Pod::Spec.new do |s|
   s.platform = :osx, '10.9'
   s.source_files = 'RealmConverter/**/*.{swift,h,m,c}'
   s.dependency 'Realm'
-  s.dependency 'PathKit', '~> 0.6.0'
+  s.dependency 'PathKit'
   s.dependency 'CSwiftV'
-  s.dependency 'SSZipArchive', '~> 1.6.2'
+  s.dependency 'SSZipArchive'
   s.dependency 'TGSpreadsheetWriter'
 end

@@ -22,13 +22,13 @@ import Realm
 import TGSpreadsheetWriter
 
 @objc(RLMXLSXDataImporter)
-public class XLSXDataImporter: DataImporter {
+open class XLSXDataImporter: DataImporter {
 
-    public override func importToPath(path: String, schema: ImportSchema) throws -> RLMRealm {
-        let realm = try! self.createNewRealmFile(path, schema: schema)
+    open override func `import`(toPath path: String, schema: ImportSchema) throws -> RLMRealm {
+        let realm = try! self.createNewRealmFile(atPath: path, schema: schema)
         
-        let workbook = TGSpreadsheetWriter.readWorkbook(NSURL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
-        for (index, key) in workbook.keys.enumerate() {
+        let workbook = TGSpreadsheetWriter.readWorkbook(URL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
+        for (index, key) in workbook.keys.enumerated() {
             let schema = schema.schemas[index]
             
             if let sheet = workbook[key] {
@@ -37,25 +37,25 @@ public class XLSXDataImporter: DataImporter {
                     let cls = NSClassFromString(schema.objectClassName) as! RLMObject.Type
                     let object = cls.init()
                     
-                    row.enumerate().forEach { (index, field) -> () in
+                    row.enumerated().forEach { (index, field) -> () in
                         let property = schema.properties[index]
                         
                         switch property.type {
-                        case .Int:
+                        case .int:
                             if let number = Int64(field) {
-                                object.setValue(NSNumber(longLong: number), forKey: property.originalName)
+                                object.setValue(NSNumber(value: number), forKey: property.originalName)
                             }
-                        case .Double:
+                        case .double:
                             if let number = Double(field) {
-                                object.setValue(NSNumber(double: number), forKey: property.originalName)
+                                object.setValue(NSNumber(value: number), forKey: property.originalName)
                             }
                         default:
                             object.setValue(field, forKey: property.originalName)
                         }
                     }
-                    
-                    try realm.transactionWithBlock { () -> Void in
-                        realm.addObject(object)
+
+                    try realm.transaction { () -> Void in
+                        realm.add(object)
                     }
                 }
             }

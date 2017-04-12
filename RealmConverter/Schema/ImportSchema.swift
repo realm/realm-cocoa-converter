@@ -19,7 +19,7 @@
 import Foundation
 
 @objc(RLMImportSchema)
-public class ImportSchema: NSObject {
+open class ImportSchema: NSObject {
     var schemas: [ImportObjectSchema] = []
     
     init(schemas: [ImportObjectSchema]) {
@@ -27,8 +27,8 @@ public class ImportSchema: NSObject {
         self.schemas = schemas
     }
     
-    func toJSON() -> [String: AnyObject] {
-        var s = [String: AnyObject]()
+    func toJSON() -> [String: Any] {
+        var s = [String: Any]()
         for schema in schemas {
             s[schema.objectClassName] = schema.toJSON()
         }
@@ -38,12 +38,12 @@ public class ImportSchema: NSObject {
 
 extension ImportSchema  {
     
-    override public var description: String {
-        let data = try! NSJSONSerialization.dataWithJSONObject(toJSON() as NSDictionary, options: .PrettyPrinted)
-        return NSString(data: data, encoding: NSUTF8StringEncoding) as! String
+    override open var description: String {
+        let data = try! JSONSerialization.data(withJSONObject: toJSON() as NSDictionary, options: .prettyPrinted)
+        return String(data: data, encoding: .utf8)!
     }
     
-    override public var debugDescription: String {
+    override open var debugDescription: String {
         return description
     }
 }

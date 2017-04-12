@@ -24,9 +24,9 @@ import Realm
  setting up objects that can export the contents of 
  Realm files to another format.
 */
-public class DataExporter: NSObject {
+open class DataExporter: NSObject {
     
-    public let realm: RLMRealm
+    open let realm: RLMRealm
     
     /**
      Create a new instance of the exporter object
@@ -35,8 +35,8 @@ public class DataExporter: NSObject {
      */
     @objc(initWithRealmFileAtPath:error:)
     public convenience init(realmFilePath: String) throws {
-        let configuration = RLMRealmConfiguration.defaultConfiguration()
-        configuration.fileURL = NSURL(fileURLWithPath: realmFilePath)
+        let configuration = RLMRealmConfiguration.default()
+        configuration.fileURL = URL(fileURLWithPath: realmFilePath)
         configuration.dynamic = true
 
         let realm = try RLMRealm(configuration: configuration)
@@ -68,7 +68,7 @@ public class DataExporter: NSObject {
      - warning: This method must be overridden by a subclass, that does *not* call `super`
      */
     @objc(exportToFolderAtPath:withError:)
-    public func exportToFolderAtPath(outputFolderPath: String) throws {
+    open func export(toFolderAtPath outputFolderPath: String) throws {
         fatalError("Cannot call export() from DataExporter base class")
     }
 

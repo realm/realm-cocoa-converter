@@ -33,18 +33,19 @@ import Realm
  not captured in the CSV files.
  */
 @objc(RLMCSVDataImporter)
-public class CSVDataImporter: DataImporter {
+open class CSVDataImporter: DataImporter {
 
-    public override func importToPath(path: String, schema: ImportSchema) throws -> RLMRealm {
-        let realm = try! self.createNewRealmFile(path, schema: schema)
+    @discardableResult
+    open override func `import`(toPath path: String, schema: ImportSchema) throws -> RLMRealm {
+        let realm = try! self.createNewRealmFile(atPath: path, schema: schema)
         
-        for (index, file) in files.enumerate() {
+        for (index, file) in files.enumerated() {
             let schema = schema.schemas[index]
 
             let inputString = try! NSString(contentsOfFile: file, encoding: encoding.rawValue) as String
-            let csv = CSwiftV(string: inputString)
+            let csv = CSwiftV(with: inputString)
 
-            var generator = csv.rows.generate()
+            var generator = csv.rows.makeIterator()
             transactionLoop: while true {
                 realm.beginWriteTransaction()
                 for _ in 0..<10000 {
@@ -54,24 +55,24 @@ public class CSVDataImporter: DataImporter {
                     guard let row = generator.next() else {
                         break transactionLoop
                     }
-                    row.enumerate().forEach { (index, field) -> () in
+                    row.enumerated().forEach { index, field in
                         let property = schema.properties[index]
 
                         switch property.type {
-                        case .Int:
+                        case .int:
                             if let number = Int64(field) {
-                                object.setValue(NSNumber(longLong: number), forKey: property.originalName)
+                                object.setValue(NSNumber(value: number), forKey: property.originalName)
                             }
-                        case .Double:
+                        case .double:
                             if let number = Double(field) {
-                                object.setValue(NSNumber(double: number), forKey: property.originalName)
+                                object.setValue(NSNumber(value: number), forKey: property.originalName)
                             }
                         default:
                             object.setValue(field, forKey: property.originalName)
                         }
                     }
                     
-                    realm.addObject(object)
+                    realm.add(object)
                 }
                 try realm.commitWriteTransaction()
             }
