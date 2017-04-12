@@ -34,7 +34,7 @@ let realmFilePath = '' // Absolute file path to my Realm file
 let outputFolderPath = '' // Absolute path to the folder which will hold the CSV files
 
 let csvDataExporter = try! CSVDataExporter(realmFilePath: realmFilePath)
-try! csvDataExporter.exportToFolderAtPath(outputFolderPath)
+try! csvDataExporter.export(toFolderAtPath: outputFolderPath)
 ```
 
 ### Generate a Realm file from CSV
@@ -48,7 +48,7 @@ let schema = try! generator.generate()
 
 // Use the schema and files to create the Realm file, and import the data
 let dataImporter = CSVDataImporter(files: filePaths)
-try! dataImporter.importToPath(destinationRealmPath, schema: schema)
+try! dataImporter.import(toPath: destinationRealmPath, schema: schema)
 ```
 
 # License
