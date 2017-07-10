@@ -109,12 +109,6 @@ open class DataImporter: NSObject {
                 let ivar = objc_property_attribute_t(name: "V".cString(using: .utf8), value: property.name.cString(using: .utf8)!)
                 let attrs = [type, ivar]
                 class_addProperty(cls, property.originalName, attrs, 2)
-                
-                let imp = imp_implementationWithBlock(unsafeBitCast({ () -> Bool in
-                    return true
-                } as @convention(block) () -> (Bool), to: AnyObject.self))
-
-                class_addMethod(cls, #selector(NSObjectProtocol.responds(to:)), imp, "b@::")
             }
             
             objc_registerClassPair(cls);
