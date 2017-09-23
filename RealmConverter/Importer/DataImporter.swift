@@ -106,7 +106,7 @@ open class DataImporter: NSObject {
                 
                 class_addIvar(cls, property.originalName, size, alignment, encode)
                 
-                let ivar = objc_property_attribute_t(name: "V".cString(using: .utf8), value: property.name.cString(using: .utf8)!)
+                let ivar = objc_property_attribute_t(name: "V".utf8CString, value: property.name.utf8CString)
                 let attrs = [type, ivar]
                 class_addProperty(cls, property.originalName, attrs, 2)
             }
