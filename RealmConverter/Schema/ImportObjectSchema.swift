@@ -43,6 +43,7 @@ open class ImportObjectSchema: NSObject {
         var type: RLMPropertyType = .string
         var indexed = false
         var optional = false
+        var array = false
         
         init(column: UInt, originalName: String, name: String) {
             self.column = column
@@ -57,7 +58,8 @@ open class ImportObjectSchema: NSObject {
                 "name": name,
                 "type": "\(type)",
                 "indexed": indexed,
-                "optional": optional
+                "optional": optional,
+                "array": array,
             ]
         }
     }
@@ -98,8 +100,6 @@ extension RLMPropertyType: CustomStringConvertible, CustomDebugStringConvertible
             return "date"
         case .object:
             return "object"
-        case .array:
-            return "array"
         case .linkingObjects:
             return "linkingobjects"
         }
@@ -108,5 +108,4 @@ extension RLMPropertyType: CustomStringConvertible, CustomDebugStringConvertible
     public var debugDescription: Swift.String {
         return description
     }
-    
 }

@@ -78,7 +78,8 @@ open class CSVDataExporter: DataExporter {
 
                     if let value = value as? RLMObject {
                         return serializedObject(value, realm: realm)
-                    } else if let value = value as? RLMArray {
+                    } else if property.type == .object && property.array,
+                        let value = value as? RLMArray<RLMObject> {
                         return serializedObjectArray(value, realm: realm)
                     }
 
@@ -120,7 +121,7 @@ open class CSVDataExporter: DataExporter {
     }
     
     fileprivate func serializedObjectArray(_ array: RLMArray<RLMObject>, realm: RLMRealm) -> String {
-        let className = array.objectClassName
+        let className = array.objectClassName!
         let allObjects = realm.allObjects(className)
         
         return "<\(className)>{" + (0..<array.count).map({ arrayIndex in
