@@ -16,6 +16,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
+#if os(OSX)
 import Foundation
 import PathKit
 import Realm
@@ -64,3 +65,4 @@ open class XLSXDataImporter: DataImporter {
         return realm
     }
 }
+#endif
