@@ -27,7 +27,7 @@ extension String {
 
         let delimiters = CharacterSet(charactersIn: "_-")
         let pascalcaseString = capitalized.components(separatedBy: delimiters).joined(separator: "")
-        return "\(pascalcaseString.substring(to: self.index(startIndex, offsetBy: 1)).lowercased())\(pascalcaseString.substring(from: self.index(startIndex, offsetBy: 1)))"
+        return "\(pascalcaseString[startIndex..<self.index(startIndex, offsetBy: 1)].lowercased())\(pascalcaseString[self.index(startIndex, offsetBy: 1)...]))"
     }
     
 }

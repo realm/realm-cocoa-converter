@@ -26,8 +26,8 @@ import Realm
  */
 @objc (RLMDataImporter)
 open class DataImporter: NSObject {
-    open let files: [String]
-    open let encoding: Encoding
+    @objc public let files: [String]
+    @objc public let encoding: Encoding
     
     /**
      Creates a new instance of `DataImporter`, taking a single
@@ -117,7 +117,7 @@ open class DataImporter: NSObject {
                 return schema.properties.filter { !$0.optional }.map { $0.originalName } as NSArray
             } as @convention(block) () -> (NSArray), to: AnyObject.self))
 
-            class_addMethod(objc_getMetaClass(className) as! AnyClass, #selector(RLMObject.requiredProperties), imp, "@16@0:8")
+            class_addMethod(objc_getMetaClass(className) as? AnyClass, #selector(RLMObject.requiredProperties), imp, "@16@0:8")
             
             generatedClasses.append(cls)
         }

@@ -20,14 +20,14 @@ import Foundation
 
 @objc(RLMImportSchema)
 open class ImportSchema: NSObject {
-    var schemas: [ImportObjectSchema] = []
+    @objc var schemas: [ImportObjectSchema] = []
     
-    init(schemas: [ImportObjectSchema]) {
+    @objc init(schemas: [ImportObjectSchema]) {
         super.init()
         self.schemas = schemas
     }
     
-    func toJSON() -> [String: Any] {
+    @objc func toJSON() -> [String: Any] {
         var s = [String: Any]()
         for schema in schemas {
             s[schema.objectClassName] = schema.toJSON()

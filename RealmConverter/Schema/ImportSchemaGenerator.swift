@@ -53,9 +53,9 @@ extension String {
  */
 @objc(RLMImportSchemaGenerator)
 open class ImportSchemaGenerator: NSObject {
-    let files: [String]
-    let encoding: Encoding
-    let format: ImportSchemaFormat
+    @objc let files: [String]
+    @objc let encoding: Encoding
+    @objc let format: ImportSchemaFormat
     
     /**
      Creates a new instance of `ImportSchemaGenerator`, specifying a single
@@ -137,7 +137,7 @@ open class ImportSchemaGenerator: NSObject {
                 return true
             }
 
-            return propertyTypeFallbackOrder.index(of: type)! <= propertyTypeFallbackOrder.index(of: fallbackType)!
+            return propertyTypeFallbackOrder.firstIndex(of: type)! <= propertyTypeFallbackOrder.firstIndex(of: fallbackType)!
         }
 
         let schemas = files.map { (file) -> ImportObjectSchema in
