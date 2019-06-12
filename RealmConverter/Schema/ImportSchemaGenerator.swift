@@ -221,6 +221,8 @@ open class ImportSchemaGenerator: NSObject {
                             .doubleType,
                             .cgFloatType:
                                 property.type = .double;
+                            @unknown default:
+                                fatalError()
                             }
                         } else {
                             property.type = .string

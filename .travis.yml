@@ -1,8 +1,20 @@
 language: objective-c
-osx_image: xcode10.2
+osx_image: xcode12
+cache: 
+    cocoapods: true
+    bundler: true
+xcode_workspace: RealmConverter.xcworkspace
+env: CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO COMPILER_INDEX_STORE_ENABLE=NO
 install:
     - bundle install
-    - pod install --repo-update
-script:
-    - set -o pipefail && xcodebuild -workspace "RealmConverter.xcworkspace" -scheme "RealmConverter" clean test | xcpretty
-    - pod lib lint
+    - pod install
+matrix:
+    include:
+        - xcode_scheme: RealmConverterMacOS
+          xcode_sdk: macosx
+          xcode_destination: platform=macOS
+
+        - xcode_scheme: RealmConverteriOS
+          xcode_sdk: iphonesimulator
+          env: CODE_SIGN_IDENTITY=- CODE_SIGNING_REQUIRED=NO COMPILER_INDEX_STORE_ENABLE=NO ONLY_ACTIVE_ARCH=NO
+          xcode_destination: platform=iOS Simulator,name=iPhone 11 Pro Max

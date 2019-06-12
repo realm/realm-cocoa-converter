@@ -9,7 +9,8 @@ added to it over time.
 
 ## Technical Requirements
 
-OS X 10.9 and above.
+macOS: 10.9 or later
+iOS: 10.0 or later
 
 ## Features
 

@@ -1,10 +1,10 @@
 PODS:
   - CSwiftV (0.0.9)
   - PathKit (1.0.0)
-  - Realm (3.16.1):
-    - Realm/Headers (= 3.16.1)
-  - Realm/Headers (3.16.1)
-  - SSZipArchive (2.2.2)
+  - Realm (5.4.4):
+    - Realm/Headers (= 5.4.4)
+  - Realm/Headers (5.4.4)
+  - SSZipArchive (2.2.3)
   - TGSpreadsheetWriter (1.0.2):
     - SSZipArchive
 
@@ -15,7 +15,7 @@ DEPENDENCIES:
   - TGSpreadsheetWriter
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - CSwiftV
     - PathKit
     - Realm
@@ -25,10 +25,10 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   CSwiftV: 8dde426ad2a4f645bdfb513b8aa878d555aeff60
   PathKit: 364e0de7fb5adb142aecab4e112187e5548fc4b6
-  Realm: 601cacc51d8be3b17a377ef787be0f6ee0e76cf1
-  SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
+  Realm: b845bf406e03b9c52a53e0de2394480288aa532a
+  SSZipArchive: 62d4947b08730e4cda640473b0066d209ff033c9
   TGSpreadsheetWriter: 09bbb2c18a111a11c94ff9c1af2320e2530c958e
 
-PODFILE CHECKSUM: 915da086a362ca5e056a3be081ba98aba06dbbce
+PODFILE CHECKSUM: 7968dd07c3a2aadd7e89074a3d67001289e192ef
 
-COCOAPODS: 1.7.1
+COCOAPODS: 1.9.3
