@@ -27,6 +27,15 @@ open class ImportSchema: NSObject {
         self.schemas = schemas
     }
     
+    @objc func schemaWithName(_ name : String) -> ImportObjectSchema? {
+        for schema in self.schemas {
+            if (schema.objectClassName == name) {
+                return schema
+            }
+        }
+        return nil
+    }
+    
     @objc func toJSON() -> [String: Any] {
         var s = [String: Any]()
         for schema in schemas {

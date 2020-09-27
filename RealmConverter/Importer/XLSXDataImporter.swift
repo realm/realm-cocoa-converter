@@ -29,36 +29,39 @@ open class XLSXDataImporter: DataImporter {
         let realm = try! self.createNewRealmFile(atPath: path, schema: schema)
         
         let workbook = TGSpreadsheetWriter.readWorkbook(URL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
-        for (index, key) in workbook.keys.enumerated() {
-            let schema = schema.schemas[index]
+        for (_, key) in workbook.keys.enumerated() {
+            if let curSchema = schema.schemaWithName(key) {
             
-            if let sheet = workbook[key] {
-                let rows = sheet.dropFirst()
-                for row in rows {
-                    let cls = NSClassFromString(schema.objectClassName) as! RLMObject.Type
-                    let object = cls.init()
-                    
-                    row.enumerated().forEach { (index, field) -> () in
-                        let property = schema.properties[index]
+                if let sheet = workbook[key] {
+                    let rows = sheet.dropFirst()
+                    for row in rows {
+                        let cls = NSClassFromString(curSchema.objectClassName) as! RLMObject.Type
+                        let object = cls.init()
                         
-                        switch property.type {
-                        case .int:
-                            if let number = Int64(field) {
-                                object.setValue(NSNumber(value: number), forKey: property.originalName)
+                        row.enumerated().forEach { (fieldIndex, field) -> () in
+                            let property = curSchema.properties[fieldIndex]
+                            
+                            switch property.type {
+                            case .int:
+                                if let number = Int64(field) {
+                                    object.setValue(NSNumber(value: number), forKey: property.originalName)
+                                }
+                            case .double:
+                                if let number = Double(field) {
+                                    object.setValue(NSNumber(value: number), forKey: property.originalName)
+                                }
+                            default:
+                                object.setValue(field, forKey: property.originalName)
                             }
-                        case .double:
-                            if let number = Double(field) {
-                                object.setValue(NSNumber(value: number), forKey: property.originalName)
-                            }
-                        default:
-                            object.setValue(field, forKey: property.originalName)
+                        }
+
+                        try realm.transaction { () -> Void in
+                            realm.add(object)
                         }
                     }
-
-                    try realm.transaction { () -> Void in
-                        realm.add(object)
-                    }
                 }
+            } else {
+                throw NSError(domain: "io.realm.converter.error", code: 0, userInfo: nil)
             }
         }
         
