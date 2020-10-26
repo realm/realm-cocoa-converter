@@ -102,6 +102,10 @@ extension RLMPropertyType: CustomStringConvertible, CustomDebugStringConvertible
             return "object"
         case .linkingObjects:
             return "linkingobjects"
+        case .objectId:
+            return "objectID"
+        case .decimal128:
+            return "decimal128"
         }
     }
     
