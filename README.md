@@ -4,12 +4,10 @@ Realm Converter is an open source software utility framework to make it easier
 to get data both in and out of Realm.
 It has been built in Swift, but can also be easily utilized in Objective-C projects.
 
-It is still in heavy development, with refinements and new formats being
-added to it over time.
-
 ## Technical Requirements
 
-OS X 10.9 and above.
+macOS: 10.9 or later
+iOS: 10.0 or later
 
 ## Features
 

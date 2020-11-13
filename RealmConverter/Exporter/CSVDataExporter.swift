@@ -37,13 +37,13 @@ open class CSVDataExporter: DataExporter {
      The delimiter symbol used to separate each property on each row.
      Defaults to the CSV standard ',' comma.
      */
-    open var delimiter        = ","
+    @objc open var delimiter        = ","
     
     /**
      When it's necessary to escape a Realm property on a CSV row, this is the escape symbol
      Defaults to the CSV standard '"' double-quotes.
      */
-    open var escapeQuotes     = "\""
+    @objc open var escapeQuotes     = "\""
     
     /**
      Takes the provided Realm file and exports each table to a CSV file in the provided

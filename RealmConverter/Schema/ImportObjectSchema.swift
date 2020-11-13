@@ -21,15 +21,15 @@ import Realm
 
 @objc(RLMImportObjectSchema)
 open class ImportObjectSchema: NSObject {
-    open var objectClassName: String
+    @objc open var objectClassName: String
     var properties: [ImportObjectSchema.Property] = []
     
-    init(objectClassName: String) {
+    @objc init(objectClassName: String) {
         self.objectClassName = objectClassName
         super.init()
     }
     
-    func toJSON() -> [String: Any] {
+    @objc func toJSON() -> [String: Any] {
         let fields = properties.map { (property) -> [String: Any] in
             return property.toJSON()
         }
@@ -102,6 +102,10 @@ extension RLMPropertyType: CustomStringConvertible, CustomDebugStringConvertible
             return "object"
         case .linkingObjects:
             return "linkingobjects"
+        case .objectId:
+            return "objectID"
+        case .decimal128:
+            return "decimal128"
         }
     }
     

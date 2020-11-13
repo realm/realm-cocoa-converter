@@ -26,7 +26,7 @@ import Realm
 */
 open class DataExporter: NSObject {
     
-    open let realm: RLMRealm
+    @objc public let realm: RLMRealm
     
     /**
      Create a new instance of the exporter object

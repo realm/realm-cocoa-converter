@@ -19,7 +19,9 @@
 import Foundation
 import CSwiftV
 import PathKit
+#if canImport(TGSpreadsheetWriter)
 import TGSpreadsheetWriter
+#endif
 import Realm
 
 @objc
@@ -51,9 +53,9 @@ extension String {
  */
 @objc(RLMImportSchemaGenerator)
 open class ImportSchemaGenerator: NSObject {
-    let files: [String]
-    let encoding: Encoding
-    let format: ImportSchemaFormat
+    @objc let files: [String]
+    @objc let encoding: Encoding
+    @objc let format: ImportSchemaFormat
     
     /**
      Creates a new instance of `ImportSchemaGenerator`, specifying a single
@@ -89,7 +91,12 @@ open class ImportSchemaGenerator: NSObject {
     open func generate() throws -> ImportSchema {
         switch format {
         case .csv: return try! generateForCSV()
-        case .xlsx: return try! generateForXLSX()
+        case .xlsx:
+            #if os(OSX)
+            return try! generateForXLSX()
+            #else
+            fatalError("XLSX is not supported on iOS")
+            #endif
         case .json: return try! generateForJSON()
         }
     }
@@ -130,7 +137,7 @@ open class ImportSchemaGenerator: NSObject {
                 return true
             }
 
-            return propertyTypeFallbackOrder.index(of: type)! <= propertyTypeFallbackOrder.index(of: fallbackType)!
+            return propertyTypeFallbackOrder.firstIndex(of: type)! <= propertyTypeFallbackOrder.firstIndex(of: fallbackType)!
         }
 
         let schemas = files.map { (file) -> ImportObjectSchema in
@@ -162,6 +169,7 @@ open class ImportSchemaGenerator: NSObject {
         return ImportSchema(schemas: schemas)
     }
     
+    #if os(OSX)
     fileprivate func generateForXLSX() throws -> ImportSchema {
         let workbook = TGSpreadsheetWriter.readWorkbook(URL(fileURLWithPath: "\(Path(files[0]).absolute())")) as! [String: [[String]]]
         let schemas = workbook.keys.enumerated().map { (index, key) -> ImportObjectSchema in
@@ -213,6 +221,8 @@ open class ImportSchemaGenerator: NSObject {
                             .doubleType,
                             .cgFloatType:
                                 property.type = .double;
+                            @unknown default:
+                                fatalError()
                             }
                         } else {
                             property.type = .string
@@ -226,6 +236,7 @@ open class ImportSchemaGenerator: NSObject {
         
         return ImportSchema(schemas: schemas)
     }
+    #endif
     
     fileprivate class func importSchemaFormat(_ file: String) -> ImportSchemaFormat {
         switch Path(file).`extension`!.lowercased() {
