@@ -30,7 +30,6 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
       config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '10.9'
-      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64' #https://github.com/realm/realm-cocoa/issues/6685
     end
   end
 end
