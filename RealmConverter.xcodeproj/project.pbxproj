@@ -770,7 +770,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SUPPORTED_PLATFORMS = "iphonesimulator ios";
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -825,7 +825,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				SUPPORTED_PLATFORMS = "iphonesimulator ios";
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -942,6 +942,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.realm.converter;
 				PRODUCT_NAME = RealmConverter;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "ios iphonesimulator";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -969,6 +970,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.realm.converter;
 				PRODUCT_NAME = RealmConverter;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "ios iphonesimulator";
 			};
 			name = Release;
 		};
