@@ -770,6 +770,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "iphonesimulator ios";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -824,6 +825,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "iphonesimulator ios";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -886,7 +888,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D0010560E0BE72D4F3BDB6EE /* Pods-RealmConverterTestsMacOS.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = RealmConverterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -904,7 +906,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A705EE21315E89140DF8E812 /* Pods-RealmConverterTestsMacOS.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = RealmConverterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -974,7 +976,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1C7A1C087BEDB3E38C4FB7FC /* Pods-RealmConverterTestsiOS.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = RealmConverterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -985,7 +987,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.realm.ConverterTests;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphonesimulator;
 			};
 			name = Debug;
@@ -994,7 +995,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EC616BC65A164F5FFA83CA31 /* Pods-RealmConverterTestsiOS.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = RealmConverterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1005,7 +1006,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.realm.ConverterTests;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphonesimulator;
 			};
 			name = Release;
