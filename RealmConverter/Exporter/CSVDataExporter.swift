@@ -106,10 +106,8 @@ open class CSVDataExporter: DataExporter {
             return valueByEscapingQuotes(
                 value.replacingOccurrences(of: escapeQuotes, with: escapeQuotes + escapeQuotes)
             )
-        } else if value.range(of: " ") != nil || value.range(of: delimiter) != nil {
-            return valueByEscapingQuotes(value)
         }
-        return value
+        return valueByEscapingQuotes(value)
     }
     
     fileprivate func serializedObject(_ object: RLMObject, realm: RLMRealm) -> String {
