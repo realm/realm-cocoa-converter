@@ -106,6 +106,8 @@ extension RLMPropertyType: CustomStringConvertible, CustomDebugStringConvertible
             return "objectID"
         case .decimal128:
             return "decimal128"
+        case .UUID:
+            return "uuid"
         }
     }
     
